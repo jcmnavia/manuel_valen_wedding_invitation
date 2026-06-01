@@ -8,127 +8,104 @@ type Props = {
 }
 
 /**
- * Champagne-gold wax seal with two interlocked wedding rings.
+ * Terracotta wax seal with botanical wreath and debossed M&V monogram.
  *
- * 3D realism strategy:
- *   - Strong directional lighting (top-left, ~30° elevation)
- *   - Rings drawn 3-layer: deep shadow + main stroke + highlight stroke,
- *     so they read as carved depressions in the wax, not flat painted lines
- *   - Diamond drawn with facet lines and a central specular sparkle
- *   - Edge has 8 "thickness bumps" — small dome highlights at irregular
- *     positions along the perimeter, sells the molten-pooled thickness
- *   - Surface carries small divots (dark spots) and crystalline sparkles
- *   - Two layered drop shadows: a tight contact shadow + a soft ambient
+ * Visual reference: a matte, dusty-rose / terracotta wax seal (not metallic
+ * gold, not glossy red). Vertical-oval pool with irregular molten edges.
+ * The design is debossed (recessed) into the wax: a botanical wreath
+ * surrounds the center field, where the M&V monogram is carved in serif.
  *
- * The seal is always intact: it lifts up with the envelope flap during
- * the cinematic; it does not crack or shatter.
+ * Critical realism choices:
+ *   - Matte surface, not glossy: NO bright specular, NO crystalline sparkles.
+ *   - Form lighting only: slightly lighter at top, slightly darker at bottom.
+ *   - Debossed elements use two SVG layers: a dark interior (the recess
+ *     bottom) + a thin light edge along the upper rim of the recess (where
+ *     overhead light catches the wall of the depression). No painted strokes.
+ *   - Edge thickness bumps and a small drip create the molten-pool silhouette.
+ *
+ * The seal stays intact and lifts up with the envelope flap during the
+ * cinematic; it never cracks.
  */
 export const WaxSeal = forwardRef<SVGSVGElement, Props>(function WaxSeal(
-  { className = '', size = 240 },
+  { className = '', size = 260 },
   ref,
 ) {
   return (
     <svg
       ref={ref}
-      viewBox="0 0 240 240"
-      width={size}
+      viewBox="0 0 220 260"
+      width={size * (220 / 260)}
       height={size}
       className={className}
       role="presentation"
       aria-hidden="true"
     >
       <defs>
-        {/* Main fill — directional light from upper-left, ~30° */}
-        <radialGradient id="gold-fill" cx="34%" cy="28%" r="78%">
-          <stop offset="0%" stopColor="#FBEFC4" />
-          <stop offset="14%" stopColor="#F2D898" />
-          <stop offset="40%" stopColor="#D4B36C" />
-          <stop offset="68%" stopColor="#9D7A3A" />
-          <stop offset="88%" stopColor="#6B4E20" />
-          <stop offset="100%" stopColor="#3D2A10" />
+        {/* Main matte terracotta — form lighting from above.
+            Lighter at top, deeper at bottom. NO specular highlight. */}
+        <linearGradient id="terracotta-fill" x1="50%" y1="0%" x2="50%" y2="100%">
+          <stop offset="0%" stopColor="#C58974" />
+          <stop offset="35%" stopColor="#B86F58" />
+          <stop offset="70%" stopColor="#9C5642" />
+          <stop offset="100%" stopColor="#7A3F2E" />
+        </linearGradient>
+
+        {/* Subtle horizontal warmth — slight bounce light on the right */}
+        <linearGradient id="terracotta-side" x1="0%" y1="50%" x2="100%" y2="50%">
+          <stop offset="0%" stopColor="rgba(0,0,0,0.06)" />
+          <stop offset="50%" stopColor="rgba(0,0,0,0)" />
+          <stop offset="100%" stopColor="rgba(255,180,140,0.06)" />
+        </linearGradient>
+
+        {/* Soft form-light on the upper third — diffuse, no hard sheen */}
+        <radialGradient id="terracotta-toplight" cx="50%" cy="20%" r="55%">
+          <stop offset="0%" stopColor="rgba(220,160,130,0.32)" />
+          <stop offset="60%" stopColor="rgba(220,160,130,0.08)" />
+          <stop offset="100%" stopColor="rgba(220,160,130,0)" />
         </radialGradient>
 
-        {/* Sharp specular highlight in the upper-left quadrant */}
-        <radialGradient id="gold-specular" cx="28%" cy="22%" r="22%">
-          <stop offset="0%" stopColor="rgba(255,252,235,0.95)" />
-          <stop offset="35%" stopColor="rgba(255,250,220,0.4)" />
-          <stop offset="100%" stopColor="rgba(255,250,220,0)" />
+        {/* Rim darkening — the edge of the wax pool falls away into shadow */}
+        <radialGradient id="terracotta-rim" cx="50%" cy="50%" r="50%">
+          <stop offset="75%" stopColor="rgba(0,0,0,0)" />
+          <stop offset="92%" stopColor="rgba(50,20,10,0.30)" />
+          <stop offset="100%" stopColor="rgba(36,12,4,0.55)" />
         </radialGradient>
 
-        {/* Secondary softer sheen reaching across the upper half */}
-        <radialGradient id="gold-sheen" cx="42%" cy="32%" r="48%">
-          <stop offset="0%" stopColor="rgba(255,240,200,0.55)" />
-          <stop offset="55%" stopColor="rgba(255,240,200,0.08)" />
-          <stop offset="100%" stopColor="rgba(255,240,200,0)" />
-        </radialGradient>
-
-        {/* Bottom-right warm bounce light — implies a surface reflecting back */}
-        <radialGradient id="gold-bounce" cx="76%" cy="80%" r="36%">
-          <stop offset="0%" stopColor="rgba(255,170,80,0.30)" />
-          <stop offset="100%" stopColor="rgba(255,170,80,0)" />
-        </radialGradient>
-
-        {/* Hard rim darkening to create the dome silhouette */}
-        <radialGradient id="gold-rim" cx="50%" cy="50%" r="50%">
-          <stop offset="72%" stopColor="rgba(0,0,0,0)" />
-          <stop offset="88%" stopColor="rgba(48,30,8,0.42)" />
-          <stop offset="98%" stopColor="rgba(28,16,2,0.78)" />
-          <stop offset="100%" stopColor="rgba(14,6,0,0.95)" />
-        </radialGradient>
-
-        {/* Small high-intensity sparkles */}
-        <radialGradient id="spark-tiny" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="rgba(255,255,240,1)" />
-          <stop offset="40%" stopColor="rgba(255,250,210,0.55)" />
-          <stop offset="100%" stopColor="rgba(255,250,210,0)" />
-        </radialGradient>
-
-        {/* Fine surface grain — heavier than before for tactile feel */}
-        <filter id="gold-grain" x="-5%" y="-5%" width="110%" height="110%">
+        {/* Fine paper-pressed grain — barely visible micro-texture */}
+        <filter id="terracotta-grain" x="-5%" y="-5%" width="110%" height="110%">
           <feTurbulence
             type="fractalNoise"
-            baseFrequency="1.1"
-            numOctaves="3"
-            seed="29"
-          />
-          <feColorMatrix
-            values="0 0 0 0 0
-                    0 0 0 0 0
-                    0 0 0 0 0
-                    0 0 0 0.34 0"
-          />
-          <feComposite in2="SourceGraphic" operator="in" />
-        </filter>
-
-        {/* Wider "vein" texture — simulates cooled-wax stress patterns */}
-        <filter id="gold-veins" x="-5%" y="-5%" width="110%" height="110%">
-          <feTurbulence
-            type="turbulence"
-            baseFrequency="0.035"
+            baseFrequency="1.6"
             numOctaves="2"
-            seed="11"
+            seed="41"
           />
           <feColorMatrix
             values="0 0 0 0 0
                     0 0 0 0 0
                     0 0 0 0 0
-                    0 0 0 0.42 0"
+                    0 0 0 0.14 0"
           />
           <feComposite in2="SourceGraphic" operator="in" />
         </filter>
 
-        {/* Two-layer shadow: tight contact + soft ambient */}
-        <filter id="gold-shadow" x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
-          <feOffset dx="0" dy="3" result="contact" />
+        {/* Soft diffuse drop shadow — contact only, not hard */}
+        <filter
+          id="terracotta-shadow"
+          x="-30%"
+          y="-30%"
+          width="160%"
+          height="160%"
+        >
+          <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+          <feOffset dx="1" dy="4" result="contact" />
           <feComponentTransfer result="contactOut">
-            <feFuncA type="linear" slope="0.55" />
+            <feFuncA type="linear" slope="0.45" />
           </feComponentTransfer>
 
-          <feGaussianBlur in="SourceAlpha" stdDeviation="8" />
-          <feOffset dx="0" dy="10" result="ambient" />
+          <feGaussianBlur in="SourceAlpha" stdDeviation="9" />
+          <feOffset dx="1" dy="10" result="ambient" />
           <feComponentTransfer result="ambientOut">
-            <feFuncA type="linear" slope="0.45" />
+            <feFuncA type="linear" slope="0.30" />
           </feComponentTransfer>
 
           <feMerge>
@@ -138,364 +115,447 @@ export const WaxSeal = forwardRef<SVGSVGElement, Props>(function WaxSeal(
           </feMerge>
         </filter>
 
-        {/* IRREGULAR MOLTEN OUTLINE — 24-point bezier with hand-tuned drips.
-            More pronounced lobes than before. */}
-        <clipPath id="gold-clip">
+        {/*
+         * IRREGULAR VERTICAL OVAL — a wax pool taller than wide, with
+         * thickness bumps and a slight asymmetric overflow. 16 anchor
+         * points walking around a center near (110, 130) with vertical
+         * radius ~115 and horizontal radius ~95.
+         */}
+        <clipPath id="terracotta-clip">
           <path
             d="
-              M 120 12
-              C 134 8, 154 14, 168 22
-              C 182 22, 198 30, 206 46
-              C 218 54, 226 70, 226 88
-              C 234 100, 232 118, 226 130
-              C 230 144, 222 162, 212 170
-              C 208 188, 192 200, 178 204
-              C 170 218, 152 224, 138 222
-              C 124 230, 106 226, 96 220
-              C 80 224, 64 216, 56 204
-              C 40 200, 28 188, 22 174
-              C 8 168, 4 152, 6 138
-              C 0 122, 4 104, 14 92
-              C 12 76, 22 60, 34 54
-              C 40 38, 56 28, 72 28
-              C 84 16, 102 10, 120 12
+              M 110 18
+              C 130 16, 152 22, 168 36
+              C 184 50, 198 70, 202 92
+              C 208 116, 204 142, 196 168
+              C 192 192, 178 218, 158 234
+              C 140 246, 118 250, 100 246
+              C 78 246, 56 234, 42 216
+              C 26 198, 16 174, 14 148
+              C 10 124, 16 100, 26 78
+              C 36 56, 52 38, 72 28
+              C 84 22, 96 18, 110 18
               Z
             "
           />
         </clipPath>
 
-        {/* Same path as a usable reference for the rim stroke */}
         <path
-          id="gold-perimeter"
+          id="terracotta-perimeter"
           d="
-            M 120 12
-            C 134 8, 154 14, 168 22
-            C 182 22, 198 30, 206 46
-            C 218 54, 226 70, 226 88
-            C 234 100, 232 118, 226 130
-            C 230 144, 222 162, 212 170
-            C 208 188, 192 200, 178 204
-            C 170 218, 152 224, 138 222
-            C 124 230, 106 226, 96 220
-            C 80 224, 64 216, 56 204
-            C 40 200, 28 188, 22 174
-            C 8 168, 4 152, 6 138
-            C 0 122, 4 104, 14 92
-            C 12 76, 22 60, 34 54
-            C 40 38, 56 28, 72 28
-            C 84 16, 102 10, 120 12
+            M 110 18
+            C 130 16, 152 22, 168 36
+            C 184 50, 198 70, 202 92
+            C 208 116, 204 142, 196 168
+            C 192 192, 178 218, 158 234
+            C 140 246, 118 250, 100 246
+            C 78 246, 56 234, 42 216
+            C 26 198, 16 174, 14 148
+            C 10 124, 16 100, 26 78
+            C 36 56, 52 38, 72 28
+            C 84 22, 96 18, 110 18
             Z
           "
         />
       </defs>
 
-      {/* ====== SHADOW + BODY ====== */}
-      <g data-wax-body filter="url(#gold-shadow)">
-        {/* Clipped wax body — stacking gradients and textures */}
-        <g clipPath="url(#gold-clip)">
-          {/* 1. Base fill */}
-          <rect width="240" height="240" fill="url(#gold-fill)" />
-          {/* 2. Warm bottom-right bounce */}
-          <rect width="240" height="240" fill="url(#gold-bounce)" />
-          {/* 3. Rim darkening (the dome silhouette) */}
-          <rect width="240" height="240" fill="url(#gold-rim)" />
-          {/* 4. Heavy surface grain */}
+      {/* ====== BODY ====== */}
+      <g data-wax-body filter="url(#terracotta-shadow)">
+        {/* Clipped wax body */}
+        <g clipPath="url(#terracotta-clip)">
+          {/* 1. Base terracotta fill */}
+          <rect width="220" height="260" fill="url(#terracotta-fill)" />
+          {/* 2. Side bounce light */}
+          <rect width="220" height="260" fill="url(#terracotta-side)" />
+          {/* 3. Rim darkening */}
+          <rect width="220" height="260" fill="url(#terracotta-rim)" />
+          {/* 4. Fine grain */}
           <rect
-            width="240"
-            height="240"
-            fill="#6B4E20"
-            filter="url(#gold-grain)"
-            opacity="0.50"
+            width="220"
+            height="260"
+            fill="#5C2818"
+            filter="url(#terracotta-grain)"
+            opacity="0.45"
           />
-          {/* 5. Wider vein texture */}
-          <rect
-            width="240"
-            height="240"
-            fill="#3D2A10"
-            filter="url(#gold-veins)"
-            opacity="0.18"
-          />
-
-          {/* 6. Surface divots — tiny dark spots scattered for tactile feel */}
-          {[
-            [56, 92],
-            [88, 168],
-            [148, 80],
-            [178, 142],
-            [104, 200],
-            [196, 96],
-            [42, 144],
-            [124, 156],
-          ].map(([x, y], i) => (
-            <ellipse
-              key={i}
-              cx={x}
-              cy={y}
-              rx={i % 2 ? 2.2 : 1.6}
-              ry={i % 2 ? 1.2 : 0.9}
-              fill="rgba(40,24,4,0.4)"
-            />
-          ))}
-
-          {/* 7. Soft sheen over the upper half */}
-          <rect width="240" height="240" fill="url(#gold-sheen)" />
-
-          {/* 8. Tight specular highlight in the upper-left */}
-          <rect width="240" height="240" fill="url(#gold-specular)" />
-
-          {/* 9. Crystalline sparkles — small bright dots over the dome */}
-          {[
-            [50, 64, 5],
-            [80, 50, 3.2],
-            [130, 58, 4],
-            [60, 110, 3.5],
-            [104, 92, 2.4],
-            [170, 110, 3],
-            [156, 178, 3.4],
-            [82, 188, 2.6],
-            [190, 60, 2.2],
-            [38, 96, 2],
-            [144, 196, 2.8],
-          ].map(([x, y, r], i) => (
-            <circle
-              key={`s${i}`}
-              cx={x}
-              cy={y}
-              r={r}
-              fill="url(#spark-tiny)"
-            />
-          ))}
+          {/* 5. Soft top-light */}
+          <rect width="220" height="260" fill="url(#terracotta-toplight)" />
         </g>
 
-        {/* ====== RIM EDGE LIGHTING ====== */}
-        {/* Outer bright edge — where the dome catches light along the perimeter */}
+        {/* Rim edge highlight — thin top-light line along the perimeter */}
         <use
-          href="#gold-perimeter"
+          href="#terracotta-perimeter"
           fill="none"
-          stroke="rgba(255,230,170,0.65)"
-          strokeWidth="1.8"
+          stroke="rgba(220,170,140,0.42)"
+          strokeWidth="1.3"
+          transform="translate(-0.4 -0.7)"
         />
-        {/* Inner shadow line just inside the rim */}
+        {/* Rim shadow line — bottom-edge darkening */}
         <use
-          href="#gold-perimeter"
+          href="#terracotta-perimeter"
           fill="none"
-          stroke="rgba(50,30,8,0.55)"
-          strokeWidth="2.6"
-          transform="translate(0 2.5)"
-          opacity="0.55"
+          stroke="rgba(40,14,4,0.5)"
+          strokeWidth="2.2"
+          transform="translate(0.5 1.4)"
+          opacity="0.6"
         />
 
-        {/* "Thickness bumps" — small dome highlights at irregular spots
-            on the perimeter. Sells the molten pool's irregular thickness. */}
+        {/* Edge thickness bumps — small molten lobes around the perimeter */}
         {[
-          { x: 190, y: 36, r: 6 },
-          { x: 220, y: 100, r: 5 },
-          { x: 212, y: 174, r: 7 },
-          { x: 156, y: 220, r: 5 },
-          { x: 76, y: 224, r: 6 },
-          { x: 28, y: 184, r: 5 },
-          { x: 8, y: 122, r: 6 },
-          { x: 28, y: 64, r: 5 },
-          { x: 88, y: 18, r: 6 },
+          { x: 180, y: 40, r: 7 },
+          { x: 204, y: 100, r: 5 },
+          { x: 200, y: 178, r: 7 },
+          { x: 168, y: 234, r: 6 },
+          { x: 82, y: 248, r: 7 },
+          { x: 30, y: 220, r: 5 },
+          { x: 12, y: 156, r: 6 },
+          { x: 18, y: 90, r: 6 },
+          { x: 58, y: 30, r: 6 },
         ].map((b, i) => (
           <g key={`b${i}`}>
-            <circle cx={b.x} cy={b.y} r={b.r} fill="url(#gold-fill)" />
-            <circle cx={b.x} cy={b.y} r={b.r} fill="url(#gold-rim)" />
+            <circle cx={b.x} cy={b.y} r={b.r} fill="url(#terracotta-fill)" />
+            <circle cx={b.x} cy={b.y} r={b.r} fill="url(#terracotta-rim)" />
+            {/* Subtle top-light catch on each bump */}
             <circle
-              cx={b.x - b.r * 0.35}
-              cy={b.y - b.r * 0.35}
-              r={b.r * 0.45}
-              fill="rgba(255,245,210,0.6)"
+              cx={b.x - b.r * 0.25}
+              cy={b.y - b.r * 0.45}
+              r={b.r * 0.35}
+              fill="rgba(220,170,140,0.32)"
             />
           </g>
         ))}
 
-        {/* ====== ENGRAVED WEDDING RINGS — CARVED INTO THE WAX ======
-            Drawn in three layers per ring (shadow + main + highlight) to
-            sell the recessed-engraving look. The interlock works by
-            drawing the right ring FIRST (full), then the left ring on top
-            (so left wins at the upper crossover), then re-drawing a small
-            arc of the right ring's lower-left so it crosses in FRONT of
-            the left ring at the bottom crossover.
+        {/*
+         * ================================================================
+         * DEBOSSED BOTANICAL WREATH
+         * Two mirrored vining stems with small leaves and tiny berries.
+         * Drawn with two layers:
+         *   (a) "shadow" — dark interior of the recess
+         *   (b) "edge" — thin light line on the upper-left edge of each
+         *       recessed element (where overhead light catches the wall)
+         * No painted outlines — physical depth via tonal contrast.
+         * ================================================================
+         */}
 
-            Rings sized cleanly: rx=ry=34 (round circles, easier to read).
-            Left center: (98, 130). Right center: (142, 130). Center spacing 44px. */}
-
-        {/* ----- RIGHT RING — full circle, drawn first so it sits behind ----- */}
-        {/* shadow */}
-        <circle
-          cx="143"
-          cy="131.4"
-          r="34"
-          fill="none"
-          stroke="#1A0F06"
-          strokeWidth="5"
-          opacity="0.55"
-        />
-        {/* main carve */}
-        <circle
-          cx="142"
-          cy="130"
-          r="34"
-          fill="none"
-          stroke="#3A2614"
-          strokeWidth="4.5"
-          opacity="0.95"
-        />
-        {/* upper-left highlight on right ring */}
-        <g
-          fill="none"
-          stroke="rgba(255,240,190,0.7)"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-        >
-          <path d="M 124 110 A 34 34 0 0 1 162 104" />
-        </g>
-
-        {/* ----- LEFT RING — full circle, drawn on top so it crosses over right ring at top ----- */}
-        {/* shadow */}
-        <circle
-          cx="99"
-          cy="131.4"
-          r="34"
-          fill="none"
-          stroke="#1A0F06"
-          strokeWidth="5"
-          opacity="0.6"
-        />
-        {/* main carve */}
-        <circle
-          cx="98"
-          cy="130"
-          r="34"
-          fill="none"
-          stroke="#3A2614"
-          strokeWidth="4.5"
-          opacity="0.95"
-        />
-        {/* upper-left highlight on left ring */}
-        <g
-          fill="none"
-          stroke="rgba(255,240,190,0.75)"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-        >
-          <path d="M 78 110 A 34 34 0 0 1 116 104" />
-        </g>
-
-        {/* ----- RIGHT RING — front arc, drawn LAST so it crosses IN FRONT of
-            the left ring at the BOTTOM. This is the segment of the right ring
-            from roughly the 7 o'clock to the 10 o'clock position (lower-left
-            quadrant) — that's where it should pass in front of the left ring. */}
-        {/* shadow */}
-        <path
-          d="M 119 152 A 34 34 0 0 1 109 117"
-          fill="none"
-          stroke="#1A0F06"
-          strokeWidth="5"
-          strokeLinecap="round"
-          opacity="0.6"
-          transform="translate(1 1.4)"
-        />
-        {/* main carve */}
-        <path
-          d="M 119 152 A 34 34 0 0 1 109 117"
-          fill="none"
-          stroke="#3A2614"
-          strokeWidth="4.5"
-          strokeLinecap="round"
-          opacity="0.95"
-        />
-        {/* highlight along that arc */}
-        <path
-          d="M 114 145 A 34 34 0 0 1 110 124"
-          fill="none"
-          stroke="rgba(255,240,190,0.6)"
-          strokeWidth="1.3"
-          strokeLinecap="round"
-        />
-
-        {/* ====== DIAMOND SOLITAIRE on the left ring (sits at the top of left ring, y = 130 - 34 = 96) ====== */}
-        <g transform="translate(98 92)">
-          {/* prong setting shadow */}
+        {/* === LEFT VINE === */}
+        <g>
+          {/* Main curving stem — shadow */}
           <path
-            d="M -8 6 L 8 6 L 6 0 L -6 0 Z"
-            fill="#22150A"
-            opacity="0.7"
-            transform="translate(0.8 1)"
-          />
-          {/* prong setting */}
-          <path d="M -8 5 L 8 5 L 6 -1 L -6 -1 Z" fill="#3A2614" />
-          {/* setting top highlight */}
-          <path
-            d="M -7 5 L 7 5 L 6 4 L -6 4 Z"
-            fill="rgba(255,238,180,0.45)"
-          />
-
-          {/* diamond outline with facets */}
-          <path
-            d="M -7 -1 L 0 -13 L 7 -1 L 4 2 L -4 2 Z"
-            fill="#1A0F06"
-            stroke="rgba(255,240,200,0.4)"
-            strokeWidth="0.6"
-          />
-          {/* internal facet lines */}
-          <g
+            d="M 60 78 Q 36 130 60 200"
             fill="none"
-            stroke="rgba(255,240,200,0.45)"
-            strokeWidth="0.5"
+            stroke="rgba(60,24,12,0.42)"
+            strokeWidth="1.4"
             strokeLinecap="round"
-          >
-            <path d="M -7 -1 L 0 2" />
-            <path d="M 7 -1 L 0 2" />
-            <path d="M -7 -1 L 0 -7" />
-            <path d="M 7 -1 L 0 -7" />
-            <path d="M 0 -13 L 0 -7" />
-          </g>
-          {/* central sparkle on the stone */}
-          <circle cx="0" cy="-5" r="1.8" fill="url(#spark-tiny)" />
-          {/* tiny cross-sparkle */}
-          <g
-            stroke="rgba(255,255,240,0.95)"
-            strokeWidth="0.4"
+          />
+          {/* Stem highlight */}
+          <path
+            d="M 59 78 Q 35 130 59 200"
+            fill="none"
+            stroke="rgba(220,170,140,0.38)"
+            strokeWidth="0.6"
             strokeLinecap="round"
-          >
-            <line x1="0" y1="-9" x2="0" y2="-2" />
-            <line x1="-3.5" y1="-5" x2="3.5" y2="-5" />
-          </g>
+          />
 
-          {/* prong dots (4 small prongs) */}
+          {/* Leaves on left vine — each pair: shadow + highlight */}
           {[
-            [-5.5, -2],
-            [5.5, -2],
-            [-3.5, -11],
-            [3.5, -11],
-          ].map(([x, y], i) => (
-            <circle key={i} cx={x} cy={y} r="0.9" fill="#3A2614" />
+            { x: 50, y: 90, r: -42, sx: 1 },
+            { x: 42, y: 112, r: -18, sx: 1 },
+            { x: 38, y: 138, r: 6, sx: 1 },
+            { x: 38, y: 164, r: 30, sx: 1 },
+            { x: 46, y: 186, r: 52, sx: 1 },
+            { x: 60, y: 110, r: -60, sx: -1 },
+            { x: 52, y: 168, r: 60, sx: -1 },
+          ].map((leaf, i) => (
+            <g
+              key={`lL${i}`}
+              transform={`translate(${leaf.x} ${leaf.y}) rotate(${leaf.r}) scale(${leaf.sx} 1)`}
+            >
+              {/* leaf shadow — full leaf body recess */}
+              <path
+                d="M 0 0 Q 4 -3 9 -2 Q 12 0 9 3 Q 4 4 0 0 Z"
+                fill="rgba(60,24,12,0.5)"
+              />
+              {/* leaf highlight along upper-left edge */}
+              <path
+                d="M 0 0 Q 3 -3 8 -2"
+                fill="none"
+                stroke="rgba(220,170,140,0.55)"
+                strokeWidth="0.7"
+                strokeLinecap="round"
+              />
+              {/* central vein */}
+              <path
+                d="M 1 1 Q 4 0 8 -1"
+                fill="none"
+                stroke="rgba(60,24,12,0.4)"
+                strokeWidth="0.4"
+                strokeLinecap="round"
+              />
+            </g>
+          ))}
+
+          {/* Berry cluster on left vine */}
+          {[
+            [38, 124],
+            [42, 130],
+            [46, 124],
+          ].map(([cx, cy], i) => (
+            <g key={`bL${i}`}>
+              <circle cx={cx} cy={cy} r="1.6" fill="rgba(60,24,12,0.55)" />
+              <circle
+                cx={cx - 0.4}
+                cy={cy - 0.6}
+                r="0.7"
+                fill="rgba(220,170,140,0.5)"
+              />
+            </g>
           ))}
         </g>
 
-        {/* Final overall sheen sweep across upper-left of the dome */}
-        <path
-          clipPath="url(#gold-clip)"
-          d="M 20 50 Q 80 22, 150 30 Q 110 56, 80 78 Q 46 90, 20 50 Z"
-          fill="rgba(255,240,200,0.25)"
-        />
+        {/* === RIGHT VINE (mirrored) === */}
+        <g transform="translate(220 0) scale(-1 1)">
+          <path
+            d="M 60 78 Q 36 130 60 200"
+            fill="none"
+            stroke="rgba(60,24,12,0.42)"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+          />
+          <path
+            d="M 59 78 Q 35 130 59 200"
+            fill="none"
+            stroke="rgba(220,170,140,0.38)"
+            strokeWidth="0.6"
+            strokeLinecap="round"
+          />
+
+          {[
+            { x: 50, y: 90, r: -42, sx: 1 },
+            { x: 42, y: 112, r: -18, sx: 1 },
+            { x: 38, y: 138, r: 6, sx: 1 },
+            { x: 38, y: 164, r: 30, sx: 1 },
+            { x: 46, y: 186, r: 52, sx: 1 },
+            { x: 60, y: 110, r: -60, sx: -1 },
+            { x: 52, y: 168, r: 60, sx: -1 },
+          ].map((leaf, i) => (
+            <g
+              key={`lR${i}`}
+              transform={`translate(${leaf.x} ${leaf.y}) rotate(${leaf.r}) scale(${leaf.sx} 1)`}
+            >
+              <path
+                d="M 0 0 Q 4 -3 9 -2 Q 12 0 9 3 Q 4 4 0 0 Z"
+                fill="rgba(60,24,12,0.5)"
+              />
+              <path
+                d="M 0 0 Q 3 -3 8 -2"
+                fill="none"
+                stroke="rgba(220,170,140,0.55)"
+                strokeWidth="0.7"
+                strokeLinecap="round"
+              />
+              <path
+                d="M 1 1 Q 4 0 8 -1"
+                fill="none"
+                stroke="rgba(60,24,12,0.4)"
+                strokeWidth="0.4"
+                strokeLinecap="round"
+              />
+            </g>
+          ))}
+
+          {[
+            [38, 124],
+            [42, 130],
+            [46, 124],
+          ].map(([cx, cy], i) => (
+            <g key={`bR${i}`}>
+              <circle cx={cx} cy={cy} r="1.6" fill="rgba(60,24,12,0.55)" />
+              <circle
+                cx={cx - 0.4}
+                cy={cy - 0.6}
+                r="0.7"
+                fill="rgba(220,170,140,0.5)"
+              />
+            </g>
+          ))}
+        </g>
+
+        {/* === TOP JOIN — small sprig where the two vines meet === */}
+        <g transform="translate(110 64)">
+          {/* central tiny leaf */}
+          <path
+            d="M 0 0 Q 0 -6 0 -10 Q -3 -6 0 0 Z"
+            fill="rgba(60,24,12,0.5)"
+          />
+          <path
+            d="M 0 0 Q 0 -6 0 -10"
+            fill="none"
+            stroke="rgba(220,170,140,0.5)"
+            strokeWidth="0.6"
+            strokeLinecap="round"
+          />
+          {/* left tiny leaf */}
+          <g transform="translate(-6 4) rotate(-45)">
+            <path
+              d="M 0 0 Q 3 -2 7 -1 Q 9 0 7 2 Q 3 3 0 0 Z"
+              fill="rgba(60,24,12,0.5)"
+            />
+            <path
+              d="M 0 0 Q 3 -2 7 -1"
+              fill="none"
+              stroke="rgba(220,170,140,0.5)"
+              strokeWidth="0.6"
+            />
+          </g>
+          {/* right tiny leaf */}
+          <g transform="translate(6 4) rotate(45) scale(-1 1)">
+            <path
+              d="M 0 0 Q 3 -2 7 -1 Q 9 0 7 2 Q 3 3 0 0 Z"
+              fill="rgba(60,24,12,0.5)"
+            />
+            <path
+              d="M 0 0 Q 3 -2 7 -1"
+              fill="none"
+              stroke="rgba(220,170,140,0.5)"
+              strokeWidth="0.6"
+            />
+          </g>
+        </g>
+
+        {/* === BOTTOM JOIN — small sprig where the two vines meet === */}
+        <g transform="translate(110 210)">
+          {/* central tiny leaf, pointing down */}
+          <path
+            d="M 0 0 Q 0 6 0 10 Q -3 6 0 0 Z"
+            fill="rgba(60,24,12,0.5)"
+          />
+          <path
+            d="M 0 0 Q 0 6 0 10"
+            fill="none"
+            stroke="rgba(220,170,140,0.5)"
+            strokeWidth="0.6"
+            strokeLinecap="round"
+          />
+          {/* left tiny leaf */}
+          <g transform="translate(-6 -4) rotate(45)">
+            <path
+              d="M 0 0 Q 3 -2 7 -1 Q 9 0 7 2 Q 3 3 0 0 Z"
+              fill="rgba(60,24,12,0.5)"
+            />
+            <path
+              d="M 0 0 Q 3 -2 7 -1"
+              fill="none"
+              stroke="rgba(220,170,140,0.5)"
+              strokeWidth="0.6"
+            />
+          </g>
+          {/* right tiny leaf */}
+          <g transform="translate(6 -4) rotate(-45) scale(-1 1)">
+            <path
+              d="M 0 0 Q 3 -2 7 -1 Q 9 0 7 2 Q 3 3 0 0 Z"
+              fill="rgba(60,24,12,0.5)"
+            />
+            <path
+              d="M 0 0 Q 3 -2 7 -1"
+              fill="none"
+              stroke="rgba(220,170,140,0.5)"
+              strokeWidth="0.6"
+            />
+          </g>
+        </g>
+
+        {/*
+         * ================================================================
+         * DEBOSSED M&V MONOGRAM
+         * Serif capital letters carved into the center field.
+         * Two-layer approach again: dark interior (recess bottom)
+         * + thin highlight along the upper-left edge of each stroke.
+         * Letters use SVG paths for proper serif anatomy.
+         * ================================================================
+         */}
+        <g data-monogram>
+          {/* SHADOW LAYER — dark interior of carved letters */}
+          <g
+            fill="rgba(50,16,4,0.62)"
+            stroke="rgba(50,16,4,0.62)"
+            strokeWidth="0.4"
+            strokeLinejoin="round"
+          >
+            {/* M */}
+            <path
+              d="M 68 108 L 68 162 L 74 162 L 74 122 L 90 154 L 92 154 L 108 122 L 108 162 L 114 162 L 114 108 L 106 108 L 91 144 L 76 108 Z"
+            />
+            {/* Serifs on M (top and bottom) */}
+            <rect x="62" y="106" width="18" height="3" />
+            <rect x="102" y="106" width="18" height="3" />
+            <rect x="62" y="161" width="18" height="3" />
+            <rect x="102" y="161" width="18" height="3" />
+
+            {/* Ampersand — simple serif ornament between letters */}
+            <path
+              d="M 124 138 Q 128 130 134 132 Q 138 134 136 138 Q 132 142 128 144 Q 134 148 138 144 Q 142 140 144 144"
+              fill="none"
+              stroke="rgba(50,16,4,0.62)"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+
+            {/* V */}
+            <path
+              d="M 150 108 L 168 162 L 174 162 L 192 108 L 184 108 L 171 152 L 158 108 Z"
+            />
+            {/* Serifs on V (top only — V has no bottom serif) */}
+            <rect x="144" y="106" width="18" height="3" />
+            <rect x="180" y="106" width="18" height="3" />
+          </g>
+
+          {/* HIGHLIGHT LAYER — thin top-light on upper-left edge of each stroke,
+              creates the optical illusion of recessed depth */}
+          <g
+            fill="rgba(220,170,140,0.42)"
+            stroke="rgba(220,170,140,0.42)"
+            strokeWidth="0.4"
+          >
+            {/* M highlight — left edge of left vertical + top of strokes */}
+            <path d="M 68 108 L 68 162 L 70 162 L 70 110 Z" />
+            <path d="M 102 162 L 104 162 L 104 120 L 102 124 Z" />
+            <rect x="62" y="106" width="18" height="1" />
+            <rect x="102" y="106" width="18" height="1" />
+
+            {/* V highlight */}
+            <path d="M 150 108 L 153 108 L 169 156 L 168 162 Z" />
+            <rect x="144" y="106" width="18" height="1" />
+            <rect x="180" y="106" width="18" height="1" />
+          </g>
+
+          {/* SHADOW LAYER on bottom-right edge (the OPPOSITE side, opposite the light) */}
+          <g
+            fill="rgba(30,10,2,0.5)"
+            stroke="rgba(30,10,2,0.5)"
+            strokeWidth="0.4"
+          >
+            <rect x="62" y="163" width="18" height="1.2" />
+            <rect x="102" y="163" width="18" height="1.2" />
+            {/* V bottom point shadow */}
+            <path d="M 168 162 L 174 162 L 173 160 L 169 160 Z" />
+          </g>
+        </g>
 
         {/* Tiny lower-right drip blob — sells the molten character */}
         <g>
-          <circle
-            cx="216"
-            cy="186"
-            r="7"
-            fill="url(#gold-fill)"
+          <ellipse
+            cx="194"
+            cy="226"
+            rx="9"
+            ry="11"
+            fill="url(#terracotta-fill)"
           />
-          <circle cx="216" cy="186" r="7" fill="url(#gold-rim)" />
-          <circle
-            cx="213"
-            cy="183"
-            r="2.4"
-            fill="rgba(255,245,210,0.7)"
+          <ellipse cx="194" cy="226" rx="9" ry="11" fill="url(#terracotta-rim)" />
+          <ellipse
+            cx="191"
+            cy="222"
+            rx="2.6"
+            ry="3"
+            fill="rgba(220,170,140,0.35)"
           />
         </g>
       </g>

@@ -10,10 +10,10 @@ colors:
   ink-soft: "#4A3F2E"
   gold: "#B08D57"
   gold-dim: "#8C6F40"
-  wax-gold: "#C2A35A"
-  wax-gold-bright: "#F2D898"
-  wax-gold-deep: "#6E5226"
-  wax-engrave: "#3A2614"
+  wax-terracotta: "#B86F58"
+  wax-terracotta-light: "#C58974"
+  wax-terracotta-deep: "#7A3F2E"
+  wax-engrave: "#321004"
 typography:
   display:
     fontFamily: "Italiana, Georgia, serif"
@@ -97,8 +97,8 @@ This system rejects the pastel-rose template-aesthetic that dominates wedding si
 A palette of paper, ink, gold leaf, and deep wax red. Every neutral is tinted warm; no cool greys, no pure black, no pure white.
 
 ### Primary
-- **Champagne Wax Gold** (`#C2A35A` with `#F2D898` highlights and `#6E5226` shadows): the wax seal itself. A dimensional molten-gold dome with two interlocked wedding rings engraved into it (one with a solitaire diamond). The only metallic surface in the system. Appears only on the home cinematic.
-- **Wax Engrave** (`#3A2614`): the dark line color used for the engraved rings and diamond on the seal. Reads as a recessed engraving, not a flat ink stroke.
+- **Terracotta Wax** (`#B86F58` with `#C58974` form-light highlights and `#7A3F2E` shadows): the wax seal itself. A matte, sun-faded rose-brown wax pool — vertical oval shape, irregular molten edges. Debossed botanical wreath surrounds a debossed M&V serif monogram. NOT metallic, NOT glossy. Appears only on the home cinematic.
+- **Wax Engrave** (`#321004`): the dark interior color of debossed (recessed) wreath leaves, berries, and monogram strokes. Reads as physical depth, not a painted line.
 
 ### Secondary
 - **Gold Leaf** (`#B08D57`): ornamental dividers, accent line below headlines, focus ring on links, palette swatch borders, button borders, link hover color. Used as a "second voice" alongside ink for delicate ornament.
@@ -114,7 +114,9 @@ A palette of paper, ink, gold leaf, and deep wax red. Every neutral is tinted wa
 - **Ink-soft** (`#4A3F2E`): secondary text, italic body, captions. The "voice in parentheses."
 
 ### Named Rules
-**The Wax-Gold Is The Seal Rule.** Champagne wax gold (`#C2A35A` family) appears only on the wax seal. Never on buttons, never on text, never as a fill anywhere else. The seal is a singular object, and its color is its signature.
+**The Terracotta Is The Seal Rule.** Terracotta wax (`#B86F58` family) appears only on the wax seal. Never on buttons, never on text, never as a fill anywhere else. The seal is a singular object, and its color is its signature.
+
+**The Matte Wax Rule.** The wax surface is matte. No specular highlights, no crystalline sparkles, no glossy sheen, no metallic shader. Depth is conveyed through soft form lighting (slightly lighter top, slightly darker bottom) and through the debossed elements (dark recesses with a single thin top-light edge on each carved shape). If it looks like jewelry, it has failed.
 
 **The Wax-Red Is The Postmark Rule.** The deep red `#7A2421` is used only on the round postmark stamp in the upper-right of the envelope. Used at low opacity. Never on buttons, body, or as a hover state.
 
@@ -178,7 +180,7 @@ None. The site has no forms. RSVP is intentionally out of scope.
 - **NavBar (home, post-envelope):** identical to subpages, but appears via `opacity 0 → 1` + `translateY(-16px → 0)` when the envelope scroll progress crosses 0.85.
 
 ### Signature: Wax Seal
-A layered SVG 240×240 viewBox, scaled to `clamp(180px, 26vw, 280px)`. Champagne-gold molten wax with a highly irregular outline (not a perfect circle) — small drips and lobes around the perimeter, like real wax that pooled unevenly before solidifying. Surface texture is heavy: two layered noise filters (one fine grain, one wider stress-fracture vein pattern), scattered sparkle highlights, top-left specular sheen, and a darker rim around the perimeter that sells the dome. The engraving consists of **two interlocked wedding rings** drawn in dark recessed strokes (`#3A2614`): the left ring carries a small prong-set solitaire diamond at the top. Sits at the seam where the flap meets the front body. Lifts up with the flap during the cinematic; never cracks, never shatters.
+A layered SVG 220×260 viewBox (vertical oval), scaled to `clamp(180px, 26vw, 280px)`. Matte terracotta wax with an irregular vertical-oval outline — small thickness bumps and a slight drip overflow at the lower-right. Form lighting only: a soft top-light radial gradient (no specular, no sparkles, no shine). The design is **debossed**: every element (wreath leaves, stems, berries, monogram) is drawn as a dark recess with a single thin top-light edge along its upper-left, creating the optical illusion of physical depth carved into wax. The center field carries a **debossed serif M&V monogram**, surrounded by a **botanical wreath** of two mirrored curving stems with ~14 small leaves and 6 tiny berry pairs, meeting in small sprigs at the top and bottom of the oval. Sits at the seam where the flap meets the front body. Lifts up with the flap during the cinematic; never cracks, never shatters.
 
 ### Signature: Envelope (home only)
 A full-bleed paper artifact filling 100vw × 100vh. Five stacked layers: (1) envelope back (cream gradient, full viewport), (2) inner liner (revealed when flap opens, with a subtle diamond pattern), (3) envelope front (clipped to lower 62%, with grain, address text, postmark, and return address), (4) top flap (clipped to triangle, hinged on top edge, rotates 0 → -178° on rotateX), (5) wax seal at the flap-front seam.
