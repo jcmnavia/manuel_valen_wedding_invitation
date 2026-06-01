@@ -124,39 +124,31 @@ export function EnvelopeScene() {
         0,
       )
 
-      // 0.12 – 0.55 — FLAP LIFTS OPEN with a page-turn feel.
-      // Multiple coupled animations sell the realism:
-      //   (a) rotateX 0 → -178°  — main rotation
-      //   (b) scaleY 1 → 0.94 → 1 — subtle "paper bend" mid-rotation
-      //   (c) cast shadow on body fades out as the flap clears
-      //   (d) inner letter peeks up as the flap reaches ~45°
+      // 0.12 – 0.55 — FLAP LIFTS OPEN TOWARD THE USER with real page-turn bend.
+      //
+      // Direction: rotateX POSITIVE rotates the top edge OUT of the screen
+      // toward the viewer (the flap "opens forward"). 178° lands it folded
+      // back onto itself, facing the user with the inside surface showing.
+      //
+      // Paper-bend mechanics — interpolated through keyframes:
+      //   - rotateZ: 0 → 2.5° → -1.5° → 0  (a corner catches first, then settles)
+      //   - scaleX:  1 → 0.96 → 1            (paper squeezes inward as it bends)
+      //   - scaleY:  1 → 0.90 → 1            (more pronounced curl mid-rotation)
+      //   - rotateX: 0 → 60 → 130 → 178      (eases through the rotation)
       tl.to(
         flap,
         {
-          rotateX: -178,
+          keyframes: {
+            rotateX: [0, 60, 130, 178],
+            rotateZ: [0, 2.5, -1.5, 0],
+            scaleX: [1, 0.97, 0.96, 1],
+            scaleY: [1, 0.94, 0.90, 1],
+            easeEach: 'power2.inOut',
+          },
           duration: 0.43,
           ease: 'power2.inOut',
         },
         0.12,
-      )
-
-      // Paper-bend: subtle scaleY arc that peaks at the mid-rotation
-      tl.to(
-        flap,
-        {
-          scaleY: 0.94,
-          duration: 0.21,
-          ease: 'sine.in',
-        },
-        0.12,
-      ).to(
-        flap,
-        {
-          scaleY: 1.0,
-          duration: 0.22,
-          ease: 'sine.out',
-        },
-        0.34,
       )
 
       // Cast shadow on the body recedes as the flap rotates up
