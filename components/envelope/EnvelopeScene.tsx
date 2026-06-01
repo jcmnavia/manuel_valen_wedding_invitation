@@ -54,6 +54,12 @@ export function EnvelopeScene() {
         '[data-envelope-address]',
       ) as HTMLElement
       const seal = envelope.querySelector('[data-envelope-seal]') as HTMLElement
+      const castShadow = envelope.querySelector(
+        '[data-envelope-cast-shadow]',
+      ) as HTMLElement | null
+      const innerLetter = envelope.querySelector(
+        '[data-envelope-letter]',
+      ) as HTMLElement | null
 
       // Initial states — envelope is closed and visible on load
       gsap.set(envelope, { opacity: 1 })
@@ -61,6 +67,14 @@ export function EnvelopeScene() {
       gsap.set(letterRef.current, { opacity: 0 })
       gsap.set(flap, { rotateX: 0 })
       gsap.set(inside, { opacity: 0 })
+      if (castShadow) gsap.set(castShadow, { opacity: 1 })
+      if (innerLetter) {
+        // Start the letter tucked inside the envelope, hidden behind the flap
+        gsap.set(innerLetter, {
+          opacity: 0,
+          y: '40%',
+        })
+      }
 
       // Non-scroll intro: hint fades in after a beat
       gsap.to(hintRef.current, {
@@ -110,9 +124,12 @@ export function EnvelopeScene() {
         0,
       )
 
-      // 0.12 – 0.55 — FLAP LIFTS OPEN — the seal lifts with it because it's
-      // a child of the flap. The lift is the entire mechanism; no crack,
-      // no shatter, no residue.
+      // 0.12 – 0.55 — FLAP LIFTS OPEN with a page-turn feel.
+      // Multiple coupled animations sell the realism:
+      //   (a) rotateX 0 → -178°  — main rotation
+      //   (b) scaleY 1 → 0.94 → 1 — subtle "paper bend" mid-rotation
+      //   (c) cast shadow on body fades out as the flap clears
+      //   (d) inner letter peeks up as the flap reaches ~45°
       tl.to(
         flap,
         {
@@ -122,15 +139,77 @@ export function EnvelopeScene() {
         },
         0.12,
       )
-      // Inner liner becomes visible as the flap clears past ~30° of rotation
+
+      // Paper-bend: subtle scaleY arc that peaks at the mid-rotation
+      tl.to(
+        flap,
+        {
+          scaleY: 0.94,
+          duration: 0.21,
+          ease: 'sine.in',
+        },
+        0.12,
+      ).to(
+        flap,
+        {
+          scaleY: 1.0,
+          duration: 0.22,
+          ease: 'sine.out',
+        },
+        0.34,
+      )
+
+      // Cast shadow on the body recedes as the flap rotates up
+      if (castShadow) {
+        tl.to(
+          castShadow,
+          {
+            opacity: 0,
+            scaleY: 0.2,
+            transformOrigin: 'top center',
+            duration: 0.25,
+            ease: 'power2.out',
+          },
+          0.14,
+        )
+      }
+
+      // Inner liner becomes visible as the flap clears past ~30°
       tl.to(inside, { opacity: 1, duration: 0.12 }, 0.22)
 
-      // 0.55 – 0.78 — Envelope dissolves to reveal the letter
-      tl.to(front, { y: 140, opacity: 0, duration: 0.20 }, 0.55)
-      tl.to(address, { opacity: 0, duration: 0.10 }, 0.55)
-      tl.to(flapWrap, { opacity: 0, duration: 0.14, y: -80 }, 0.62)
+      // Letter inside peeks up after the flap clears ~45°
+      if (innerLetter) {
+        tl.to(
+          innerLetter,
+          {
+            opacity: 1,
+            y: '15%',
+            duration: 0.18,
+            ease: 'power2.out',
+          },
+          0.30,
+        )
+      }
 
-      // 0.65 – 0.85 — Letter content emerges
+      // 0.55 – 0.78 — Envelope dissolves; the letter completes its slide-up
+      tl.to(front, { y: 160, opacity: 0, duration: 0.22 }, 0.55)
+      tl.to(address, { opacity: 0, duration: 0.10 }, 0.55)
+      tl.to(flapWrap, { opacity: 0, duration: 0.14, y: -100 }, 0.62)
+
+      if (innerLetter) {
+        tl.to(
+          innerLetter,
+          {
+            y: '-30%',
+            opacity: 0,
+            duration: 0.20,
+            ease: 'power2.in',
+          },
+          0.58,
+        )
+      }
+
+      // 0.65 – 0.85 — Story-letter content emerges
       tl.to(letterRef.current, { opacity: 1, duration: 0.15 }, 0.65)
 
       return () => {
