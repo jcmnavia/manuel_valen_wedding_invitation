@@ -209,7 +209,12 @@ export function EnvelopeScene() {
         <div className="paper-texture absolute inset-0 opacity-30 pointer-events-none" />
         <div className="relative max-w-3xl mx-auto px-6 py-32 space-y-32">
           {story.map((m, i) => (
-            <StoryMilestone key={m.year} milestone={m} reverse={i % 2 === 1} />
+            <StoryMilestone
+              key={m.year}
+              milestone={m}
+              index={i}
+              reverse={i % 2 === 1}
+            />
           ))}
         </div>
 
