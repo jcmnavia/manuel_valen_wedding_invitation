@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Cormorant_Garamond, Italiana, Mrs_Saint_Delafield } from 'next/font/google'
 import { PaperBackground } from '@/components/shared/PaperBackground'
 import { SmoothScrollProvider } from '@/components/motion/SmoothScrollProvider'
+import { BackgroundMusic } from '@/components/shared/BackgroundMusic'
 import './globals.css'
 
 const cormorant = Cormorant_Garamond({
@@ -49,6 +50,7 @@ export default function RootLayout({
       <body className="font-serif bg-ivory text-ink antialiased">
         <PaperBackground />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <BackgroundMusic />
       </body>
     </html>
   )
