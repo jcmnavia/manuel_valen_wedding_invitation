@@ -113,6 +113,35 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
               </defs>
               <rect width="400" height="400" fill="url(#fly-liner)" />
             </svg>
+
+            {/* OPEN-V RECESS — the lifted flap rotates up out of view, so paint
+                its footprint here: a downward triangle (apex low-centre, like
+                the closed flap) that's softly shaded with a defined edge, so the
+                open envelope clearly reads the V opening even though the
+                physical flap has clipped away above. */}
+            <svg
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+              className="absolute inset-0 w-full h-full"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="fly-vshade" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="rgba(31,20,10,0.16)" />
+                  <stop offset="100%" stopColor="rgba(31,20,10,0)" />
+                </linearGradient>
+              </defs>
+              {/* the triangular flap footprint (top edge full width, apex ~60%) */}
+              <path d="M 0 0 L 50 60 L 100 0 Z" fill="url(#fly-vshade)" />
+              {/* the two V edges, drawn crisply */}
+              <path
+                d="M 0 0 L 50 60 L 100 0"
+                fill="none"
+                stroke="rgba(31,20,10,0.28)"
+                strokeWidth="0.6"
+                vectorEffect="non-scaling-stroke"
+              />
+            </svg>
           </div>
 
           {/* lower body of the back (below the flap V) */}
@@ -205,19 +234,43 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
                 />
               </div>
 
-              {/* INSIDE face (visible after rotation past 90°) */}
+              {/* INSIDE face (visible after rotation past 90° — this is the
+                  flat-open V). Deliberately DARKER/warmer than the inner liner
+                  so the open flap stays visible (doesn't blend in) when folded
+                  flat, with a fold shadow at the hinge + a defined V edge. */}
               <div
                 className="absolute inset-0"
                 style={{
-                  background: 'linear-gradient(180deg, #F4ECCC 0%, #E2D2A8 100%)',
+                  backgroundImage:
+                    "url('/textures/paper-grain.svg'), linear-gradient(180deg, #D9C496 0%, #C7B07E 100%)",
+                  backgroundSize: '300px 300px, cover',
+                  backgroundBlendMode: 'multiply, normal',
                   clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
                   transform: 'rotateX(180deg)',
                   backfaceVisibility: 'hidden',
                   WebkitBackfaceVisibility: 'hidden',
+                  // strong fold shadow along the top (the hinge once flipped),
+                  // plus a soft shade toward the point for depth.
                   boxShadow:
-                    'inset 0 2px 0 rgba(255,250,232,0.65), inset 0 -2px 8px rgba(31,20,10,0.1)',
+                    'inset 0 3px 8px rgba(31,20,10,0.28), inset 0 -1px 0 rgba(255,250,232,0.4)',
                 }}
-              />
+              >
+                {/* the two diagonal edges of the V, drawn so the triangle reads */}
+                <svg
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                  className="absolute inset-0 w-full h-full"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M 0 0 L 50 100 L 100 0"
+                    fill="none"
+                    stroke="rgba(31,20,10,0.22)"
+                    strokeWidth="0.5"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                </svg>
+              </div>
 
               {/* WAX SEAL — child of the flap, lifts with it (placeholder) */}
               <div
