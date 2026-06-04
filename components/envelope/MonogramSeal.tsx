@@ -37,11 +37,9 @@ export const MonogramSeal = forwardRef<HTMLDivElement>(function MonogramSeal(
         />
       </div>
 
-      {/* Couple monogram / names */}
-      <p className="mt-8 font-script text-5xl md:text-7xl text-ink">
-        {wedding.brideName} &amp; {wedding.groomName}
-      </p>
-      <p className="mt-3 font-display tracking-[0.45em] text-xs md:text-sm text-wine uppercase">
+      {/* The seal already carries "Valentina & Manuel", so just the date sits
+          below it — no repeated names. */}
+      <p className="mt-8 font-display tracking-[0.45em] text-xs md:text-sm text-wine uppercase">
         {wedding.dateRoman}
       </p>
     </div>
