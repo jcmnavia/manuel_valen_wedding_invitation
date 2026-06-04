@@ -244,34 +244,6 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
                   />
                 </svg>
               </div>
-
-              {/* WAX SEAL — child of the flap, lifts with it (placeholder) */}
-              <div
-                data-fly-seal
-                className="absolute left-1/2 -translate-x-1/2"
-                style={{ bottom: '-14%', width: '26%' }}
-              >
-                <svg viewBox="0 0 100 100" className="w-full h-auto" aria-hidden="true">
-                  <defs>
-                    <radialGradient id="fly-wax" cx="42%" cy="36%" r="70%">
-                      <stop offset="0%" stopColor="#C58874" />
-                      <stop offset="55%" stopColor="#9B5240" />
-                      <stop offset="100%" stopColor="#5E2730" />
-                    </radialGradient>
-                  </defs>
-                  <circle cx="50" cy="50" r="44" fill="url(#fly-wax)" />
-                  <text
-                    x="50"
-                    y="62"
-                    textAnchor="middle"
-                    fontFamily="Georgia, serif"
-                    fontSize="30"
-                    fill="#7A3324"
-                  >
-                    M&amp;V
-                  </text>
-                </svg>
-              </div>
             </div>
           </div>
 

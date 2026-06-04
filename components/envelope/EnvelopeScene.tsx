@@ -44,9 +44,10 @@ export function EnvelopeScene() {
       const inside = flyEnv.querySelector('[data-envelope-inside]') as HTMLElement
       const castShadow = flyEnv.querySelector('[data-envelope-cast-shadow]') as HTMLElement | null
       const innerLetter = flyEnv.querySelector('[data-envelope-letter]') as HTMLElement | null
-      const seal = flyEnv.querySelector('[data-fly-seal]') as HTMLElement | null
       const clip = flyEnv.querySelector('[data-letter-clip]') as HTMLElement | null
       const tumble = flyEnv.querySelector('[data-fly-tumble]') as HTMLElement | null
+      const frontFace = flyEnv.querySelector('[data-env-front-plain]') as HTMLElement | null
+      const backFace = flyEnv.querySelector('[data-env-clip]') as HTMLElement | null
 
       // Initial states
       gsap.set(monogram, { opacity: 1, y: 0 })
@@ -127,11 +128,18 @@ export function EnvelopeScene() {
         )
       }
 
-      // 0.68–0.80 — flap opens fully to 180° once the envelope has landed: the
-      // triangle folds flat back over its top edge (a clean open lid). The wax
-      // seal rides up briefly then fades before the flip shows its back.
+      // Show only the side that's actually facing the viewer. (The back face has
+      // preserve-3d, so backface-visibility doesn't reliably cull it and its V
+      // bleeds through the front.) Front visible / back hidden until the flip
+      // crosses 90° (~0.55), then swap — instant, hidden behind the edge-on flip.
+      if (frontFace) gsap.set(frontFace, { opacity: 1 })
+      if (backFace) gsap.set(backFace, { opacity: 0 })
+      if (frontFace) tl.set(frontFace, { opacity: 0 }, 0.55)
+      if (backFace) tl.set(backFace, { opacity: 1 }, 0.55)
+
+      // 0.68–0.80 — flap opens to 180° once the envelope has landed, flipping
+      // up over its top edge to stand above as the inverted "A".
       tl.to(flap, { rotateX: 180, duration: 0.12, ease: 'paperSettle' }, 0.68)
-      if (seal) tl.to(seal, { opacity: 0, duration: 0.05, ease: 'power1.in' }, 0.71)
       if (sheen) {
         tl.to(sheen, { opacity: 1, duration: 0.04 }, 0.69)
         tl.to(sheen, { y: '60%', duration: 0.1, ease: 'power1.inOut' }, 0.69)
