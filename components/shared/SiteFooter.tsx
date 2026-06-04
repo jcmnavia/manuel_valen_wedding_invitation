@@ -20,11 +20,9 @@ export function SiteFooter() {
           className="mx-auto h-24 w-auto md:h-28 opacity-90"
         />
 
-        <p className="mt-6 font-script text-4xl md:text-5xl text-ink">
-          {wedding.brideName} &amp; {wedding.groomName}
-        </p>
-
-        <p className="mt-4 font-display tracking-[0.4em] text-xs text-wine uppercase">
+        {/* The crest already arches "Valentina & Manuel", so just the date sits
+            below it — no repeated names. */}
+        <p className="mt-6 font-display tracking-[0.4em] text-xs text-wine uppercase">
           {wedding.dateRoman}
         </p>
 
