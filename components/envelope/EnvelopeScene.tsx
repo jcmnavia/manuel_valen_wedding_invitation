@@ -319,7 +319,7 @@ function PostEnvelopeNavRoot({ visible }: { visible: boolean }) {
             href="/mensajes"
             className="text-ink hover:text-gold transition-colors"
           >
-            Mensajes
+            Dedicatorias
           </Link>
         </div>
       </div>

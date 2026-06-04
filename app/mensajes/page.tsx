@@ -5,7 +5,7 @@ import { MessageList } from './MessageList'
 import { MessageWallClient } from './MessageWallClient'
 
 export const metadata = {
-  title: 'Mensajes · Manuel & Valentina',
+  title: 'Dedicatorias · Manuel & Valentina',
 }
 
 // DB-backed: always render fresh, never statically prerender at build time.
@@ -37,7 +37,7 @@ export default async function MensajesPage() {
             Déjanos unas palabras
           </p>
           <h1 className="font-display text-5xl md:text-7xl text-ink mt-6">
-            Mensajes
+            Dedicatorias
           </h1>
           <p className="font-script text-3xl text-ink-soft mt-4">
             para los novios

@@ -155,7 +155,7 @@ export function InvitationReveal() {
           href="/mensajes"
           className="group relative px-8 py-4 border border-gold text-ink hover:bg-gold hover:text-ivory transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
         >
-          Mensajes
+          Dedicatorias
         </Link>
       </motion.div>
 

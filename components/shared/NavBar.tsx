@@ -8,7 +8,7 @@ const links = [
   { href: '/', label: 'Invitación' },
   { href: '/codigo-de-vestimenta', label: 'Código de Vestimenta' },
   { href: '/ubicacion', label: 'Ubicación' },
-  { href: '/mensajes', label: 'Mensajes' },
+  { href: '/mensajes', label: 'Dedicatorias' },
 ]
 
 export function NavBar({ visible = true }: { visible?: boolean }) {
