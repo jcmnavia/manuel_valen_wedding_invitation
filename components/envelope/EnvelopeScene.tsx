@@ -198,21 +198,26 @@ export function EnvelopeScene() {
           preserveAspectRatio="none"
           aria-hidden="true"
         >
-          {/* A long, cinematic flight. The envelope enters tiny from far off the
-              top-left, sweeps a big graceful S across the stage (down-right,
-              across the lower area, back up the right side), then curls in and
-              settles at centre (50,50) approaching ALMOST HORIZONTALLY — so the
-              autoRotate leaves it nearly upright and it doesn't spin on its axis
-              at the end. Every segment's control points are collinear across the
-              shared anchors (smooth joins → no harsh turns / corners). */}
+          {/* A looping, calligraphic flourish (3 loops) traced from the user's
+              sketch — START at the top-right gliding in flat, a big loop on the
+              upper-left, a small loop on the right, a big loop on the lower-left,
+              then it curls into the CENTRE (50,50) where it lands and opens.
+              All coordinates stay within ~6–95 of the 0–100 stage so the whole
+              path is visible on a narrow (mobile) viewport the entire time. */}
           <path
             ref={pathRef}
-            d="M -45 -30
-               C 0 -38, 18 -6, 22 18
-               C 26 44, 8 64, 30 78
-               C 52 92, 86 84, 92 58
-               C 96 40, 84 28, 66 34
-               C 54 38, 50 46, 50 50"
+            d="M 96 13
+               C 80 15, 70 19, 58 21
+               C 40 24, 22 24, 22 14
+               C 22 6, 34 8, 40 18
+               C 47 30, 44 38, 36 40
+               C 28 42, 26 36, 32 38
+               C 50 44, 80 30, 86 36
+               C 92 42, 78 46, 64 46
+               C 48 46, 34 52, 24 62
+               C 12 74, 18 88, 36 86
+               C 54 84, 60 70, 56 60
+               C 53 53, 51 51, 50 50"
             fill="none"
           />
         </svg>
