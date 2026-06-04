@@ -60,7 +60,10 @@ export function EnvelopeScene() {
       gsap.set(flyEnv, { opacity: 0, scale: 0.62 })
       // The letter starts fully opaque but tucked low inside the envelope and
       // clipped by it — it EMERGES by moving, never by fading.
-      if (innerLetter) gsap.set(innerLetter, { opacity: 1, yPercent: 60 })
+      // Letter starts HIDDEN and parked low (so it can't poke out of the
+      // envelope during the flight/flip — 3D rotation defeats overflow clipping).
+      // It is made visible only once the flap has opened, then EMERGES by moving.
+      if (innerLetter) gsap.set(innerLetter, { opacity: 0, yPercent: 60 })
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -137,13 +140,15 @@ export function EnvelopeScene() {
       tl.to(inside, { opacity: 1, duration: 0.05 }, 0.74)
       if (castShadow) tl.to(castShadow, { opacity: 0, duration: 0.1 }, 0.69)
 
-      // 0.82–1.00 — the LETTER EMERGES BY MOVING (no opacity). Parked low and
-      // CLIPPED by the envelope (data-env-clip overflow:hidden), so it's hidden.
-      //   1) rises UP into the envelope's mouth (peeks above the front), then
-      //   2) a small settle DOWN, then
-      //   3) the clip is switched off and it grows to fill the page.
+      // 0.80–1.00 — the LETTER EMERGES BY MOVING (no opacity change during the
+      // emerge). It is revealed (opacity 0→1 instantly) the moment the flap has
+      // opened — at that point it's still tucked inside the mouth behind the
+      // front, so this reads as "uncovered by the opening", not a fade-in. Then
+      // it rises up, settles, and grows to full page.
       if (innerLetter) {
-        // 1) up into the opening (clipped → emerges from the mouth, not midair)
+        // reveal it the instant the flap is open (still hidden by geometry)
+        tl.set(innerLetter, { opacity: 1 }, 0.8)
+        // 1) up into the opening (emerges from the mouth, not midair)
         tl.to(
           innerLetter,
           { yPercent: 2, duration: 0.08, ease: 'power2.out' },
