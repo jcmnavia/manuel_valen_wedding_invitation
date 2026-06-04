@@ -3,8 +3,9 @@
 import { useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import Link from 'next/link'
-import { gsap, ScrollTrigger } from '@/lib/gsap'
-import { Envelope } from './Envelope'
+import { gsap, ScrollTrigger, MotionPathPlugin } from '@/lib/gsap'
+import { MonogramSeal } from './MonogramSeal'
+import { FlyingEnvelope } from './FlyingEnvelope'
 import { StoryMilestone } from './StoryMilestone'
 import { FamilyBlessing } from './FamilyBlessing'
 import { InvitationReveal } from './InvitationReveal'
@@ -15,158 +16,29 @@ import { story } from '@/content/story'
 export function EnvelopeScene() {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const stageRef = useRef<HTMLDivElement | null>(null)
-  const envelopeWrapRef = useRef<HTMLDivElement | null>(null)
-  const envelopeRef = useRef<HTMLDivElement | null>(null)
-  const hintRef = useRef<HTMLDivElement | null>(null)
+  const monogramRef = useRef<HTMLDivElement | null>(null)
+  const flyEnvRef = useRef<HTMLDivElement | null>(null)
+  const pathRef = useRef<SVGPathElement | null>(null)
   const letterRef = useRef<HTMLDivElement | null>(null)
   const [navVisible, setNavVisible] = useState(false)
 
   useGSAP(
     () => {
-      if (
-        !containerRef.current ||
-        !stageRef.current ||
-        !envelopeRef.current ||
-        !letterRef.current
-      )
-        return
+      if (!containerRef.current || !stageRef.current || !letterRef.current) return
 
-      const reduced = prefersReducedMotion()
-
-      if (reduced) {
-        gsap.set(envelopeWrapRef.current, { opacity: 0, display: 'none' })
-        gsap.set(letterRef.current, { opacity: 1, y: 0 })
+      if (prefersReducedMotion()) {
+        gsap.set(flyEnvRef.current, { display: 'none' })
+        gsap.set(monogramRef.current, { display: 'none' })
+        gsap.set(letterRef.current, { opacity: 1 })
         setNavVisible(true)
         return
       }
 
-      const envelope = envelopeRef.current
-      const flap = envelope.querySelector('[data-envelope-flap]') as HTMLElement
-      const inside = envelope.querySelector(
-        '[data-envelope-inside]',
-      ) as HTMLElement
-      const castShadow = envelope.querySelector(
-        '[data-envelope-cast-shadow]',
-      ) as HTMLElement | null
-      const innerLetter = envelope.querySelector(
-        '[data-envelope-letter]',
-      ) as HTMLElement | null
-      const sheen = envelope.querySelector(
-        '[data-envelope-flap-sheen]',
-      ) as HTMLElement | null
-
-      // Initial states — envelope is closed and visible on load
-      gsap.set(envelope, { opacity: 1 })
-      gsap.set(hintRef.current, { opacity: 0, y: 8 })
-      gsap.set(letterRef.current, { opacity: 0 })
-      gsap.set(flap, { rotateX: 0 })
-      gsap.set(inside, { opacity: 0 })
-      if (castShadow) gsap.set(castShadow, { opacity: 1 })
-      if (innerLetter) {
-        // Start the letter tucked inside the envelope, hidden behind the flap
-        gsap.set(innerLetter, {
-          opacity: 0,
-          y: '40%',
-        })
-      }
-
-      // Non-scroll intro: hint fades in after a beat
-      gsap.to(hintRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 1.0,
-        ease: 'power2.out',
-        delay: 0.9,
-      })
-
-      // Master scroll-driven timeline
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: stageRef.current,
-          start: 'top top',
-          end: '+=320%',
-          pin: true,
-          scrub: 0.6,
-          anticipatePin: 1,
-          onUpdate: (st) => {
-            setNavVisible(st.progress > 0.85)
-          },
-        },
-      })
-
-      // 0.00 – 0.06 — Hint fades out as user starts scrolling
-      tl.to(hintRef.current, { opacity: 0, duration: 0.06 }, 0)
-
-      // 0.00 – 0.12 — Lean in: subtle scale on the whole envelope
-      tl.to(envelope, { scale: 1.02, duration: 0.12, ease: 'none' }, 0)
-
-      // 0.12 – 0.55 — FLAP LIFTS OPEN TOWARD THE USER.
-      //
-      // rotateX POSITIVE rotates the top edge out toward the viewer (opens
-      // forward). It hinges on its top edge (origin-top). We stop at 168° —
-      // a few degrees short of dead-flat — so a sliver of thickness stays
-      // visible and it never reads as a flat sticker. ONE clean rotateX with
-      // the paper-settle ease; no scaleX/scaleY squish (that read as the
-      // triangle squishing, not paper bending). The bend is sold instead by
-      // the moving sheen below + the receding shadow.
-      tl.to(
-        flap,
-        {
-          rotateX: 168,
-          duration: 0.43,
-          ease: 'paperSettle',
-        },
-        0.12,
-      )
-
-      // Light catches the bending surface: a bright band sweeps down the flap
-      // and fades, mid-open. transform + opacity only (GPU-composited).
-      if (sheen) {
-        tl.to(sheen, { opacity: 1, duration: 0.1, ease: 'power1.out' }, 0.14)
-        tl.to(
-          sheen,
-          { y: '60%', duration: 0.34, ease: 'power1.inOut' },
-          0.14,
-        )
-        tl.to(sheen, { opacity: 0, duration: 0.12, ease: 'power1.in' }, 0.4)
-      }
-
-      // Cast shadow on the body recedes as the flap rotates up — fade by
-      // OPACITY only (animating clip-path/scaleY forces re-rasterization).
-      if (castShadow) {
-        tl.to(
-          castShadow,
-          {
-            opacity: 0,
-            duration: 0.28,
-            ease: 'power2.out',
-          },
-          0.14,
-        )
-      }
-
-      // Inner liner becomes visible as the flap clears past ~30°
-      tl.to(inside, { opacity: 1, duration: 0.12 }, 0.22)
-
-      // ── ONE COHERENT POST-OPEN IDEA ───────────────────────────────────────
-      // The opened envelope recedes AS ONE unit (gentle scale-back + fade), and
-      // the story content rises gently up into its place. One thing leaves, one
-      // thing arrives — no panels sliding in conflicting directions, no blank
-      // letter sheet drifting off-centre. (The blank inner sheet is left tucked
-      // away; it just fades with the rest of the envelope.)
-      if (innerLetter) tl.to(innerLetter, { opacity: 0, duration: 0.12 }, 0.5)
-
-      // 0.5 – 0.72 — Whole envelope recedes together behind the rising content.
-      tl.to(envelope, { scale: 0.94, duration: 0.22, ease: 'power2.inOut' }, 0.5)
-      tl.to(envelope, { opacity: 0, duration: 0.18, ease: 'power2.in' }, 0.56)
-
-      // 0.6 – 0.82 — Story content rises gently into place as the envelope clears.
-      tl.fromTo(
-        letterRef.current,
-        { opacity: 0, yPercent: 6 },
-        { opacity: 1, yPercent: 0, duration: 0.22, ease: 'paperSettle' },
-        0.6,
-      )
+      // Minimal placeholder reveal — replaced by the full timeline in a later task.
+      void MotionPathPlugin
+      gsap.set(flyEnvRef.current, { opacity: 0 })
+      gsap.set(letterRef.current, { opacity: 1 })
+      setNavVisible(true)
 
       return () => {
         ScrollTrigger.getAll().forEach((t) => t.kill())
@@ -188,38 +60,28 @@ export function EnvelopeScene() {
         }}
       >
 
-        {/* Envelope IS the page */}
-        <div ref={envelopeWrapRef} className="absolute inset-0">
-          <Envelope ref={envelopeRef} />
-        </div>
+        {/* MONOGRAM + SEAL — the opener */}
+        <MonogramSeal ref={monogramRef} />
 
-        {/* Scroll hint at the very bottom */}
-        <div
-          ref={hintRef}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-ivory/80 pointer-events-none z-30"
+        {/* FLYING ENVELOPE — flown in along the motion path */}
+        <FlyingEnvelope ref={flyEnvRef} />
+
+        {/* Hidden motion path the envelope follows (authored in stage % space) */}
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none opacity-0"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
         >
-          <p className="font-display tracking-[0.5em] text-[10px] uppercase">
-            Desliza para abrir
-          </p>
-          <svg
-            width="16"
-            height="22"
-            viewBox="0 0 16 22"
-            className="animate-bounce"
-            aria-hidden="true"
-          >
-            <path
-              d="M8 2 V 18 M2 12 L 8 18 L 14 12"
-              stroke="currentColor"
-              strokeWidth="1.4"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
+          {/* start top-right + small, S-curve loop down to centre (50,50) */}
+          <path
+            ref={pathRef}
+            d="M 116 -18 C 92 8, 96 40, 64 34 C 36 29, 30 6, 50 50"
+            fill="none"
+          />
+        </svg>
 
-        {/* LETTER CONTENT — revealed once envelope dissolves */}
+        {/* LETTER CONTENT — the story intro that the scaled letter carries in */}
         <div
           ref={letterRef}
           className="absolute inset-0 flex items-center justify-center px-6 pointer-events-none opacity-0"
