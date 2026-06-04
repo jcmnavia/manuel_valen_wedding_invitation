@@ -184,7 +184,16 @@ The system is mostly flat. Shadows are not used for hierarchy; tonal layering is
 - **Polaroid frame:** off-white (#FBF6EA) mat with extra bottom padding, washi tape strip at top center, slight rotation per-instance (-3deg to +3deg), sepia/contrast filter on the inner image.
 
 ### Inputs
-None. The site has no forms. RSVP is intentionally out of scope.
+One form only: the message wall on `/mensajes` (name + message). Inputs use the
+ivory canvas with a 1px sage border, focus ring in wine. RSVP remains out of scope.
+
+### The Message Modal (the one allowed dialog)
+The `/mensajes` form lives in a single modal, opened by a floating "Dejar un
+mensaje" button so the wall of messages leads the page. This is the **only** modal
+in the system, an intentional exception to the no-modal rule below. It must stay
+accessible: `role="dialog"`, `aria-modal`, Escape + backdrop to close, focus moved
+in on open and restored to the trigger on close, body scroll locked while open. No
+other feature may introduce a modal.
 
 ### Navigation
 - **NavBar (subpages):** fixed top, max-width 5xl, max 80px tall. Backdrop-blur on the row. "M & V" monogram (Mrs Saint Delafield) on the left, three uppercase Italiana label-style links on the right (gap 4-8). Active link is gold; inactive is ink. 1px gold animated underline on the active link.
@@ -218,5 +227,6 @@ A full-bleed paper artifact filling 100vw × 100vh. Five stacked layers: (1) env
 - **Don't** use pure `#000` or `#fff`. Every neutral is tinted toward the paper hue.
 - **Don't** apply `border-left` greater than 1px as a colored stripe on cards or callouts. Never an accent stripe.
 - **Don't** use pill-shaped buttons or 12px+ border-radius on any element. Square corners, ≤ 2px radius only.
-- **Don't** use modal dialogs. There is no modal in the system.
+- **Don't** use modal dialogs, with the single documented exception of the message
+  form on `/mensajes` (see "The Message Modal" above). No other modals.
 - **Don't** crack the wax seal. The seal lifts up intact with the flap; it does not shatter.

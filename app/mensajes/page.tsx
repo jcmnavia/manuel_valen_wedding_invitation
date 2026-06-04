@@ -1,8 +1,8 @@
 import { NavBar } from '@/components/shared/NavBar'
 import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
 import { getSupabase, type GuestMessage } from '@/lib/supabase'
-import { MessageForm } from './MessageForm'
 import { MessageList } from './MessageList'
+import { MessageWallClient } from './MessageWallClient'
 
 export const metadata = {
   title: 'Mensajes · Manuel & Valentina',
@@ -48,31 +48,24 @@ export default async function MensajesPage() {
           <OrnamentalDivider variant={2} />
         </div>
 
-        <p className="text-center text-lg leading-relaxed text-ink-soft max-w-xl mx-auto italic mb-12">
-          Tu cariño, un consejo o un buen deseo: deja aquí unas palabras que
-          Manuel y Valentina guardarán para siempre.
+        <p className="text-center text-lg leading-relaxed text-ink-soft max-w-xl mx-auto italic mb-16">
+          Tu cariño, un consejo o un buen deseo: estas son las palabras que
+          familiares y amigos le dejan a Manuel y Valentina.
         </p>
 
-        <section className="mb-20">
-          <MessageForm />
+        {/* The wall leads the page */}
+        <section>
+          <MessageList messages={messages} />
           {!available && (
             <p className="mt-6 text-center text-sm text-ink-soft italic">
               El muro de mensajes estará disponible muy pronto.
             </p>
           )}
         </section>
-
-        <div className="flex justify-center mb-16">
-          <OrnamentalDivider variant={1} />
-        </div>
-
-        <section>
-          <h2 className="font-display tracking-[0.4em] text-xs text-wine uppercase text-center mb-10">
-            Lo que nos han dejado
-          </h2>
-          <MessageList messages={messages} />
-        </section>
       </main>
+
+      {/* Floating "Dejar un mensaje" button + form modal */}
+      <MessageWallClient />
     </>
   )
 }

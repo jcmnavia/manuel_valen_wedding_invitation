@@ -5,17 +5,21 @@ import { submitMessage, type SubmitState } from './actions'
 
 const initialState: SubmitState = { status: 'idle' }
 
-export function MessageForm() {
+export function MessageForm({ onSuccess }: { onSuccess?: () => void }) {
   const [state, formAction, isPending] = useActionState(
     submitMessage,
     initialState,
   )
   const formRef = useRef<HTMLFormElement | null>(null)
 
-  // Clear the fields after a successful submit so the next guest starts fresh.
+  // Clear the fields after a successful submit so the next guest starts fresh,
+  // and notify the parent (e.g. a modal can close itself).
   useEffect(() => {
-    if (state.status === 'ok') formRef.current?.reset()
-  }, [state])
+    if (state.status === 'ok') {
+      formRef.current?.reset()
+      onSuccess?.()
+    }
+  }, [state, onSuccess])
 
   return (
     <form
