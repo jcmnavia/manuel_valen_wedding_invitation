@@ -136,6 +136,7 @@ export function StoryMilestone({ milestone, index, reverse = false }: Props) {
             rotation={0}
             tapeColor={milestone.tapeColor}
             orientation={milestone.orientation}
+            grayscale
           />
         </motion.div>
 

@@ -11,6 +11,8 @@ type Props = {
   orientation?: Orientation
   className?: string
   priority?: boolean
+  /** Render the photo in black & white instead of the warm sepia tone. */
+  grayscale?: boolean
 }
 
 const tapeStyles: Record<NonNullable<Props['tapeColor']>, string> = {
@@ -38,8 +40,14 @@ export function PolaroidFrame({
   orientation = 'square',
   className = '',
   priority = false,
+  grayscale = false,
 }: Props) {
   const { w, h, sizes } = frameSize[orientation]
+
+  // Black & white for the history photos; warm sepia everywhere else.
+  const photoFilter = grayscale
+    ? 'grayscale contrast-[1.08] brightness-[0.98]'
+    : 'sepia-[.35] contrast-[1.05] brightness-[0.96]'
 
   return (
     <figure
@@ -60,7 +68,7 @@ export function PolaroidFrame({
           fill
           sizes={sizes}
           priority={priority}
-          className="object-cover sepia-[.35] contrast-[1.05] brightness-[0.96]"
+          className={`object-cover ${photoFilter}`}
         />
       </div>
       <figcaption className="absolute bottom-3 left-0 right-0 text-center font-script text-2xl text-ink-soft">
