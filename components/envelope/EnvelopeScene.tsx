@@ -315,6 +315,12 @@ function PostEnvelopeNavRoot({ visible }: { visible: boolean }) {
           >
             Ubicación
           </Link>
+          <Link
+            href="/mensajes"
+            className="text-ink hover:text-gold transition-colors"
+          >
+            Mensajes
+          </Link>
         </div>
       </div>
     </nav>

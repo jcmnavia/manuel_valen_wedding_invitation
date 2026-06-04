@@ -151,6 +151,12 @@ export function InvitationReveal() {
         >
           Ubicación
         </Link>
+        <Link
+          href="/mensajes"
+          className="group relative px-8 py-4 border border-gold text-ink hover:bg-gold hover:text-ivory transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
+        >
+          Mensajes
+        </Link>
       </motion.div>
 
       <motion.p
