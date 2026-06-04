@@ -65,7 +65,7 @@ export function EnvelopeScene() {
       // envelope, hidden purely by geometry (the closed flap covers the top, the
       // front panel covers the bottom; z-index 1 keeps it under both). It
       // emerges only by MOVING: up and out, then down in front.
-      if (innerLetter) gsap.set(innerLetter, { opacity: 1, yPercent: 28, zIndex: 1 })
+      if (innerLetter) gsap.set(innerLetter, { opacity: 1, yPercent: 40, zIndex: 1 })
 
       const tl = gsap.timeline({
         scrollTrigger: {

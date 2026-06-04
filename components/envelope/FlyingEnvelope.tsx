@@ -116,10 +116,13 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
             </svg>
           </div>
 
-          {/* lower body of the back (below the flap V) */}
+          {/* lower body of the back (below the flap V). z-index 3 so it sits in
+              FRONT of the resting letter (z1) and hides its lower half while
+              closed — the letter is only revealed when it rises out. */}
           <div
             className="absolute inset-0"
             style={{
+              zIndex: 3,
               backgroundImage:
                 "url('/textures/paper-grain.svg'), linear-gradient(165deg, #E7D4AC 0%, #D8C394 60%, #C6AD78 100%)",
               backgroundSize: '300px 300px, cover',
@@ -163,7 +166,7 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
           <div
             data-envelope-flap-wrap
             className="absolute inset-x-0 top-0"
-            style={{ height: '60%', transformStyle: 'preserve-3d' }}
+            style={{ height: '60%', transformStyle: 'preserve-3d', zIndex: 3 }}
           >
             <div
               data-envelope-flap
