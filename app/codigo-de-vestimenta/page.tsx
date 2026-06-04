@@ -1,6 +1,6 @@
 import { NavBar } from '@/components/shared/NavBar'
 import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
-import { PaletteSwatches } from '@/components/dress-code/PaletteSwatches'
+import { PinterestBoard } from '@/components/dress-code/PinterestBoard'
 import { AvoidColors } from '@/components/dress-code/AvoidColors'
 import { AttireSilhouettes } from '@/components/dress-code/AttireSilhouettes'
 import { dressCode } from '@/content/dressCode'
@@ -36,13 +36,13 @@ export default function DressCodePage() {
 
         <section className="mb-24">
           <h2 className="font-display tracking-[0.4em] text-xs text-gold uppercase text-center mb-10">
-            Paleta sugerida
+            Inspiración
           </h2>
-          <PaletteSwatches />
+          <PinterestBoard />
         </section>
 
         <div className="flex justify-center mb-24">
-          <OrnamentalDivider variant={1} />
+          <OrnamentalDivider variant={2} />
         </div>
 
         <section className="mb-24">

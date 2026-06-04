@@ -8,8 +8,14 @@ colors:
   paper-deep: "#CCB682"
   ink: "#1F1A14"
   ink-soft: "#4A3F2E"
-  gold: "#B08D57"
-  gold-dim: "#8C6F40"
+  wine: "#7B3540"
+  wine-deep: "#5E2730"
+  sage: "#8BA597"
+  sage-deep: "#5F7A6B"
+  rosa: "#D8B4B0"
+  durazno: "#F0C090"
+  naranja: "#C8682E"
+  esmeralda: "#2C6B33"
   wax-terracotta: "#B86F58"
   wax-terracotta-light: "#C58974"
   wax-terracotta-deep: "#7A3F2E"
@@ -100,8 +106,11 @@ A palette of paper, ink, gold leaf, and deep wax red. Every neutral is tinted wa
 - **Terracotta Wax** (`#B86F58` with `#C58974` form-light highlights and `#7A3F2E` shadows): the wax seal itself. A matte, sun-faded rose-brown wax pool — vertical oval shape, irregular molten edges. Debossed botanical wreath surrounds a debossed M&V serif monogram. NOT metallic, NOT glossy. Appears only on the home cinematic.
 - **Wax Engrave** (`#321004`): the dark interior color of debossed (recessed) wreath leaves, berries, and monogram strokes. Reads as physical depth, not a painted line.
 
-### Secondary
-- **Gold Leaf** (`#B08D57`): ornamental dividers, accent line below headlines, focus ring on links, palette swatch borders, button borders, link hover color. Used as a "second voice" alongside ink for delicate ornament.
+### Accent (the wedding palette)
+The site's accent voice is drawn from the couple's wedding palette (Palo de rosa · Wine · Durazno · Naranjado · Eucalipto · Esmeralda). Two of the six lead; the rest are decorative.
+- **Wine** (`#7B3540`): the **text + action** accent. Section eyebrows, uppercase labels, the active nav link and its underline, the "&" on the reveal, link hover, and the fill on primary/outline buttons (hover → `#5E2730`). At 7.5:1 on ivory it is AAA at any size, replacing the former low-contrast gold leaf.
+- **Eucalipto Sage** (`#8BA597`): the **line + ornament** voice. Ornamental dividers, venue/map card borders (`sage/40`), the small rule under the countdown, washi-tape on photos. A 1px non-text usage, so its softer contrast is appropriate.
+- **Esmeralda** (`#2C6B33`), **Naranjado** (`#C8682E`→deepened `#A6531F` for text), **Palo de rosa** (`#D8B4B0`), **Durazno** (`#F0C090`): supporting accents. Esmeralda/Naranja-deep carry per-milestone story accents; all six appear as the dress-code swatches. Rose/Durazno are decorative only (never small text).
 
 ### Postmark
 - **Wax Red** (`#7A2421`): the postmark stamp in the upper-right of the envelope only. Used at low opacity (~60%). Nowhere else in the system.
@@ -122,7 +131,9 @@ A palette of paper, ink, gold leaf, and deep wax red. Every neutral is tinted wa
 
 **The No Pure Black, No Pure White Rule.** `#000` and `#fff` are forbidden. Every neutral is tinted toward the paper hue. The closest the system gets to white is `#F5EFE3` (ivory). The closest it gets to black is `#1F1A14` (ink).
 
-**The Gold Restraint Rule.** Gold leaf is only ever 1px thick. Dividers are 1px, focus rings are 1px, swatch borders are 1px. Never a gold fill, never gradient gold, never metallic shader. Just the color, used as if it were ink with a different pigment.
+**The Two-Voice Accent Rule.** Accent text and actions are **Wine**; accent lines and ornament are **Eucalipto sage**. Never use sage for small text (it is line-only, ~2.3:1 on ivory) and never use a decorative palette color (rose, durazno) for text. Wine fills are allowed on buttons (the action voice); sage is only ever 1px (dividers, borders, underlines). No gradients, no metallic shaders, no gold leaf (retired in favor of the wedding palette).
+
+**The Readability Rule.** Accent text must clear WCAG AA (≥4.5:1 on ivory). Wine (7.5:1) and Esmeralda (5.6:1) qualify; Naranjado is deepened to `#A6531F` (4.7:1) when used as text. Prefer Cormorant Garamond 600–700 over thin Italiana for large numerals and emphasis, so nothing reads as hairline-thin.
 
 ## 3. Typography
 

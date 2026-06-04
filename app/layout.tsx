@@ -27,14 +27,14 @@ const mrsSaint = Mrs_Saint_Delafield({
 })
 
 export const metadata: Metadata = {
-  title: 'Manuel & Valentina · 14 de Noviembre, 2026',
+  title: 'Manuel & Valentina · 16 de Agosto, 2026',
   description:
-    'Acompáñanos a celebrar nuestro matrimonio. 14 de Noviembre, 2026 · Hacienda San Carlos, Lima.',
+    'Acompáñanos a celebrar nuestro matrimonio. 16 de Agosto, 2026 · Fábula, Envigado.',
   openGraph: {
-    title: 'Manuel & Valentina · 14.11.2026',
+    title: 'Manuel & Valentina · 16.08.2026',
     description: 'Acompáñanos a celebrar nuestro matrimonio.',
     type: 'website',
-    locale: 'es_PE',
+    locale: 'es_CO',
   },
 }
 

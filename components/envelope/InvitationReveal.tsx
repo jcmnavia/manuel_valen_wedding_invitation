@@ -4,6 +4,8 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import { motion, useInView, type Easing } from 'motion/react'
 import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
+import { PolaroidFrame } from '@/components/shared/PolaroidFrame'
+import { Countdown } from './Countdown'
 import { wedding } from '@/content/wedding'
 
 export function InvitationReveal() {
@@ -35,15 +37,33 @@ export function InvitationReveal() {
         initial={{ opacity: 0, y: 12 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={transition(0.15)}
-        className="font-display tracking-[0.5em] text-sm text-gold mt-8 mb-6 uppercase"
+        className="font-display tracking-[0.5em] text-sm text-gold mt-8 mb-8 uppercase"
       >
         Tenemos el honor de invitarte
       </motion.p>
 
+      {/* Hero keepsake — the couple, the ring, the heart of the reveal */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.86, y: 24 }}
+        animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
+        transition={transition(0.25)}
+        className="mb-10"
+      >
+        <PolaroidFrame
+          src="/photos/couple-hero.jpg"
+          alt={`${wedding.groomName} y ${wedding.brideName}`}
+          caption="Nosotros"
+          rotation={-2}
+          tapeColor="gold"
+          orientation="portrait"
+          priority
+        />
+      </motion.div>
+
       <motion.h1
         initial={{ opacity: 0, y: 16 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={transition(0.35)}
+        transition={transition(0.45)}
         className="font-script text-7xl md:text-9xl text-ink leading-none"
       >
         {wedding.brideName}
@@ -94,11 +114,16 @@ export function InvitationReveal() {
         {wedding.dateDisplay}
       </motion.p>
 
+      {/* Countdown to the big day */}
+      <div className="mt-14">
+        <Countdown />
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={transition(1.45)}
-        className="mt-8"
+        className="mt-16"
       >
         <p className="font-display tracking-[0.3em] text-sm text-gold uppercase mb-1">
           Ceremonia

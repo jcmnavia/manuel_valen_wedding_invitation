@@ -1,48 +1,55 @@
 export type StoryMilestone = {
+  /** Short eyebrow label (a chapter marker, not a literal date). */
   year: string
   title: string
   body: string
   rotation: number
   tapeColor: 'cream' | 'gold'
   photo: string
+  /** Square = 1:1, portrait = taller, landscape = wider. Drives the Polaroid frame. */
+  orientation: 'square' | 'portrait' | 'landscape'
   caption: string
 }
 
 export const story: readonly StoryMilestone[] = [
   {
-    year: '2019',
-    title: 'Cómo nos conocimos',
-    body: 'Una tarde de octubre en una cafetería de Barranco. Ella pidió un café cargado; él, un té de jazmín. Hablamos hasta que cerraron.',
+    year: 'El comienzo',
+    title: 'Así empezó',
+    body: 'Caminando sin rumbo, riéndonos de nada en particular. Bastó una tarde para saber que queríamos muchas más. Desde entonces, cualquier camino es mejor si lo recorremos juntos.',
     rotation: -2.5,
     tapeColor: 'cream',
-    photo: '/photos/polaroid-1.jpg',
-    caption: 'Octubre, 2019',
+    photo: '/photos/story-walking.jpg',
+    orientation: 'portrait',
+    caption: 'Donde todo empezó',
   },
   {
-    year: '2021',
-    title: 'El primer viaje',
-    body: 'Cusco. Lluvia inesperada en Machu Picchu, un paraguas compartido, y una promesa silenciosa de no soltarnos la mano.',
+    year: 'Nuestro mundo',
+    title: 'De la mano',
+    body: 'Aprendimos a mirar hacia arriba juntos: los árboles, el cielo, lo que viene. Espalda con espalda, sosteniéndonos, descubrimos que el mundo es más grande de a dos.',
     rotation: 1.8,
     tapeColor: 'gold',
-    photo: '/photos/polaroid-2.jpg',
-    caption: 'Cusco · 2021',
+    photo: '/photos/story-canopy.jpg',
+    orientation: 'landscape',
+    caption: 'Mirando hacia adelante',
   },
   {
-    year: '2024',
-    title: 'La propuesta',
-    body: 'Diciembre en Paracas. El sol se ponía sobre el mar cuando Manuel sacó la cajita. Valentina lloró antes de que él dijera una palabra.',
+    year: 'El sí',
+    title: 'Dijimos que sí',
+    body: 'Entre risas y los pies en el aire, supimos que era para siempre. No hizo falta un gran discurso: solo nosotros, este abrazo, y la certeza de toda una vida por delante.',
     rotation: -1.2,
     tapeColor: 'cream',
-    photo: '/photos/polaroid-3.jpg',
-    caption: 'Paracas · 2024',
+    photo: '/photos/story-lift.jpg',
+    orientation: 'portrait',
+    caption: 'Para toda la vida',
   },
   {
-    year: '2026',
-    title: 'Y ahora...',
-    body: 'Queremos celebrar este nuevo capítulo contigo. Acompáñanos a decir: para siempre.',
+    year: 'Y ahora...',
+    title: 'Lo que viene',
+    body: 'Hoy empieza el capítulo más esperado, y queremos vivirlo contigo. Acompáñanos a celebrar el amor que nos trajo hasta aquí y a decir, juntos: para siempre.',
     rotation: 2.0,
     tapeColor: 'gold',
-    photo: '/photos/polaroid-4.jpg',
+    photo: '/photos/story-gaze.jpg',
+    orientation: 'portrait',
     caption: 'Para siempre',
   },
 ] as const

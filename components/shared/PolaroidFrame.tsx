@@ -1,17 +1,32 @@
 import Image from 'next/image'
 
+type Orientation = 'square' | 'portrait' | 'landscape'
+
 type Props = {
   src: string
   alt: string
   caption: string
   rotation?: number
   tapeColor?: 'cream' | 'gold'
+  orientation?: Orientation
   className?: string
+  priority?: boolean
 }
 
 const tapeStyles: Record<NonNullable<Props['tapeColor']>, string> = {
   cream: 'bg-[rgba(236,227,207,0.85)]',
-  gold: 'bg-[rgba(176,141,87,0.55)]',
+  // "gold" tape retoned to soft Eucalipto sage to match the wedding palette
+  gold: 'bg-[rgba(139,165,151,0.55)]',
+}
+
+/**
+ * Inner photo dimensions per orientation. The cream Polaroid board (p-3 / pb-12)
+ * frames whatever size we give it, so the whole frame grows with the photo.
+ */
+const frameSize: Record<Orientation, { w: number; h: number; sizes: string }> = {
+  square: { w: 260, h: 260, sizes: '260px' },
+  portrait: { w: 264, h: 344, sizes: '264px' },
+  landscape: { w: 332, h: 236, sizes: '332px' },
 }
 
 export function PolaroidFrame({
@@ -20,8 +35,12 @@ export function PolaroidFrame({
   caption,
   rotation = 0,
   tapeColor = 'cream',
+  orientation = 'square',
   className = '',
+  priority = false,
 }: Props) {
+  const { w, h, sizes } = frameSize[orientation]
+
   return (
     <figure
       className={`relative inline-block bg-[#FBF6EA] p-3 pb-12 shadow-[0_18px_40px_-16px_rgba(31,26,20,0.35),0_4px_12px_-2px_rgba(31,26,20,0.15)] ${className}`}
@@ -31,12 +50,16 @@ export function PolaroidFrame({
         aria-hidden="true"
         className={`absolute -top-3 left-1/2 -translate-x-1/2 h-6 w-24 ${tapeStyles[tapeColor]} skew-y-[-2deg] opacity-90`}
       />
-      <div className="relative w-[260px] h-[260px] overflow-hidden">
+      <div
+        className="relative overflow-hidden"
+        style={{ width: w, height: h, maxWidth: '100%' }}
+      >
         <Image
           src={src}
           alt={alt}
           fill
-          sizes="260px"
+          sizes={sizes}
+          priority={priority}
           className="object-cover sepia-[.35] contrast-[1.05] brightness-[0.96]"
         />
       </div>

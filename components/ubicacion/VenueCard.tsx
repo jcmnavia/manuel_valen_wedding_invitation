@@ -10,7 +10,7 @@ type Props = {
 
 export function VenueCard({ label, name, address, time, mapsHref }: Props) {
   return (
-    <article className="relative bg-cream/60 border border-gold/30 rounded-sm p-8 md:p-10 text-center shadow-[0_18px_40px_-20px_rgba(31,26,20,0.25)]">
+    <article className="relative bg-cream/60 border border-sage/40 rounded-sm p-8 md:p-10 text-center shadow-[0_18px_40px_-20px_rgba(31,26,20,0.25)]">
       <p className="font-display tracking-[0.4em] text-xs text-gold uppercase">
         {label}
       </p>

@@ -1,22 +1,47 @@
 export const wedding = {
   brideName: 'Valentina',
   groomName: 'Manuel',
-  date: new Date('2026-11-14T17:00:00-05:00'),
-  dateDisplay: 'Sábado, 14 de Noviembre de 2026',
-  dateRoman: 'XIV · XI · MMXXVI',
+  date: new Date('2026-08-16T16:00:00-05:00'),
+  dateDisplay: 'Domingo, 16 de Agosto de 2026',
+  dateRoman: 'XVI · VIII · MMXXVI',
+  /** City + country, used for the postmark, return address, and metadata. */
+  city: 'Envigado',
+  region: 'Antioquia, Colombia',
+  /**
+   * Single venue for ceremony + reception. `mapsQuery` is what we hand to
+   * Google Maps (resolving the real pin by name is more reliable than raw
+   * coordinates); `coords` is a sensible fallback for "open in Maps" links.
+   */
+  venue: {
+    name: 'Fábula Bodas & Eventos',
+    address: 'Loma del Escobero, Envigado',
+    mapsQuery: 'Fábula Bodas y Eventos, Loma del Escobero, Envigado, Antioquia',
+    coords: [6.1605, -75.543] as [number, number],
+  },
   ceremony: {
-    name: 'Hacienda San Carlos',
-    address: 'Vía Cieneguilla, Km 18, Lima',
-    time: '17:00',
-    coords: [-12.118, -76.866] as [number, number],
+    name: 'Fábula Bodas & Eventos',
+    address: 'Loma del Escobero, Envigado',
+    time: '16:00',
+    coords: [6.1605, -75.543] as [number, number],
   },
   reception: {
-    name: 'Hacienda San Carlos — Salón Jardín',
-    address: 'Vía Cieneguilla, Km 18, Lima',
-    time: '19:30',
-    coords: [-12.118, -76.866] as [number, number],
+    name: 'Fábula — Recepción',
+    address: 'Loma del Escobero, Envigado',
+    time: '18:30',
+    coords: [6.1605, -75.543] as [number, number],
   },
   hashtag: '#ManuelYValentina2026',
+  /** Parents of the couple — shown in the "bendición" blessing section. */
+  family: {
+    novia: {
+      label: 'Padres de la novia',
+      names: ['Flor María Bedoya López', 'Fabio Eduardo Fonnegra Tobón'],
+    },
+    novio: {
+      label: 'Padres del novio',
+      names: ['Carlos Alberto Sanín Uribe', 'Gloria Victoria Cossio Toro'],
+    },
+  },
 } as const
 
 export type Wedding = typeof wedding

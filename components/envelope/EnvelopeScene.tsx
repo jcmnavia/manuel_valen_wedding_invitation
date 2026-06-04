@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { Envelope } from './Envelope'
 import { StoryMilestone } from './StoryMilestone'
+import { FamilyBlessing } from './FamilyBlessing'
 import { InvitationReveal } from './InvitationReveal'
 import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
 import { prefersReducedMotion } from '@/lib/prefersReducedMotion'
@@ -53,7 +54,6 @@ export function EnvelopeScene() {
       const address = envelope.querySelector(
         '[data-envelope-address]',
       ) as HTMLElement
-      const seal = envelope.querySelector('[data-envelope-seal]') as HTMLElement
       const castShadow = envelope.querySelector(
         '[data-envelope-cast-shadow]',
       ) as HTMLElement | null
@@ -85,15 +85,6 @@ export function EnvelopeScene() {
         delay: 0.9,
       })
 
-      // Subtle ambient sway on the seal before scrolling starts
-      gsap.to(seal, {
-        y: -2,
-        duration: 3.2,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-      })
-
       // Master scroll-driven timeline
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -112,17 +103,8 @@ export function EnvelopeScene() {
       // 0.00 – 0.06 — Hint fades out as user starts scrolling
       tl.to(hintRef.current, { opacity: 0, duration: 0.06 }, 0)
 
-      // 0.00 – 0.12 — Lean in: subtle scale, warmer drop shadow on seal
+      // 0.00 – 0.12 — Lean in: subtle scale on the whole envelope
       tl.to(envelope, { scale: 1.02, duration: 0.12, ease: 'none' }, 0)
-      tl.to(
-        seal,
-        {
-          filter:
-            'drop-shadow(0 18px 36px rgba(110,82,38,0.55)) drop-shadow(0 4px 8px rgba(36,22,4,0.35))',
-          duration: 0.12,
-        },
-        0,
-      )
 
       // 0.12 – 0.55 — FLAP LIFTS OPEN TOWARD THE USER with real page-turn bend.
       //
@@ -287,6 +269,10 @@ export function EnvelopeScene() {
               reverse={i % 2 === 1}
             />
           ))}
+        </div>
+
+        <div className="relative max-w-3xl mx-auto">
+          <FamilyBlessing />
         </div>
 
         <div className="relative max-w-3xl mx-auto">

@@ -5,8 +5,26 @@
   --color-cream: #ECE3CF;
   --color-ink: #1F1A14;
   --color-ink-soft: #4A3F2E;
-  --color-gold: #B08D57;
-  --color-gold-dim: #8C6F40;
+
+  /* ── Wedding palette (Palo de rosa · Wine · Durazno · Naranjado · Eucalipto · Esmeralda) ──
+     Wine leads the accent voice (7.5:1 on ivory → AAA, reads at any size).
+     Eucalipto sage is the line/ornament voice (1px dividers, borders, focus).
+     The rest are decorative: swatches and soft touches, never small text. */
+  --color-wine: #7B3540;
+  --color-wine-deep: #5E2730;
+  --color-sage: #8BA597;
+  --color-sage-deep: #5F7A6B;
+  --color-rosa: #D8B4B0;
+  --color-durazno: #F0C090;
+  --color-naranja: #C8682E;
+  --color-esmeralda: #2C6B33;
+
+  /* The former "gold" accent role now resolves to Wine, so every existing
+     text-gold / border-gold usage becomes the palette accent in one move.
+     Line-and-ornament usages are migrated to sage individually. */
+  --color-gold: #7B3540;
+  --color-gold-dim: #5E2730;
+
   --color-wax: #8C2E2A;
   --color-wax-dark: #5C1B19;
 

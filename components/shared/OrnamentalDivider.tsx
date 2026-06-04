@@ -86,7 +86,7 @@ export function OrnamentalDivider({
       role="presentation"
       aria-hidden="true"
       viewBox={viewBox}
-      className={`text-gold ${className}`}
+      className={`text-sage ${className}`}
       width={320}
       height={variant === 1 ? 24 : 32}
     >

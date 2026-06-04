@@ -15,7 +15,10 @@ type Props = {
   reverse?: boolean
 }
 
-const accentByIndex = ['#C2A35A', '#1F4D3D', '#F2D898', '#7A2421']
+// Per-milestone accent, drawn from the wedding palette (deepened where needed
+// so the small eyebrow text clears WCAG AA on ivory). Esmeralda · Naranjado ·
+// Wine · Sage-deep — one distinct color per beat.
+const accentByIndex = ['#2C6B33', '#A6531F', '#7B3540', '#5F7A6B']
 
 /**
  * Two-beat scroll choreography for every milestone:
@@ -132,6 +135,7 @@ export function StoryMilestone({ milestone, index, reverse = false }: Props) {
             caption={milestone.caption}
             rotation={0}
             tapeColor={milestone.tapeColor}
+            orientation={milestone.orientation}
           />
         </motion.div>
 

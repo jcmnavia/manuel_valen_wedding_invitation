@@ -1,7 +1,6 @@
 'use client'
 
 import { forwardRef, ReactNode } from 'react'
-import { WaxSeal } from './WaxSeal'
 
 type Props = {
   children?: ReactNode
@@ -300,7 +299,7 @@ export const Envelope = forwardRef<HTMLDivElement, Props>(function Envelope(
           </p>
           <div className="mt-4 mx-auto w-24 h-px bg-gold/50" />
           <p className="font-display tracking-[0.4em] text-[10px] md:text-xs text-ink-soft uppercase mt-4">
-            14 · XI · 2026
+            16 · VIII · 2026
           </p>
         </div>
 
@@ -328,7 +327,7 @@ export const Envelope = forwardRef<HTMLDivElement, Props>(function Envelope(
                 stroke="none"
                 letterSpacing="2"
               >
-                LIMA · PERÚ
+                ENVIGADO · CO
               </text>
               <text
                 x="60"
@@ -353,7 +352,7 @@ export const Envelope = forwardRef<HTMLDivElement, Props>(function Envelope(
                 stroke="none"
                 letterSpacing="3"
               >
-                14·11
+                16·08
               </text>
             </g>
           </svg>
@@ -365,7 +364,7 @@ export const Envelope = forwardRef<HTMLDivElement, Props>(function Envelope(
             Remitente
           </p>
           <p className="font-script text-xl md:text-2xl mt-1">M &amp; V</p>
-          <p className="text-[10px] md:text-xs italic mt-1">Lima · 2026</p>
+          <p className="text-[10px] md:text-xs italic mt-1">Envigado · 2026</p>
         </div>
       </div>
 
@@ -557,20 +556,6 @@ export const Envelope = forwardRef<HTMLDivElement, Props>(function Envelope(
                 'inset 0 2px 0 rgba(255,250,232,0.65), inset 0 -2px 8px rgba(31,20,10,0.10)',
             }}
           />
-
-          {/* WAX SEAL — inside the flap so it lifts with the flap */}
-          <div
-            data-envelope-seal
-            className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
-            style={{
-              bottom: 'calc(-1 * clamp(90px, 13vw, 140px))',
-              width: 'clamp(180px, 26vw, 280px)',
-              height: 'clamp(180px, 26vw, 280px)',
-              transform: 'translateZ(3px)',
-            }}
-          >
-            <WaxSeal size={280} className="w-full h-full" />
-          </div>
         </div>
       </div>
 
