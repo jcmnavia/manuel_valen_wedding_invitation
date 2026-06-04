@@ -45,7 +45,7 @@ export function EnvelopeScene() {
       const castShadow = flyEnv.querySelector('[data-envelope-cast-shadow]') as HTMLElement | null
       const innerLetter = flyEnv.querySelector('[data-envelope-letter]') as HTMLElement | null
       const seal = flyEnv.querySelector('[data-fly-seal]') as HTMLElement | null
-      const clip = flyEnv.querySelector('[data-env-clip]') as HTMLElement | null
+      const clip = flyEnv.querySelector('[data-letter-clip]') as HTMLElement | null
       const tumble = flyEnv.querySelector('[data-fly-tumble]') as HTMLElement | null
 
       // Initial states

@@ -70,9 +70,10 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
             faces the viewer. data-env-clip toggles overflow for the letter. */}
         <div
           data-env-clip
-          className="absolute inset-0 overflow-hidden rounded-[3px]"
+          className="absolute inset-0 rounded-[3px]"
           style={{
             transform: 'rotateY(180deg)',
+            transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
           }}
@@ -112,35 +113,6 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
                 </pattern>
               </defs>
               <rect width="400" height="400" fill="url(#fly-liner)" />
-            </svg>
-
-            {/* OPEN-V RECESS — the lifted flap rotates up out of view, so paint
-                its footprint here: a downward triangle (apex low-centre, like
-                the closed flap) that's softly shaded with a defined edge, so the
-                open envelope clearly reads the V opening even though the
-                physical flap has clipped away above. */}
-            <svg
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-              className="absolute inset-0 w-full h-full"
-              aria-hidden="true"
-            >
-              <defs>
-                <linearGradient id="fly-vshade" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="rgba(31,20,10,0.16)" />
-                  <stop offset="100%" stopColor="rgba(31,20,10,0)" />
-                </linearGradient>
-              </defs>
-              {/* the triangular flap footprint (top edge full width, apex ~60%) */}
-              <path d="M 0 0 L 50 60 L 100 0 Z" fill="url(#fly-vshade)" />
-              {/* the two V edges, drawn crisply */}
-              <path
-                d="M 0 0 L 50 60 L 100 0"
-                fill="none"
-                stroke="rgba(31,20,10,0.28)"
-                strokeWidth="0.6"
-                vectorEffect="non-scaling-stroke"
-              />
             </svg>
           </div>
 
@@ -185,8 +157,9 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
             }}
           />
 
-          {/* THE V FLAP — downward triangle covering the top ~60%, hinged on the
-              top edge; lifts open. (The "V shape" that opens.) */}
+          {/* THE FLAP — a downward "V" triangle when closed; it flips up on
+              rotateX to stand above the envelope as an inverted "A". A
+              drop-shadow gives it depth / shade behind it once open. */}
           <div
             data-envelope-flap-wrap
             className="absolute inset-x-0 top-0"
@@ -245,17 +218,17 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
                     "url('/textures/paper-grain.svg'), linear-gradient(180deg, #D9C496 0%, #C7B07E 100%)",
                   backgroundSize: '300px 300px, cover',
                   backgroundBlendMode: 'multiply, normal',
-                  clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
+                  // UPWARD triangle (apex at top) so the open flap reads as an
+                  // inverted "A" standing above the envelope, not a downward V.
+                  clipPath: 'polygon(0 100%, 100% 100%, 50% 0)',
                   transform: 'rotateX(180deg)',
                   backfaceVisibility: 'hidden',
                   WebkitBackfaceVisibility: 'hidden',
-                  // strong fold shadow along the top (the hinge once flipped),
-                  // plus a soft shade toward the point for depth.
                   boxShadow:
-                    'inset 0 3px 8px rgba(31,20,10,0.28), inset 0 -1px 0 rgba(255,250,232,0.4)',
+                    'inset 0 -3px 8px rgba(31,20,10,0.22), inset 0 1px 0 rgba(255,250,232,0.4)',
                 }}
               >
-                {/* the two diagonal edges of the V, drawn so the triangle reads */}
+                {/* the two edges of the A */}
                 <svg
                   viewBox="0 0 100 100"
                   preserveAspectRatio="none"
@@ -263,7 +236,7 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
                   aria-hidden="true"
                 >
                   <path
-                    d="M 0 0 L 50 100 L 100 0"
+                    d="M 0 100 L 50 0 L 100 100"
                     fill="none"
                     stroke="rgba(31,20,10,0.22)"
                     strokeWidth="0.5"
@@ -302,22 +275,31 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
             </div>
           </div>
 
-          {/* LETTER inside — emerges by moving, then scales to full page. Parked
-              low behind the flap; z-index keeps it under the flap until it rises. */}
+          {/* LETTER CLIP — a flat clip box that contains the letter to the
+              envelope bounds (so the low-parked letter can't poke out) without
+              flattening the flap's 3D (the flap is a separate sibling above).
+              The scene releases this clip when the letter scales to full page. */}
           <div
-            data-envelope-letter
-            className="absolute left-1/2 top-[14%] -translate-x-1/2"
-            style={{
-              zIndex: 1,
-              width: '86%',
-              height: '78%',
-              background:
-                'linear-gradient(170deg, #FBF6E8 0%, #F4ECD6 60%, #ECDFC0 100%)',
-              boxShadow:
-                '0 -4px 18px -8px rgba(31,20,10,0.35), inset 0 1px 0 rgba(255,253,245,0.6)',
-              borderTop: '1px solid rgba(255,253,245,0.6)',
-            }}
-          />
+            data-letter-clip
+            className="absolute inset-0 overflow-hidden rounded-[3px]"
+          >
+            {/* LETTER inside — emerges by moving, then scales to full page.
+                Parked low; z-index keeps it under the flap until it rises. */}
+            <div
+              data-envelope-letter
+              className="absolute left-1/2 top-[14%] -translate-x-1/2"
+              style={{
+                zIndex: 1,
+                width: '86%',
+                height: '78%',
+                background:
+                  'linear-gradient(170deg, #FBF6E8 0%, #F4ECD6 60%, #ECDFC0 100%)',
+                boxShadow:
+                  '0 -4px 18px -8px rgba(31,20,10,0.35), inset 0 1px 0 rgba(255,253,245,0.6)',
+                borderTop: '1px solid rgba(255,253,245,0.6)',
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>
