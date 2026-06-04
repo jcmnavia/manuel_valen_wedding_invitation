@@ -3,10 +3,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, useInView } from 'motion/react'
 import { PolaroidFrame } from '@/components/shared/PolaroidFrame'
-import { SteamPlumes } from './effects/SteamPlumes'
-import { FallingPetals } from './effects/FallingPetals'
-import { SparkleBurst } from './effects/SparkleBurst'
-import { HeartBubbles } from './effects/HeartBubbles'
 import type { StoryMilestone as Milestone } from '@/content/story'
 
 type Props = {
@@ -23,16 +19,11 @@ const accentByIndex = ['#2C6B33', '#A6531F', '#7B3540', '#5F7A6B']
 /**
  * Two-beat scroll choreography for every milestone:
  *   Beat 1: title + year arrive centered, large, the only thing on screen
- *   Beat 2: title shifts aside, polaroid emerges, body fades in, signature
- *           effect fires (steam / petals / sparkle / heart-bubbles)
- *
- * Each milestone gets a unique signature effect themed to its story.
+ *   Beat 2: title shifts aside, the polaroid emerges and the body fades in
  */
 export function StoryMilestone({ milestone, index, reverse = false }: Props) {
   const ref = useRef<HTMLDivElement | null>(null)
-  const titleRef = useRef<HTMLDivElement | null>(null)
   const inView = useInView(ref, { once: true, margin: '-15%' })
-  const titleVisible = useInView(titleRef, { margin: '-30% 0px -30% 0px' })
 
   // Once the polaroid has entered view, "advance" past beat 1
   const [advanced, setAdvanced] = useState(false)
@@ -80,7 +71,6 @@ export function StoryMilestone({ milestone, index, reverse = false }: Props) {
     >
       {/* ---- BEAT 1: centered title card ---- */}
       <motion.div
-        ref={titleRef}
         initial={{ opacity: 0, y: 40 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
@@ -164,12 +154,6 @@ export function StoryMilestone({ milestone, index, reverse = false }: Props) {
           </p>
         </motion.article>
       </div>
-
-      {/* ---- SIGNATURE EFFECT (themed to the milestone) ---- */}
-      {index === 0 && <SteamPlumes playing={advanced && titleVisible} />}
-      {index === 1 && <FallingPetals playing={advanced && titleVisible} />}
-      {index === 2 && <SparkleBurst playing={advanced && titleVisible} />}
-      {index === 3 && <HeartBubbles playing={advanced && titleVisible} />}
     </div>
   )
 }
