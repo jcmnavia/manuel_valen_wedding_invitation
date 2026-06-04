@@ -53,8 +53,8 @@ export function EnvelopeScene() {
       gsap.set(flap, { rotateX: 0 })
       gsap.set(inside, { opacity: 0 })
       if (castShadow) gsap.set(castShadow, { opacity: 1 })
-      // Envelope starts hidden and TINY (far away), parked at the path start.
-      gsap.set(flyEnv, { opacity: 0, scale: 0.12 })
+      // Envelope starts hidden and VERY tiny (far away), parked at path start.
+      gsap.set(flyEnv, { opacity: 0, scale: 0.04 })
       // The letter starts fully opaque but tucked low inside the envelope and
       // clipped by it — it EMERGES by moving, never by fading.
       if (innerLetter) gsap.set(innerLetter, { opacity: 1, yPercent: 60 })
@@ -63,7 +63,7 @@ export function EnvelopeScene() {
         scrollTrigger: {
           trigger: stage,
           start: 'top top',
-          end: '+=400%',
+          end: '+=560%',
           pin: true,
           scrub: 0.6,
           anticipatePin: 1,
@@ -74,46 +74,60 @@ export function EnvelopeScene() {
       // 0.00–0.12 — monogram holds, then fades + lifts away
       tl.to(monogram, { opacity: 0, y: -40, duration: 0.12, ease: 'power2.in' }, 0)
 
-      // 0.12–0.48 — envelope GLIDES in along the gentle arc. It comes from far
-      // away (tiny → full), and the path is eased slow→fast→slow so it
-      // accelerates in and decelerates as it lands. No sharp turns.
-      tl.set(flyEnv, { opacity: 1 }, 0.12)
+      // 0.10–0.66 — the envelope GLIDES the long cinematic path. This is the
+      // bulk of the scroll now (≈0.56 of the timeline, ~4× the old flight). It
+      // travels the whole S, easing slow→fast→slow.
+      //
+      // NO autoRotate: it made the envelope face the path tangent, which on a
+      // big S spins it wildly and snaps at the end. Instead the envelope stays
+      // upright and we add a SUBTLE independent bank (a few degrees) that
+      // resolves to 0 as it lands — life without the cartwheel.
+      tl.set(flyEnv, { opacity: 1 }, 0.1)
       tl.to(
         flyEnv,
         {
-          duration: 0.36,
-          ease: 'power2.inOut', // slow start, faster middle, gentle arrival
+          duration: 0.56,
+          ease: 'power1.inOut',
           motionPath: {
             path,
             align: path,
             alignOrigin: [0.5, 0.5],
-            autoRotate: 90,
+            autoRotate: false,
             start: 0,
             end: 1,
           },
         },
-        0.12,
+        0.1,
       )
-      // Scale from tiny (far) to full, easing out so it "settles" into size.
-      tl.to(flyEnv, { scale: 1, duration: 0.36, ease: 'power2.inOut' }, 0.12)
-      // settle rotation back upright as it lands
-      tl.to(flyEnv, { rotation: 0, duration: 0.08, ease: 'power2.out' }, 0.48)
+      // Grow from very tiny (far) to full over the whole flight.
+      tl.to(flyEnv, { scale: 1, duration: 0.56, ease: 'power1.inOut' }, 0.1)
+      // Subtle banking tilt through the flight, settling upright at the landing.
+      tl.to(
+        flyEnv,
+        {
+          keyframes: {
+            rotation: [-8, 6, -4, 0],
+            easeEach: 'sine.inOut',
+          },
+          duration: 0.56,
+        },
+        0.1,
+      )
 
-      // 0.54–0.74 — flap opens fully to 180°: the triangle folds flat back over
-      // its top edge and points UP above the body (a clean open lid, no
-      // ambiguous mid-angle that read as a reversed triangle). The wax seal
-      // rides up briefly then fades before the flip shows its back.
-      tl.to(flap, { rotateX: 180, duration: 0.2, ease: 'paperSettle' }, 0.54)
-      if (seal) tl.to(seal, { opacity: 0, duration: 0.07, ease: 'power1.in' }, 0.57)
+      // 0.68–0.80 — flap opens fully to 180° once the envelope has landed: the
+      // triangle folds flat back over its top edge (a clean open lid). The wax
+      // seal rides up briefly then fades before the flip shows its back.
+      tl.to(flap, { rotateX: 180, duration: 0.12, ease: 'paperSettle' }, 0.68)
+      if (seal) tl.to(seal, { opacity: 0, duration: 0.05, ease: 'power1.in' }, 0.71)
       if (sheen) {
-        tl.to(sheen, { opacity: 1, duration: 0.06 }, 0.55)
-        tl.to(sheen, { y: '60%', duration: 0.16, ease: 'power1.inOut' }, 0.55)
-        tl.to(sheen, { opacity: 0, duration: 0.08 }, 0.68)
+        tl.to(sheen, { opacity: 1, duration: 0.04 }, 0.69)
+        tl.to(sheen, { y: '60%', duration: 0.1, ease: 'power1.inOut' }, 0.69)
+        tl.to(sheen, { opacity: 0, duration: 0.05 }, 0.78)
       }
-      tl.to(inside, { opacity: 1, duration: 0.08 }, 0.62)
-      if (castShadow) tl.to(castShadow, { opacity: 0, duration: 0.16 }, 0.56)
+      tl.to(inside, { opacity: 1, duration: 0.05 }, 0.74)
+      if (castShadow) tl.to(castShadow, { opacity: 0, duration: 0.1 }, 0.69)
 
-      // 0.70–1.00 — the LETTER EMERGES BY MOVING (no opacity). Parked low and
+      // 0.82–1.00 — the LETTER EMERGES BY MOVING (no opacity). Parked low and
       // CLIPPED by the envelope (data-env-clip overflow:hidden), so it's hidden.
       //   1) rises UP into the envelope's mouth (peeks above the front), then
       //   2) a small settle DOWN, then
@@ -122,32 +136,32 @@ export function EnvelopeScene() {
         // 1) up into the opening (clipped → emerges from the mouth, not midair)
         tl.to(
           innerLetter,
-          { yPercent: 2, duration: 0.12, ease: 'power2.out' },
-          0.7,
+          { yPercent: 2, duration: 0.08, ease: 'power2.out' },
+          0.82,
         )
         // 2) small down-settle (the up-then-down gesture)
         tl.to(
           innerLetter,
-          { yPercent: 12, duration: 0.06, ease: 'power1.inOut' },
-          0.82,
+          { yPercent: 12, duration: 0.04, ease: 'power1.inOut' },
+          0.9,
         )
         // 3) unclip + raise above everything, then grow to full page
-        if (clip) tl.set(clip, { overflow: 'visible' }, 0.88)
-        tl.set(innerLetter, { zIndex: 50 }, 0.88)
+        if (clip) tl.set(clip, { overflow: 'visible' }, 0.94)
+        tl.set(innerLetter, { zIndex: 50 }, 0.94)
         tl.to(
           innerLetter,
-          { yPercent: -4, scale: 7, duration: 0.16, ease: 'paperSettle' },
-          0.88,
+          { yPercent: -4, scale: 7, duration: 0.1, ease: 'paperSettle' },
+          0.94,
         )
       }
-      tl.to(flyEnv, { opacity: 0, duration: 0.1, ease: 'power2.in' }, 0.94)
+      tl.to(flyEnv, { opacity: 0, duration: 0.06, ease: 'power2.in' }, 0.97)
       // The story intro TEXT settles onto the now-full-page letter (text fading
       // in is fine — it's content appearing on the paper, not the paper itself).
       tl.fromTo(
         letterRef.current,
         { opacity: 0, yPercent: 4 },
-        { opacity: 1, yPercent: 0, duration: 0.12, ease: 'paperSettle' },
-        0.9,
+        { opacity: 1, yPercent: 0, duration: 0.04, ease: 'paperSettle' },
+        0.96,
       )
 
       return () => {
@@ -184,12 +198,21 @@ export function EnvelopeScene() {
           preserveAspectRatio="none"
           aria-hidden="true"
         >
-          {/* One gentle sweeping arc from far top-right down to centre (50,50).
-              No reversals or sharp turns — a single smooth curve so the flight
-              reads as graceful, like a letter gliding in from a distance. */}
+          {/* A long, cinematic flight. The envelope enters tiny from far off the
+              top-left, sweeps a big graceful S across the stage (down-right,
+              across the lower area, back up the right side), then curls in and
+              settles at centre (50,50) approaching ALMOST HORIZONTALLY — so the
+              autoRotate leaves it nearly upright and it doesn't spin on its axis
+              at the end. Every segment's control points are collinear across the
+              shared anchors (smooth joins → no harsh turns / corners). */}
           <path
             ref={pathRef}
-            d="M 138 -34 C 108 -12, 72 0, 50 50"
+            d="M -45 -30
+               C 0 -38, 18 -6, 22 18
+               C 26 44, 8 64, 30 78
+               C 52 92, 86 84, 92 58
+               C 96 40, 84 28, 66 34
+               C 54 38, 50 46, 50 50"
             fill="none"
           />
         </svg>
