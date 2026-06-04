@@ -54,8 +54,9 @@ export function EnvelopeScene() {
       gsap.set(flap, { rotateX: 0 })
       gsap.set(inside, { opacity: 0 })
       if (castShadow) gsap.set(castShadow, { opacity: 1 })
-      // Envelope starts hidden but already a readable size (so the plain front
-      // and "Para Nuestros Invitados" are legible as it rises), growing to full.
+      // Envelope starts BELOW the viewport (path begins off-screen at y=128) at
+      // a readable size, so it rises up into view instead of popping in. A tiny
+      // fade at the very start (while still off-screen) avoids any hard edge.
       gsap.set(flyEnv, { opacity: 0, scale: 0.62 })
       // The letter starts fully opaque but tucked low inside the envelope and
       // clipped by it — it EMERGES by moving, never by fading.
@@ -81,10 +82,9 @@ export function EnvelopeScene() {
       // travels the whole S, easing slow→fast→slow.
       //
       // NO autoRotate: it made the envelope face the path tangent, which on a
-      // big S spins it wildly and snaps at the end. Instead the envelope stays
-      // upright and we add a SUBTLE independent bank (a few degrees) that
-      // resolves to 0 as it lands — life without the cartwheel.
-      tl.set(flyEnv, { opacity: 1 }, 0.1)
+      // Gentle fade-in at the very start while it is still below the viewport,
+      // so it has fully appeared by the time it crests the bottom edge.
+      tl.to(flyEnv, { opacity: 1, duration: 0.06, ease: 'power1.out' }, 0.1)
       tl.to(
         flyEnv,
         {
@@ -105,12 +105,12 @@ export function EnvelopeScene() {
       tl.to(flyEnv, { scale: 1, duration: 0.56, ease: 'power1.inOut' }, 0.1)
 
       // THE 3D FLIP — held to the END of the rise. The envelope spends most of
-      // the climb showing its PLAIN FRONT (address) tilted ~7° to the right;
+      // the climb showing its PLAIN FRONT (address) tilted ~4° to the right;
       // then, in the last stretch as it reaches centre, it flips on Y (0 → 180°)
       // to reveal the V-BACK and the tilt straightens to level. So you read the
       // front for a while, and it "turns" right at the end onto the back.
       if (tumble) {
-        gsap.set(tumble, { rotateY: 0, rotateZ: 7 })
+        gsap.set(tumble, { rotateY: 0, rotateZ: 4 })
         // flip happens late — roughly the final third of the flight
         tl.to(
           tumble,
@@ -213,7 +213,7 @@ export function EnvelopeScene() {
               not the path. Fully on-screen on any viewport. */}
           <path
             ref={pathRef}
-            d="M 50 92 L 50 50"
+            d="M 50 128 L 50 50"
             fill="none"
           />
         </svg>
