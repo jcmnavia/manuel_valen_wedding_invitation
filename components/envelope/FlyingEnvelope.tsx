@@ -29,15 +29,67 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
         willChange: 'transform, opacity',
       }}
     >
-      {/* 3:2 aspect box. data-env-clip lets the scene toggle overflow: while
-          the letter is parked low / emerging it is clipped to the envelope
-          (so it can't stick out the bottom); when the letter scales to full
-          page the scene switches the clip off so it can grow past the box. */}
+      {/* TUMBLER — the scene rotates this in 3D (rotateX/Y/Z) during the flight
+          so the envelope tumbles realistically at the turns. preserve-3d keeps
+          its children (the front box + the rear face) as real planes in space. */}
       <div
-        data-env-clip
-        className="relative w-full overflow-hidden"
-        style={{ paddingTop: '66%' }}
+        data-fly-tumble
+        className="relative w-full"
+        style={{ paddingTop: '66%', transformStyle: 'preserve-3d' }}
       >
+        {/* REAR FACE — the back of the envelope (seen when it flips past 90°).
+            Parchment with the closed-flap V-seam. rotateY(180) places it on the
+            far side; backface-visibility:hidden so front and back never bleed. */}
+        <div
+          data-envelope-rear
+          aria-hidden="true"
+          className="absolute inset-0 rounded-[3px] overflow-hidden"
+          style={{
+            transform: 'rotateY(180deg)',
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+            backgroundImage:
+              "url('/textures/paper-grain.svg'), linear-gradient(150deg, #ECDCB6 0%, #DDC99B 55%, #C9B17E 100%)",
+            backgroundSize: '300px 300px, cover',
+            backgroundBlendMode: 'multiply, normal',
+            boxShadow:
+              '0 30px 60px -24px rgba(31,20,10,0.55), inset 0 1px 0 rgba(255,250,232,0.45)',
+          }}
+        >
+          {/* flap seam: two diagonals from the top corners meeting low-centre,
+              plus the bottom-fold lines — the classic envelope back. */}
+          <svg
+            viewBox="0 0 100 66"
+            preserveAspectRatio="none"
+            className="absolute inset-0 w-full h-full"
+          >
+            <path
+              d="M 0 0 L 50 40 L 100 0 M 0 66 L 50 40 L 100 66"
+              fill="none"
+              stroke="rgba(31,20,10,0.16)"
+              strokeWidth="0.5"
+              vectorEffect="non-scaling-stroke"
+            />
+            <path
+              d="M 0 0 L 50 38 L 100 0"
+              fill="rgba(31,20,10,0.05)"
+              stroke="none"
+            />
+          </svg>
+        </div>
+
+        {/* FRONT BOX — everything that faces the viewer when closed. Sits on the
+            near side; backface-visibility:hidden so when the envelope flips the
+            seal/address vanish and the rear face shows instead. data-env-clip
+            lets the scene toggle overflow for the letter emerge/scale phase. */}
+        <div
+          data-env-clip
+          className="absolute inset-0 overflow-hidden"
+          style={{
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+          }}
+        >
         {/* BACK / body of the envelope (parchment) */}
         <div
           className="absolute inset-0 rounded-[3px] overflow-hidden"
@@ -221,6 +273,7 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
             borderTop: '1px solid rgba(255,253,245,0.6)',
           }}
         />
+        </div>
       </div>
     </div>
   )

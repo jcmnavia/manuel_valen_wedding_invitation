@@ -46,6 +46,7 @@ export function EnvelopeScene() {
       const innerLetter = flyEnv.querySelector('[data-envelope-letter]') as HTMLElement | null
       const seal = flyEnv.querySelector('[data-fly-seal]') as HTMLElement | null
       const clip = flyEnv.querySelector('[data-env-clip]') as HTMLElement | null
+      const tumble = flyEnv.querySelector('[data-fly-tumble]') as HTMLElement | null
 
       // Initial states
       gsap.set(monogram, { opacity: 1, y: 0 })
@@ -101,18 +102,31 @@ export function EnvelopeScene() {
       )
       // Grow from very tiny (far) to full over the whole flight.
       tl.to(flyEnv, { scale: 1, duration: 0.56, ease: 'power1.inOut' }, 0.1)
-      // Subtle banking tilt through the flight, settling upright at the landing.
-      tl.to(
-        flyEnv,
-        {
-          keyframes: {
-            rotation: [-8, 6, -4, 0],
-            easeEach: 'sine.inOut',
+
+      // 3D TUMBLE through the turns (on the preserve-3d tumbler, NOT the
+      // MotionPath-driven root). Each loop tumbles on different axes so it feels
+      // organic: it yaws fully over (shows its back), pitches/tumbles forward,
+      // and rolls — then EVERY axis resolves to a multiple of 360° (i.e. back
+      // to facing the viewer, upright) as it lands at centre.
+      if (tumble) {
+        tl.to(
+          tumble,
+          {
+            keyframes: {
+              // upper-left loop: big yaw flip (over the back) + a little roll
+              // right loop: pitch tumble forward
+              // lower-left loop: roll + secondary yaw
+              // landing: all back to 0 (mod 360) facing front, upright
+              rotateY: [0, 200, 250, 360, 360],
+              rotateX: [0, -30, 60, 20, 0],
+              rotateZ: [0, 18, -14, 8, 0],
+              easeEach: 'sine.inOut',
+            },
+            duration: 0.56,
           },
-          duration: 0.56,
-        },
-        0.1,
-      )
+          0.1,
+        )
+      }
 
       // 0.68–0.80 — flap opens fully to 180° once the envelope has landed: the
       // triangle folds flat back over its top edge (a clean open lid). The wax
