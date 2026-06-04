@@ -28,7 +28,7 @@ const mrsSaint = Mrs_Saint_Delafield({
 })
 
 export const metadata: Metadata = {
-  title: 'Manuel & Valentina · 16 de Agosto, 2026',
+  title: 'Valentina & Manuel · 16 de Agosto, 2026',
   description:
     'Acompáñanos a celebrar nuestro matrimonio. 16 de Agosto, 2026 · Fábula, Envigado.',
   // Favicons live under /public/favicon (realfavicongenerator export). Declared
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
   manifest: '/favicon/site.webmanifest',
   openGraph: {
-    title: 'Manuel & Valentina · 16.08.2026',
+    title: 'Valentina & Manuel · 16.08.2026',
     description: 'Acompáñanos a celebrar nuestro matrimonio.',
     type: 'website',
     locale: 'es_CO',

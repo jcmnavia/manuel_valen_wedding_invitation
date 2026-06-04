@@ -69,7 +69,7 @@ export function MessageForm({ onSuccess }: { onSuccess?: () => void }) {
         required
         maxLength={500}
         rows={4}
-        placeholder="Unas palabras para Manuel y Valentina…"
+        placeholder="Unas palabras para Valentina y Manuel…"
         className="w-full bg-ivory border border-sage/50 rounded-sm px-4 py-3 text-ink placeholder:text-ink-soft/45 focus:outline-none focus:border-wine focus:ring-1 focus:ring-wine/40 transition-colors resize-y leading-relaxed"
       />
 

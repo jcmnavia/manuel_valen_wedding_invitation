@@ -7,7 +7,7 @@ import { AttireSilhouettes } from '@/components/dress-code/AttireSilhouettes'
 import { dressCode } from '@/content/dressCode'
 
 export const metadata = {
-  title: 'Código de Vestimenta · Manuel & Valentina',
+  title: 'Código de Vestimenta · Valentina & Manuel',
 }
 
 export default function DressCodePage() {

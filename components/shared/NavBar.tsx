@@ -29,7 +29,7 @@ export function NavBar({ visible = true }: { visible?: boolean }) {
               href="/"
               className="font-script text-3xl text-ink hover:text-gold transition-colors"
             >
-              M &amp; V
+              V &amp; M
             </Link>
             <ul className="flex items-center gap-4 md:gap-8 text-[10px] md:text-xs tracking-widest uppercase">
               {links.map((l) => {

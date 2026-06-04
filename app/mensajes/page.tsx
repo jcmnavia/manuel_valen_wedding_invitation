@@ -6,7 +6,7 @@ import { MessageList } from './MessageList'
 import { MessageWallClient } from './MessageWallClient'
 
 export const metadata = {
-  title: 'Dedicatorias · Manuel & Valentina',
+  title: 'Dedicatorias · Valentina & Manuel',
 }
 
 // DB-backed: always render fresh, never statically prerender at build time.
@@ -51,7 +51,7 @@ export default async function MensajesPage() {
 
         <p className="text-center text-lg leading-relaxed text-ink-soft max-w-xl mx-auto italic mb-16">
           Tu cariño, un consejo o un buen deseo: estas son las palabras que
-          familiares y amigos le dejan a Manuel y Valentina.
+          familiares y amigos le dejan a Valentina y Manuel.
         </p>
 
         {/* The wall leads the page */}

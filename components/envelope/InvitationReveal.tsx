@@ -51,7 +51,7 @@ export function InvitationReveal() {
       >
         <PolaroidFrame
           src="/photos/couple-hero.jpg"
-          alt={`${wedding.groomName} y ${wedding.brideName}`}
+          alt={`${wedding.brideName} y ${wedding.groomName}`}
           caption="Nosotros"
           rotation={-2}
           tapeColor="gold"
@@ -165,7 +165,7 @@ export function InvitationReveal() {
         transition={transition(2.0)}
         className="mt-16 font-script text-3xl text-ink-soft"
       >
-        Con amor, M &amp; V
+        Con amor, V &amp; M
       </motion.p>
     </section>
   )

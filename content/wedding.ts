@@ -30,7 +30,7 @@ export const wedding = {
     time: '18:30',
     coords: [6.1605, -75.543] as [number, number],
   },
-  hashtag: '#ManuelYValentina2026',
+  hashtag: '#ValentinaYManuel2026',
   /** Parents of the couple — shown in the "bendición" blessing section. */
   family: {
     novia: {

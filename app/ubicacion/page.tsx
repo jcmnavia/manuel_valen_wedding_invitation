@@ -6,7 +6,7 @@ import { GoogleVenueMap } from '@/components/ubicacion/GoogleVenueMap'
 import { wedding } from '@/content/wedding'
 
 export const metadata = {
-  title: 'Ubicación · Manuel & Valentina',
+  title: 'Ubicación · Valentina & Manuel',
 }
 
 const venueQuery = encodeURIComponent(wedding.venue.mapsQuery)
