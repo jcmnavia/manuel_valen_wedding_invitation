@@ -61,10 +61,11 @@ export function EnvelopeScene() {
       gsap.set(flyEnv, { opacity: 0, scale: 0.62 })
       // The letter starts fully opaque but tucked low inside the envelope and
       // clipped by it — it EMERGES by moving, never by fading.
-      // Letter starts HIDDEN and parked low (so it can't poke out of the
-      // envelope during the flight/flip — 3D rotation defeats overflow clipping).
-      // It is made visible only once the flap has opened, then EMERGES by moving.
-      if (innerLetter) gsap.set(innerLetter, { opacity: 0, yPercent: 60 })
+      // Letter is ALWAYS visible (no opacity entry) — it sits inside the
+      // envelope, hidden purely by geometry (the closed flap covers the top, the
+      // front panel covers the bottom; z-index 1 keeps it under both). It
+      // emerges only by MOVING: up and out, then down in front.
+      if (innerLetter) gsap.set(innerLetter, { opacity: 1, yPercent: 28, zIndex: 1 })
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -148,33 +149,39 @@ export function EnvelopeScene() {
       tl.to(inside, { opacity: 1, duration: 0.05 }, 0.74)
       if (castShadow) tl.to(castShadow, { opacity: 0, duration: 0.1 }, 0.69)
 
-      // 0.80–1.00 — the LETTER EMERGES BY MOVING (no opacity change during the
-      // emerge). It is revealed (opacity 0→1 instantly) the moment the flap has
-      // opened — at that point it's still tucked inside the mouth behind the
-      // front, so this reads as "uncovered by the opening", not a fade-in. Then
-      // it rises up, settles, and grows to full page.
+      // 0.80–1.00 — the LETTER COMES OUT, by MOVING only (never opacity):
+      //   1) it's pulled UP, high enough to clear the envelope's top (out of the
+      //      mouth) — the clip is released first so it can rise above the top.
+      //   2) at the top of the arc its z-index swaps ABOVE the envelope, so it's
+      //      now in front of / out of the envelope.
+      //   3) it settles back DOWN, on top of the envelope, then grows to fill.
       if (innerLetter) {
-        // reveal it the instant the flap is open (still hidden by geometry)
-        tl.set(innerLetter, { opacity: 1 }, 0.8)
-        // 1) up into the opening (emerges from the mouth, not midair)
+        // release the clip so the letter can rise up out of the envelope
+        if (clip) tl.set(clip, { overflow: 'visible' }, 0.8)
+
+        // 1) pull UP and out — climbs from deep inside up out of the mouth and
+        //    high above the envelope (reads as being drawn out of it).
         tl.to(
           innerLetter,
-          { yPercent: 2, duration: 0.08, ease: 'power2.out' },
-          0.82,
+          { yPercent: -88, duration: 0.1, ease: 'power2.out' },
+          0.8,
         )
-        // 2) small down-settle (the up-then-down gesture)
+
+        // 2) once it has cleared the envelope's top, swap it IN FRONT (out of
+        //    the envelope) so it lays over the front on the way down.
+        tl.set(innerLetter, { zIndex: 50 }, 0.89)
+
+        // 3) settle back DOWN onto the front of the envelope...
         tl.to(
           innerLetter,
-          { yPercent: 12, duration: 0.04, ease: 'power1.inOut' },
+          { yPercent: -12, duration: 0.05, ease: 'power2.inOut' },
           0.9,
         )
-        // 3) unclip + raise above everything, then grow to full page
-        if (clip) tl.set(clip, { overflow: 'visible' }, 0.94)
-        tl.set(innerLetter, { zIndex: 50 }, 0.94)
+        // ...then grow to fill the page
         tl.to(
           innerLetter,
-          { yPercent: -4, scale: 7, duration: 0.1, ease: 'paperSettle' },
-          0.94,
+          { yPercent: -4, scale: 7, duration: 0.06, ease: 'paperSettle' },
+          0.95,
         )
       }
       tl.to(flyEnv, { opacity: 0, duration: 0.06, ease: 'power2.in' }, 0.97)
