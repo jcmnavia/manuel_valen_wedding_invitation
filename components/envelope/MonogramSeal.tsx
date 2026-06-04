@@ -25,13 +25,13 @@ export const MonogramSeal = forwardRef<HTMLDivElement>(function MonogramSeal(
           extra drop-shadow lets it sit on the cream without looking pasted. */}
       <div
         data-monogram-seal
-        className="relative h-44 w-44 md:h-52 md:w-52 drop-shadow-[0_18px_34px_rgba(94,39,48,0.32)]"
+        className="relative h-52 w-52 md:h-64 md:w-64 drop-shadow-[0_18px_34px_rgba(94,39,48,0.32)]"
       >
         <Image
           src="/ornaments/monogram wax seal.png"
           alt="Sello de cera de Valentina y Manuel"
           fill
-          sizes="(min-width: 768px) 208px, 176px"
+          sizes="(min-width: 768px) 256px, 208px"
           className="object-contain"
           priority
         />
