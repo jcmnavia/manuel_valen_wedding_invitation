@@ -44,6 +44,7 @@ export function EnvelopeScene() {
       const inside = flyEnv.querySelector('[data-envelope-inside]') as HTMLElement
       const castShadow = flyEnv.querySelector('[data-envelope-cast-shadow]') as HTMLElement | null
       const innerLetter = flyEnv.querySelector('[data-envelope-letter]') as HTMLElement | null
+      const seal = flyEnv.querySelector('[data-fly-seal]') as HTMLElement | null
 
       // Initial states
       gsap.set(monogram, { opacity: 1, y: 0 })
@@ -91,8 +92,11 @@ export function EnvelopeScene() {
       // settle rotation back upright as it lands
       tl.to(flyEnv, { rotation: 0, duration: 0.08, ease: 'power2.out' }, 0.45)
 
-      // 0.52–0.78 — flap opens (reused mechanics)
+      // 0.52–0.78 — flap opens (reused mechanics). The wax seal rides up with
+      // the flap for the first moments, then fades before the flap flips far
+      // enough to show its back (which would mirror the seal art).
       tl.to(flap, { rotateX: 168, duration: 0.26, ease: 'paperSettle' }, 0.52)
+      if (seal) tl.to(seal, { opacity: 0, duration: 0.07, ease: 'power1.in' }, 0.55)
       if (sheen) {
         tl.to(sheen, { opacity: 1, duration: 0.06 }, 0.53)
         tl.to(sheen, { y: '60%', duration: 0.2, ease: 'power1.inOut' }, 0.53)
