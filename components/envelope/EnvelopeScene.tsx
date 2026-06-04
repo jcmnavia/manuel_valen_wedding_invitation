@@ -34,11 +34,89 @@ export function EnvelopeScene() {
         return
       }
 
-      // Minimal placeholder reveal — replaced by the full timeline in a later task.
       void MotionPathPlugin
-      gsap.set(flyEnvRef.current, { opacity: 0 })
-      gsap.set(letterRef.current, { opacity: 1 })
-      setNavVisible(true)
+      const stage = stageRef.current
+      const flyEnv = flyEnvRef.current as HTMLElement
+      const monogram = monogramRef.current as HTMLElement
+      const path = pathRef.current as unknown as SVGPathElement
+      const flap = flyEnv.querySelector('[data-envelope-flap]') as HTMLElement
+      const sheen = flyEnv.querySelector('[data-envelope-flap-sheen]') as HTMLElement | null
+      const inside = flyEnv.querySelector('[data-envelope-inside]') as HTMLElement
+      const castShadow = flyEnv.querySelector('[data-envelope-cast-shadow]') as HTMLElement | null
+      const innerLetter = flyEnv.querySelector('[data-envelope-letter]') as HTMLElement | null
+
+      // Initial states
+      gsap.set(monogram, { opacity: 1, y: 0 })
+      gsap.set(letterRef.current, { opacity: 0 })
+      gsap.set(flap, { rotateX: 0 })
+      gsap.set(inside, { opacity: 0 })
+      if (castShadow) gsap.set(castShadow, { opacity: 1 })
+      // Envelope starts hidden + small, parked at the path start.
+      gsap.set(flyEnv, { opacity: 0, scale: 0.34 })
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: stage,
+          start: 'top top',
+          end: '+=400%',
+          pin: true,
+          scrub: 0.6,
+          anticipatePin: 1,
+          onUpdate: (st) => setNavVisible(st.progress > 0.9),
+        },
+      })
+
+      // 0.00–0.12 — monogram holds, then fades + lifts away
+      tl.to(monogram, { opacity: 0, y: -40, duration: 0.12, ease: 'power2.in' }, 0)
+
+      // 0.12–0.45 — envelope flies in along the curved path, growing, auto-rotating
+      tl.set(flyEnv, { opacity: 1 }, 0.12)
+      tl.to(
+        flyEnv,
+        {
+          duration: 0.33,
+          ease: 'power1.inOut',
+          motionPath: {
+            path,
+            align: path,
+            alignOrigin: [0.5, 0.5],
+            autoRotate: 90,
+            start: 0,
+            end: 1,
+          },
+        },
+        0.12,
+      )
+      tl.to(flyEnv, { scale: 1, duration: 0.33, ease: 'power2.out' }, 0.12)
+      // settle rotation back upright as it lands
+      tl.to(flyEnv, { rotation: 0, duration: 0.08, ease: 'power2.out' }, 0.45)
+
+      // 0.52–0.78 — flap opens (reused mechanics)
+      tl.to(flap, { rotateX: 168, duration: 0.26, ease: 'paperSettle' }, 0.52)
+      if (sheen) {
+        tl.to(sheen, { opacity: 1, duration: 0.06 }, 0.53)
+        tl.to(sheen, { y: '60%', duration: 0.2, ease: 'power1.inOut' }, 0.53)
+        tl.to(sheen, { opacity: 0, duration: 0.08 }, 0.7)
+      }
+      tl.to(inside, { opacity: 1, duration: 0.08 }, 0.6)
+      if (castShadow) tl.to(castShadow, { opacity: 0, duration: 0.16 }, 0.54)
+
+      // 0.78–1.00 — letter slides out + scales to full page; envelope recedes
+      if (innerLetter) {
+        tl.to(innerLetter, { opacity: 1, duration: 0.05 }, 0.76)
+        tl.to(
+          innerLetter,
+          { yPercent: -22, scale: 6.5, duration: 0.22, ease: 'paperSettle' },
+          0.78,
+        )
+      }
+      tl.to(flyEnv, { opacity: 0, duration: 0.12, ease: 'power2.in' }, 0.84)
+      tl.fromTo(
+        letterRef.current,
+        { opacity: 0, yPercent: 6 },
+        { opacity: 1, yPercent: 0, duration: 0.16, ease: 'paperSettle' },
+        0.86,
+      )
 
       return () => {
         ScrollTrigger.getAll().forEach((t) => t.kill())
