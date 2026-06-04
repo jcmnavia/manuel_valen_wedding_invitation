@@ -1,4 +1,5 @@
 import { NavBar } from '@/components/shared/NavBar'
+import { SiteFooter } from '@/components/shared/SiteFooter'
 import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
 import { VenueCard } from '@/components/ubicacion/VenueCard'
 import { GoogleVenueMap } from '@/components/ubicacion/GoogleVenueMap'
@@ -122,6 +123,7 @@ export default function UbicacionPage() {
           </p>
         </section>
       </main>
+      <SiteFooter />
     </>
   )
 }

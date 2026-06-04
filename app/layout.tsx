@@ -31,6 +31,17 @@ export const metadata: Metadata = {
   title: 'Manuel & Valentina · 16 de Agosto, 2026',
   description:
     'Acompáñanos a celebrar nuestro matrimonio. 16 de Agosto, 2026 · Fábula, Envigado.',
+  // Favicons live under /public/favicon (realfavicongenerator export). Declared
+  // explicitly so Next emits the right <link> tags from outside app/.
+  icons: {
+    icon: [
+      { url: '/favicon/favicon.ico', sizes: 'any' },
+      { url: '/favicon/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon/favicon-96x96.png', type: 'image/png', sizes: '96x96' },
+    ],
+    apple: [{ url: '/favicon/apple-touch-icon.png', sizes: '180x180' }],
+  },
+  manifest: '/favicon/site.webmanifest',
   openGraph: {
     title: 'Manuel & Valentina · 16.08.2026',
     description: 'Acompáñanos a celebrar nuestro matrimonio.',

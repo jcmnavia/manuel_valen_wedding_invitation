@@ -10,6 +10,7 @@ import { StoryMilestone } from './StoryMilestone'
 import { FamilyBlessing } from './FamilyBlessing'
 import { InvitationReveal } from './InvitationReveal'
 import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
+import { SiteFooter } from '@/components/shared/SiteFooter'
 import { prefersReducedMotion } from '@/lib/prefersReducedMotion'
 import { story } from '@/content/story'
 
@@ -287,6 +288,8 @@ export function EnvelopeScene() {
         <div className="relative max-w-3xl mx-auto">
           <InvitationReveal />
         </div>
+
+        <SiteFooter />
       </div>
 
       <PostEnvelopeNavRoot visible={navVisible} />

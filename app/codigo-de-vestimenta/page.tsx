@@ -1,4 +1,5 @@
 import { NavBar } from '@/components/shared/NavBar'
+import { SiteFooter } from '@/components/shared/SiteFooter'
 import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
 import { PinterestBoard } from '@/components/dress-code/PinterestBoard'
 import { AvoidColors } from '@/components/dress-code/AvoidColors'
@@ -67,6 +68,7 @@ export default function DressCodePage() {
           {dressCode.notes}
         </p>
       </main>
+      <SiteFooter />
     </>
   )
 }

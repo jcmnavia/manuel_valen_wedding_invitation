@@ -1,4 +1,5 @@
 import { NavBar } from '@/components/shared/NavBar'
+import { SiteFooter } from '@/components/shared/SiteFooter'
 import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
 import { getSupabase, type GuestMessage } from '@/lib/supabase'
 import { MessageList } from './MessageList'
@@ -63,6 +64,8 @@ export default async function MensajesPage() {
           )}
         </section>
       </main>
+
+      <SiteFooter />
 
       {/* Floating "Dejar un mensaje" button + form modal */}
       <MessageWallClient />
