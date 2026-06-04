@@ -45,6 +45,7 @@ export function EnvelopeScene() {
       const castShadow = flyEnv.querySelector('[data-envelope-cast-shadow]') as HTMLElement | null
       const innerLetter = flyEnv.querySelector('[data-envelope-letter]') as HTMLElement | null
       const seal = flyEnv.querySelector('[data-fly-seal]') as HTMLElement | null
+      const clip = flyEnv.querySelector('[data-env-clip]') as HTMLElement | null
 
       // Initial states
       gsap.set(monogram, { opacity: 1, y: 0 })
@@ -52,8 +53,11 @@ export function EnvelopeScene() {
       gsap.set(flap, { rotateX: 0 })
       gsap.set(inside, { opacity: 0 })
       if (castShadow) gsap.set(castShadow, { opacity: 1 })
-      // Envelope starts hidden + small, parked at the path start.
-      gsap.set(flyEnv, { opacity: 0, scale: 0.34 })
+      // Envelope starts hidden and TINY (far away), parked at the path start.
+      gsap.set(flyEnv, { opacity: 0, scale: 0.12 })
+      // The letter starts fully opaque but tucked low inside the envelope and
+      // clipped by it — it EMERGES by moving, never by fading.
+      if (innerLetter) gsap.set(innerLetter, { opacity: 1, yPercent: 60 })
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -70,13 +74,15 @@ export function EnvelopeScene() {
       // 0.00–0.12 — monogram holds, then fades + lifts away
       tl.to(monogram, { opacity: 0, y: -40, duration: 0.12, ease: 'power2.in' }, 0)
 
-      // 0.12–0.45 — envelope flies in along the curved path, growing, auto-rotating
+      // 0.12–0.48 — envelope GLIDES in along the gentle arc. It comes from far
+      // away (tiny → full), and the path is eased slow→fast→slow so it
+      // accelerates in and decelerates as it lands. No sharp turns.
       tl.set(flyEnv, { opacity: 1 }, 0.12)
       tl.to(
         flyEnv,
         {
-          duration: 0.33,
-          ease: 'power1.inOut',
+          duration: 0.36,
+          ease: 'power2.inOut', // slow start, faster middle, gentle arrival
           motionPath: {
             path,
             align: path,
@@ -88,38 +94,60 @@ export function EnvelopeScene() {
         },
         0.12,
       )
-      tl.to(flyEnv, { scale: 1, duration: 0.33, ease: 'power2.out' }, 0.12)
+      // Scale from tiny (far) to full, easing out so it "settles" into size.
+      tl.to(flyEnv, { scale: 1, duration: 0.36, ease: 'power2.inOut' }, 0.12)
       // settle rotation back upright as it lands
-      tl.to(flyEnv, { rotation: 0, duration: 0.08, ease: 'power2.out' }, 0.45)
+      tl.to(flyEnv, { rotation: 0, duration: 0.08, ease: 'power2.out' }, 0.48)
 
-      // 0.52–0.78 — flap opens (reused mechanics). The wax seal rides up with
-      // the flap for the first moments, then fades before the flap flips far
-      // enough to show its back (which would mirror the seal art).
-      tl.to(flap, { rotateX: 168, duration: 0.26, ease: 'paperSettle' }, 0.52)
-      if (seal) tl.to(seal, { opacity: 0, duration: 0.07, ease: 'power1.in' }, 0.55)
+      // 0.54–0.74 — flap opens fully to 180°: the triangle folds flat back over
+      // its top edge and points UP above the body (a clean open lid, no
+      // ambiguous mid-angle that read as a reversed triangle). The wax seal
+      // rides up briefly then fades before the flip shows its back.
+      tl.to(flap, { rotateX: 180, duration: 0.2, ease: 'paperSettle' }, 0.54)
+      if (seal) tl.to(seal, { opacity: 0, duration: 0.07, ease: 'power1.in' }, 0.57)
       if (sheen) {
-        tl.to(sheen, { opacity: 1, duration: 0.06 }, 0.53)
-        tl.to(sheen, { y: '60%', duration: 0.2, ease: 'power1.inOut' }, 0.53)
-        tl.to(sheen, { opacity: 0, duration: 0.08 }, 0.7)
+        tl.to(sheen, { opacity: 1, duration: 0.06 }, 0.55)
+        tl.to(sheen, { y: '60%', duration: 0.16, ease: 'power1.inOut' }, 0.55)
+        tl.to(sheen, { opacity: 0, duration: 0.08 }, 0.68)
       }
-      tl.to(inside, { opacity: 1, duration: 0.08 }, 0.6)
-      if (castShadow) tl.to(castShadow, { opacity: 0, duration: 0.16 }, 0.54)
+      tl.to(inside, { opacity: 1, duration: 0.08 }, 0.62)
+      if (castShadow) tl.to(castShadow, { opacity: 0, duration: 0.16 }, 0.56)
 
-      // 0.78–1.00 — letter slides out + scales to full page; envelope recedes
+      // 0.70–1.00 — the LETTER EMERGES BY MOVING (no opacity). Parked low and
+      // CLIPPED by the envelope (data-env-clip overflow:hidden), so it's hidden.
+      //   1) rises UP into the envelope's mouth (peeks above the front), then
+      //   2) a small settle DOWN, then
+      //   3) the clip is switched off and it grows to fill the page.
       if (innerLetter) {
-        tl.to(innerLetter, { opacity: 1, duration: 0.05 }, 0.76)
+        // 1) up into the opening (clipped → emerges from the mouth, not midair)
         tl.to(
           innerLetter,
-          { yPercent: -22, scale: 6.5, duration: 0.22, ease: 'paperSettle' },
-          0.78,
+          { yPercent: 2, duration: 0.12, ease: 'power2.out' },
+          0.7,
+        )
+        // 2) small down-settle (the up-then-down gesture)
+        tl.to(
+          innerLetter,
+          { yPercent: 12, duration: 0.06, ease: 'power1.inOut' },
+          0.82,
+        )
+        // 3) unclip + raise above everything, then grow to full page
+        if (clip) tl.set(clip, { overflow: 'visible' }, 0.88)
+        tl.set(innerLetter, { zIndex: 50 }, 0.88)
+        tl.to(
+          innerLetter,
+          { yPercent: -4, scale: 7, duration: 0.16, ease: 'paperSettle' },
+          0.88,
         )
       }
-      tl.to(flyEnv, { opacity: 0, duration: 0.12, ease: 'power2.in' }, 0.84)
+      tl.to(flyEnv, { opacity: 0, duration: 0.1, ease: 'power2.in' }, 0.94)
+      // The story intro TEXT settles onto the now-full-page letter (text fading
+      // in is fine — it's content appearing on the paper, not the paper itself).
       tl.fromTo(
         letterRef.current,
-        { opacity: 0, yPercent: 6 },
-        { opacity: 1, yPercent: 0, duration: 0.16, ease: 'paperSettle' },
-        0.86,
+        { opacity: 0, yPercent: 4 },
+        { opacity: 1, yPercent: 0, duration: 0.12, ease: 'paperSettle' },
+        0.9,
       )
 
       return () => {
@@ -136,9 +164,10 @@ export function EnvelopeScene() {
         ref={stageRef}
         className="relative w-full h-screen overflow-hidden"
         style={{
-          /* Subtle warm "tabletop" beyond the envelope - barely visible because the envelope fills the viewport */
+          /* Same cream/ivory as the story below, with a barely-there warm
+             vignette so the centered envelope keeps a hint of depth. */
           background:
-            'radial-gradient(ellipse at 50% 35%, #5C4A2C 0%, #3A2E1A 70%, #1F1A14 100%)',
+            'radial-gradient(ellipse at 50% 42%, #F7F1E5 0%, #F5EFE3 55%, #ECE3CF 100%)',
         }}
       >
 
@@ -155,10 +184,12 @@ export function EnvelopeScene() {
           preserveAspectRatio="none"
           aria-hidden="true"
         >
-          {/* start top-right + small, S-curve loop down to centre (50,50) */}
+          {/* One gentle sweeping arc from far top-right down to centre (50,50).
+              No reversals or sharp turns — a single smooth curve so the flight
+              reads as graceful, like a letter gliding in from a distance. */}
           <path
             ref={pathRef}
-            d="M 116 -18 C 92 8, 96 40, 64 34 C 36 29, 30 6, 50 50"
+            d="M 138 -34 C 108 -12, 72 0, 50 50"
             fill="none"
           />
         </svg>
@@ -168,15 +199,15 @@ export function EnvelopeScene() {
           ref={letterRef}
           className="absolute inset-0 flex items-center justify-center px-6 pointer-events-none opacity-0"
         >
-          <div className="text-center max-w-2xl pointer-events-auto text-ivory">
+          <div className="text-center max-w-2xl pointer-events-auto text-ink">
             <OrnamentalDivider variant={1} />
-            <p className="font-display tracking-[0.5em] text-xs text-gold uppercase mt-8">
+            <p className="font-display tracking-[0.5em] text-xs text-wine uppercase mt-8">
               Una pequeña historia
             </p>
-            <p className="font-script text-6xl md:text-7xl text-ivory mt-4">
+            <p className="font-script text-6xl md:text-7xl text-ink mt-4">
               de los dos
             </p>
-            <p className="mt-10 text-base text-ivory/70 italic">
+            <p className="mt-10 text-base text-ink-soft italic">
               Sigue desplazándote para leerla...
             </p>
           </div>

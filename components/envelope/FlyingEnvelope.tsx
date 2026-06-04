@@ -29,8 +29,15 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
         willChange: 'transform, opacity',
       }}
     >
-      {/* 3:2 aspect box */}
-      <div className="relative w-full" style={{ paddingTop: '66%' }}>
+      {/* 3:2 aspect box. data-env-clip lets the scene toggle overflow: while
+          the letter is parked low / emerging it is clipped to the envelope
+          (so it can't stick out the bottom); when the letter scales to full
+          page the scene switches the clip off so it can grow past the box. */}
+      <div
+        data-env-clip
+        className="relative w-full overflow-hidden"
+        style={{ paddingTop: '66%' }}
+      >
         {/* BACK / body of the envelope (parchment) */}
         <div
           className="absolute inset-0 rounded-[3px] overflow-hidden"
@@ -69,11 +76,13 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
           </svg>
         </div>
 
-        {/* FRONT of the envelope (lower V) with calligraphy address + emblem */}
+        {/* FRONT of the envelope (lower V) with calligraphy address + emblem.
+            z-index 2 so it covers the letter while the letter is parked low. */}
         <div
           data-envelope-front
           className="absolute inset-0"
           style={{
+            zIndex: 2,
             backgroundImage:
               "url('/textures/paper-grain.svg'), linear-gradient(165deg, #EFE0BD 0%, #E0CD9F 60%, #CDB682 100%)",
             backgroundSize: '300px 300px, cover',
@@ -195,11 +204,14 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
           </div>
         </div>
 
-        {/* LETTER inside — slides out + scales to full page (scene-driven) */}
+        {/* LETTER inside — slides out + scales to full page (scene-driven).
+            Starts opaque; the scene parks it low (behind the front) so it
+            EMERGES by moving up, never by fading. */}
         <div
           data-envelope-letter
-          className="absolute left-1/2 top-[14%] -translate-x-1/2 opacity-0"
+          className="absolute left-1/2 top-[14%] -translate-x-1/2"
           style={{
+            zIndex: 1,
             width: '86%',
             height: '78%',
             background:
