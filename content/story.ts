@@ -35,12 +35,12 @@ export const story: readonly StoryMilestone[] = [
   {
     year: 'El sí',
     title: 'Dijimos que sí',
-    body: 'Entre risas y los pies en el aire, supimos que era para siempre. No hizo falta un gran discurso: solo nosotros, este abrazo, y la certeza de toda una vida por delante.',
+    body: 'Con los pies en la arena y el mar de testigo, una rodilla en el suelo y un anillo lo dijeron todo. No hizo falta un gran discurso: solo nosotros, ese sí, y la certeza de toda una vida por delante.',
     rotation: -1.2,
     tapeColor: 'cream',
-    photo: '/photos/story-lift.jpg',
+    photo: '/photos/proposal.jpeg',
     orientation: 'portrait',
-    caption: 'Para toda la vida',
+    caption: 'Y dijimos que sí',
   },
   {
     year: 'Y ahora...',
