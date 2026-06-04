@@ -54,8 +54,9 @@ export function EnvelopeScene() {
       gsap.set(flap, { rotateX: 0 })
       gsap.set(inside, { opacity: 0 })
       if (castShadow) gsap.set(castShadow, { opacity: 1 })
-      // Envelope starts hidden and VERY tiny (far away), parked at path start.
-      gsap.set(flyEnv, { opacity: 0, scale: 0.04 })
+      // Envelope starts hidden but already a readable size (so the plain front
+      // and "Para Nuestros Invitados" are legible as it rises), growing to full.
+      gsap.set(flyEnv, { opacity: 0, scale: 0.62 })
       // The letter starts fully opaque but tucked low inside the envelope and
       // clipped by it — it EMERGES by moving, never by fading.
       if (innerLetter) gsap.set(innerLetter, { opacity: 1, yPercent: 60 })
@@ -103,28 +104,23 @@ export function EnvelopeScene() {
       // Grow from very tiny (far) to full over the whole flight.
       tl.to(flyEnv, { scale: 1, duration: 0.56, ease: 'power1.inOut' }, 0.1)
 
-      // 3D TUMBLE through the turns (on the preserve-3d tumbler, NOT the
-      // MotionPath-driven root). Each loop tumbles on different axes so it feels
-      // organic: it yaws fully over (shows its back), pitches/tumbles forward,
-      // and rolls — then EVERY axis resolves to a multiple of 360° (i.e. back
-      // to facing the viewer, upright) as it lands at centre.
+      // THE 3D FLIP — held to the END of the rise. The envelope spends most of
+      // the climb showing its PLAIN FRONT (address) tilted ~13° to the right;
+      // then, in the last stretch as it reaches centre, it flips on Y (0 → 180°)
+      // to reveal the V-BACK and the tilt straightens to level. So you read the
+      // front for a while, and it "turns" right at the end onto the back.
       if (tumble) {
+        gsap.set(tumble, { rotateY: 0, rotateZ: 13 })
+        // flip happens late — roughly the final third of the flight
         tl.to(
           tumble,
-          {
-            keyframes: {
-              // upper-left loop: big yaw flip (over the back) + a little roll
-              // right loop: pitch tumble forward
-              // lower-left loop: roll + secondary yaw
-              // landing: all back to 0 (mod 360) facing front, upright
-              rotateY: [0, 200, 250, 360, 360],
-              rotateX: [0, -30, 60, 20, 0],
-              rotateZ: [0, 18, -14, 8, 0],
-              easeEach: 'sine.inOut',
-            },
-            duration: 0.56,
-          },
-          0.1,
+          { rotateY: 180, duration: 0.18, ease: 'power2.inOut' },
+          0.46,
+        )
+        tl.to(
+          tumble,
+          { rotateZ: 0, duration: 0.18, ease: 'power2.out' },
+          0.46,
         )
       }
 
@@ -212,26 +208,12 @@ export function EnvelopeScene() {
           preserveAspectRatio="none"
           aria-hidden="true"
         >
-          {/* A looping, calligraphic flourish (3 loops) traced from the user's
-              sketch — START at the top-right gliding in flat, a big loop on the
-              upper-left, a small loop on the right, a big loop on the lower-left,
-              then it curls into the CENTRE (50,50) where it lands and opens.
-              All coordinates stay within ~6–95 of the 0–100 stage so the whole
-              path is visible on a narrow (mobile) viewport the entire time. */}
+          {/* A simple, dignified rise: a straight line from the bottom-centre
+              up to the centre (50,50). The drama is the 3D flip during the rise,
+              not the path. Fully on-screen on any viewport. */}
           <path
             ref={pathRef}
-            d="M 96 13
-               C 80 15, 70 19, 58 21
-               C 40 24, 22 24, 22 14
-               C 22 6, 34 8, 40 18
-               C 47 30, 44 38, 36 40
-               C 28 42, 26 36, 32 38
-               C 50 44, 80 30, 86 36
-               C 92 42, 78 46, 64 46
-               C 48 46, 34 52, 24 62
-               C 12 74, 18 88, 36 86
-               C 54 84, 60 70, 56 60
-               C 53 53, 51 51, 50 50"
+            d="M 50 92 L 50 50"
             fill="none"
           />
         </svg>
