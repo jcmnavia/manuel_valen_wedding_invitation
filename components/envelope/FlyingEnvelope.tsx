@@ -33,6 +33,9 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
         perspectiveOrigin: '50% 0%',
         transform: 'translate(-50%, -50%)',
         willChange: 'transform, opacity',
+        // Start hidden so the envelope (and its layers) never flash on first
+        // paint before GSAP initializes; the timeline fades it in on the rise.
+        opacity: 0,
       }}
     >
       {/* TUMBLER — the scene rotates this in 3D. preserve-3d keeps the two faces
