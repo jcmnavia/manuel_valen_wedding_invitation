@@ -45,6 +45,7 @@ export function EnvelopeScene() {
       const castShadow = flyEnv.querySelector('[data-envelope-cast-shadow]') as HTMLElement | null
       const innerLetter = flyEnv.querySelector('[data-envelope-letter]') as HTMLElement | null
       const clip = flyEnv.querySelector('[data-letter-clip]') as HTMLElement | null
+      const letterDepth = flyEnv.querySelector('[data-letter-depth]') as HTMLElement | null
       const tumble = flyEnv.querySelector('[data-fly-tumble]') as HTMLElement | null
       const frontFace = flyEnv.querySelector('[data-env-front-plain]') as HTMLElement | null
       const backFace = flyEnv.querySelector('[data-env-clip]') as HTMLElement | null
@@ -156,8 +157,17 @@ export function EnvelopeScene() {
       //      now in front of / out of the envelope.
       //   3) it settles back DOWN, on top of the envelope, then grows to fill.
       if (innerLetter) {
-        // release the clip so the letter can rise up out of the envelope
-        if (clip) tl.set(clip, { overflow: 'visible' }, 0.8)
+        // As it begins to emerge: bring the letter ABOVE everything (so it rises
+        // in front of the open V, not behind it). Clip it to show ONLY the part
+        // that has risen above the mouth line (~40%): open at the top, clipped
+        // from the mouth down — so the part still inside the envelope stays
+        // hidden and no overflow shows below.
+        tl.set(innerLetter, { zIndex: 50 }, 0.8)
+        // push the letter forward in real 3D so it's IN FRONT of the open "A"
+        // (the rotated flap sits forward in Z; z-index alone can't beat it).
+        if (letterDepth) tl.set(letterDepth, { z: 80 }, 0.8)
+        if (clip)
+          tl.set(clip, { overflow: 'visible', clipPath: 'inset(-300% 0% 60% 0%)' }, 0.8)
 
         // 1) pull UP and out — climbs from deep inside up out of the mouth and
         //    high above the envelope (reads as being drawn out of it).
@@ -167,11 +177,9 @@ export function EnvelopeScene() {
           0.8,
         )
 
-        // 2) once it has cleared the envelope's top, swap it IN FRONT (out of
-        //    the envelope) so it lays over the front on the way down.
-        tl.set(innerLetter, { zIndex: 50 }, 0.89)
-
-        // 3) settle back DOWN onto the front of the envelope...
+        // 2) it's out now — release the clip fully so the whole letter shows as
+        //    it settles back DOWN onto the front of the envelope...
+        if (clip) tl.set(clip, { clipPath: 'none' }, 0.9)
         tl.to(
           innerLetter,
           { yPercent: -12, duration: 0.05, ease: 'power2.inOut' },

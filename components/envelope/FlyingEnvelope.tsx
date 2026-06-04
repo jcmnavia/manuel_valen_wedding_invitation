@@ -250,30 +250,39 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
             </div>
           </div>
 
-          {/* LETTER CLIP — a flat clip box that contains the letter to the
-              envelope bounds (so the low-parked letter can't poke out) without
-              flattening the flap's 3D (the flap is a separate sibling above).
-              The scene releases this clip when the letter scales to full page. */}
+          {/* LETTER DEPTH — a preserve-3d wrapper the scene pushes FORWARD in Z
+              (translateZ) as the letter emerges, so the flat letter renders in
+              FRONT of the rotated open "A" flap in real 3D space (z-index alone
+              can't beat the 3D depth of the rotated flap). At rest translateZ is
+              0, so the letter sits at the back-face plane (hidden by the flap). */}
           <div
-            data-letter-clip
-            className="absolute inset-0 overflow-hidden rounded-[3px]"
+            data-letter-depth
+            className="absolute inset-0"
+            style={{ transformStyle: 'preserve-3d' }}
           >
-            {/* LETTER inside — emerges by moving, then scales to full page.
-                Parked low; z-index keeps it under the flap until it rises. */}
+            {/* LETTER CLIP — a flat clip box that contains the letter to the
+                envelope bounds. The scene opens/releases this clip during the
+                emerge so only the part out of the mouth shows. */}
             <div
-              data-envelope-letter
-              className="absolute left-1/2 top-[14%] -translate-x-1/2"
-              style={{
-                zIndex: 1,
-                width: '86%',
-                height: '78%',
-                background:
-                  'linear-gradient(170deg, #FBF6E8 0%, #F4ECD6 60%, #ECDFC0 100%)',
-                boxShadow:
-                  '0 -4px 18px -8px rgba(31,20,10,0.35), inset 0 1px 0 rgba(255,253,245,0.6)',
-                borderTop: '1px solid rgba(255,253,245,0.6)',
-              }}
-            />
+              data-letter-clip
+              className="absolute inset-0 overflow-hidden rounded-[3px]"
+            >
+              {/* LETTER inside — emerges by moving, then scales to full page. */}
+              <div
+                data-envelope-letter
+                className="absolute left-1/2 top-[14%] -translate-x-1/2"
+                style={{
+                  zIndex: 1,
+                  width: '86%',
+                  height: '78%',
+                  background:
+                    'linear-gradient(170deg, #FBF6E8 0%, #F4ECD6 60%, #ECDFC0 100%)',
+                  boxShadow:
+                    '0 -4px 18px -8px rgba(31,20,10,0.35), inset 0 1px 0 rgba(255,253,245,0.6)',
+                  borderTop: '1px solid rgba(255,253,245,0.6)',
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
