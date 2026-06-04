@@ -44,9 +44,10 @@ export function PolaroidFrame({
 }: Props) {
   const { w, h, sizes } = frameSize[orientation]
 
-  // Black & white for the history photos; warm sepia everywhere else.
+  // Softened B&W for the history photos (80% desaturation, gentler contrast so
+  // blacks/whites aren't stark); warm sepia everywhere else.
   const photoFilter = grayscale
-    ? 'grayscale contrast-[1.08] brightness-[0.98]'
+    ? 'grayscale-[0.8] contrast-[0.96] brightness-[1.0]'
     : 'sepia-[.35] contrast-[1.05] brightness-[0.96]'
 
   return (
