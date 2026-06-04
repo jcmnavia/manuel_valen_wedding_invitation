@@ -60,7 +60,7 @@ export function EnvelopeScene() {
       // Envelope starts BELOW the viewport (path begins off-screen at y=128) at
       // a readable size, so it rises up into view instead of popping in. A tiny
       // fade at the very start (while still off-screen) avoids any hard edge.
-      gsap.set(flyEnv, { opacity: 0, scale: 0.62 })
+      gsap.set(flyEnv, { opacity: 0, scale: 0.72 })
       // The letter starts fully opaque but tucked low inside the envelope and
       // clipped by it — it EMERGES by moving, never by fading.
       // Letter is ALWAYS visible (no opacity entry) — it sits inside the
@@ -89,9 +89,10 @@ export function EnvelopeScene() {
       // travels the whole S, easing slow→fast→slow.
       //
       // NO autoRotate: it made the envelope face the path tangent, which on a
-      // Gentle fade-in at the very start while it is still below the viewport,
-      // so it has fully appeared by the time it crests the bottom edge.
-      tl.to(flyEnv, { opacity: 1, duration: 0.06, ease: 'power1.out' }, 0.1)
+      // Fade in DURING the seal's exit (overlapping it) so the envelope is
+      // already cresting the bottom edge the moment the seal clears — no empty
+      // gap between the two.
+      tl.to(flyEnv, { opacity: 1, duration: 0.05, ease: 'power1.out' }, 0.08)
       tl.to(
         flyEnv,
         {
@@ -237,12 +238,14 @@ export function EnvelopeScene() {
           preserveAspectRatio="none"
           aria-hidden="true"
         >
-          {/* A simple, dignified rise: a straight line from the bottom-centre
-              up to the centre (50,50). The drama is the 3D flip during the rise,
-              not the path. Fully on-screen on any viewport. */}
+          {/* A simple, dignified rise: a straight line from just below the
+              bottom edge up to the centre (50,50). Starting at y=108 (only just
+              off-screen) means the envelope crests into view almost as soon as
+              the seal has left, instead of climbing a long unseen distance from
+              far below. The drama is the 3D flip during the rise, not the path. */}
           <path
             ref={pathRef}
-            d="M 50 128 L 50 50"
+            d="M 50 108 L 50 50"
             fill="none"
           />
         </svg>
