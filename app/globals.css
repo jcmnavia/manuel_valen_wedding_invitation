@@ -40,12 +40,21 @@
 @layer base {
   html {
     scroll-behavior: auto;
+    /* Moderate global type bump: 1rem = 18px (was 16px), so every rem-based
+       text size scales up ~12.5% site-wide in one move. */
+    font-size: 112.5%;
   }
   body {
     background-color: var(--color-ivory);
     color: var(--color-ink);
     font-family: var(--font-serif);
+    /* 500 (a loaded Cormorant weight) so body serif copy reads less thin than 400. */
+    font-weight: 500;
     overflow-x: hidden;
+    /* Crisper rendering so the high-contrast serifs read less hairline-thin. */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   ::selection {
     background-color: var(--color-gold);
