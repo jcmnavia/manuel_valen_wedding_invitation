@@ -105,12 +105,12 @@ export function EnvelopeScene() {
       tl.to(flyEnv, { scale: 1, duration: 0.56, ease: 'power1.inOut' }, 0.1)
 
       // THE 3D FLIP — held to the END of the rise. The envelope spends most of
-      // the climb showing its PLAIN FRONT (address) tilted ~13° to the right;
+      // the climb showing its PLAIN FRONT (address) tilted ~7° to the right;
       // then, in the last stretch as it reaches centre, it flips on Y (0 → 180°)
       // to reveal the V-BACK and the tilt straightens to level. So you read the
       // front for a while, and it "turns" right at the end onto the back.
       if (tumble) {
-        gsap.set(tumble, { rotateY: 0, rotateZ: 13 })
+        gsap.set(tumble, { rotateY: 0, rotateZ: 7 })
         // flip happens late — roughly the final third of the flight
         tl.to(
           tumble,
