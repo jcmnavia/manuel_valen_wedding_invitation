@@ -42,17 +42,8 @@ export function EnvelopeScene() {
 
       const envelope = envelopeRef.current
       const flap = envelope.querySelector('[data-envelope-flap]') as HTMLElement
-      const flapWrap = envelope.querySelector(
-        '[data-envelope-flap-wrap]',
-      ) as HTMLElement
       const inside = envelope.querySelector(
         '[data-envelope-inside]',
-      ) as HTMLElement
-      const front = envelope.querySelector(
-        '[data-envelope-front]',
-      ) as HTMLElement
-      const address = envelope.querySelector(
-        '[data-envelope-address]',
       ) as HTMLElement
       const castShadow = envelope.querySelector(
         '[data-envelope-cast-shadow]',
@@ -157,40 +148,25 @@ export function EnvelopeScene() {
       // Inner liner becomes visible as the flap clears past ~30°
       tl.to(inside, { opacity: 1, duration: 0.12 }, 0.22)
 
-      // Letter inside peeks up after the flap clears ~45°
-      if (innerLetter) {
-        tl.to(
-          innerLetter,
-          {
-            opacity: 1,
-            y: '15%',
-            duration: 0.18,
-            ease: 'power2.out',
-          },
-          0.30,
-        )
-      }
+      // ── ONE COHERENT POST-OPEN IDEA ───────────────────────────────────────
+      // The opened envelope recedes AS ONE unit (gentle scale-back + fade), and
+      // the story content rises gently up into its place. One thing leaves, one
+      // thing arrives — no panels sliding in conflicting directions, no blank
+      // letter sheet drifting off-centre. (The blank inner sheet is left tucked
+      // away; it just fades with the rest of the envelope.)
+      if (innerLetter) tl.to(innerLetter, { opacity: 0, duration: 0.12 }, 0.5)
 
-      // 0.55 – 0.78 — Envelope dissolves; the letter completes its slide-up
-      tl.to(front, { y: 160, opacity: 0, duration: 0.22 }, 0.55)
-      tl.to(address, { opacity: 0, duration: 0.10 }, 0.55)
-      tl.to(flapWrap, { opacity: 0, duration: 0.14, y: -100 }, 0.62)
+      // 0.5 – 0.72 — Whole envelope recedes together behind the rising content.
+      tl.to(envelope, { scale: 0.94, duration: 0.22, ease: 'power2.inOut' }, 0.5)
+      tl.to(envelope, { opacity: 0, duration: 0.18, ease: 'power2.in' }, 0.56)
 
-      if (innerLetter) {
-        tl.to(
-          innerLetter,
-          {
-            y: '-30%',
-            opacity: 0,
-            duration: 0.20,
-            ease: 'power2.in',
-          },
-          0.58,
-        )
-      }
-
-      // 0.65 – 0.85 — Story-letter content emerges
-      tl.to(letterRef.current, { opacity: 1, duration: 0.15 }, 0.65)
+      // 0.6 – 0.82 — Story content rises gently into place as the envelope clears.
+      tl.fromTo(
+        letterRef.current,
+        { opacity: 0, yPercent: 6 },
+        { opacity: 1, yPercent: 0, duration: 0.22, ease: 'paperSettle' },
+        0.6,
+      )
 
       return () => {
         ScrollTrigger.getAll().forEach((t) => t.kill())
