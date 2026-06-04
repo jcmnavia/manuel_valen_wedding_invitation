@@ -449,65 +449,25 @@ export const Envelope = forwardRef<HTMLDivElement, Props>(function Envelope(
           }}
         >
           {/* OUTSIDE of the flap — slightly lighter than the front body so the
-              flap reads as the SAME paper folded over, not a darker piece */}
+              flap reads as the SAME paper folded over, not a darker piece.
+              backface-visibility:hidden on BOTH faces kills the z-fight/bleed
+              at the 90° crossover. Grain is a baked background image (paints
+              once) instead of a live turbulence filter that re-rasterizes on
+              every animation frame. */}
           <div
             className="absolute inset-0"
             style={{
-              background:
-                'linear-gradient(178deg, #F2E5C2 0%, #E5D4A8 55%, #D5C088 100%)',
+              backgroundImage:
+                "url('/textures/paper-grain.svg'), linear-gradient(178deg, #F2E5C2 0%, #E5D4A8 55%, #D5C088 100%)",
+              backgroundSize: '320px 320px, cover',
+              backgroundBlendMode: 'multiply, normal',
               clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
               boxShadow:
                 'inset 0 2px 0 rgba(255,250,232,0.65), inset 0 -1px 0 rgba(31,20,10,0.08)',
             }}
           >
-            {/* Grain on flap outside */}
-            <svg
-              aria-hidden="true"
-              className="absolute inset-0 w-full h-full pointer-events-none opacity-50 mix-blend-multiply"
-              preserveAspectRatio="xMidYMid slice"
-              viewBox="0 0 400 400"
-            >
-              <filter id="flap-grain">
-                <feTurbulence
-                  type="fractalNoise"
-                  baseFrequency="0.92"
-                  numOctaves="3"
-                  seed="13"
-                />
-                <feColorMatrix
-                  values="0 0 0 0 0.20
-                          0 0 0 0 0.16
-                          0 0 0 0 0.10
-                          0 0 0 0.20 0"
-                />
-              </filter>
-              <rect width="400" height="400" filter="url(#flap-grain)" />
-            </svg>
-
-            {/* Paper fibers on flap */}
-            <svg
-              aria-hidden="true"
-              className="absolute inset-0 w-full h-full pointer-events-none opacity-25 mix-blend-multiply"
-              preserveAspectRatio="xMidYMid slice"
-              viewBox="0 0 400 400"
-            >
-              <filter id="flap-fibers">
-                <feTurbulence
-                  type="turbulence"
-                  baseFrequency="0.012 0.4"
-                  numOctaves="1"
-                  seed="21"
-                />
-                <feColorMatrix
-                  values="0 0 0 0 0.22
-                          0 0 0 0 0.16
-                          0 0 0 0 0.08
-                          0 0 0 0.4 0"
-                />
-              </filter>
-              <rect width="400" height="400" filter="url(#flap-fibers)" />
-            </svg>
-
             {/* Directional lighting on flap — same upper-left source */}
             <div
               className="absolute inset-0"
@@ -515,6 +475,23 @@ export const Envelope = forwardRef<HTMLDivElement, Props>(function Envelope(
                 background:
                   'radial-gradient(ellipse 70% 55% at 28% 22%, rgba(255,250,232,0.18) 0%, rgba(255,250,232,0) 60%), radial-gradient(ellipse 70% 60% at 70% 95%, rgba(31,20,10,0.30) 0%, rgba(31,20,10,0) 60%)',
                 clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
+              }}
+            />
+
+            {/* Light-sweep overlay — the timeline slides this bright band down
+                the flap as it bends, so light "catches" the curving surface.
+                Animating opacity/transform only (composited, no repaint). */}
+            <div
+              data-envelope-flap-sheen
+              aria-hidden="true"
+              className="absolute inset-0 opacity-0"
+              style={{
+                background:
+                  'linear-gradient(178deg, rgba(255,252,240,0) 0%, rgba(255,252,240,0.55) 48%, rgba(255,252,240,0) 64%)',
+                clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
+                transform: 'translateY(-40%)',
+                willChange: 'transform, opacity',
+                mixBlendMode: 'screen',
               }}
             />
 

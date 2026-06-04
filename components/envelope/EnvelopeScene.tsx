@@ -60,6 +60,9 @@ export function EnvelopeScene() {
       const innerLetter = envelope.querySelector(
         '[data-envelope-letter]',
       ) as HTMLElement | null
+      const sheen = envelope.querySelector(
+        '[data-envelope-flap-sheen]',
+      ) as HTMLElement | null
 
       // Initial states — envelope is closed and visible on load
       gsap.set(envelope, { opacity: 1 })
@@ -106,42 +109,45 @@ export function EnvelopeScene() {
       // 0.00 – 0.12 — Lean in: subtle scale on the whole envelope
       tl.to(envelope, { scale: 1.02, duration: 0.12, ease: 'none' }, 0)
 
-      // 0.12 – 0.55 — FLAP LIFTS OPEN TOWARD THE USER with real page-turn bend.
+      // 0.12 – 0.55 — FLAP LIFTS OPEN TOWARD THE USER.
       //
-      // Direction: rotateX POSITIVE rotates the top edge OUT of the screen
-      // toward the viewer (the flap "opens forward"). 178° lands it folded
-      // back onto itself, facing the user with the inside surface showing.
-      //
-      // Paper-bend mechanics — interpolated through keyframes:
-      //   - rotateZ: 0 → 2.5° → -1.5° → 0  (a corner catches first, then settles)
-      //   - scaleX:  1 → 0.96 → 1            (paper squeezes inward as it bends)
-      //   - scaleY:  1 → 0.90 → 1            (more pronounced curl mid-rotation)
-      //   - rotateX: 0 → 60 → 130 → 178      (eases through the rotation)
+      // rotateX POSITIVE rotates the top edge out toward the viewer (opens
+      // forward). It hinges on its top edge (origin-top). We stop at 168° —
+      // a few degrees short of dead-flat — so a sliver of thickness stays
+      // visible and it never reads as a flat sticker. ONE clean rotateX with
+      // the paper-settle ease; no scaleX/scaleY squish (that read as the
+      // triangle squishing, not paper bending). The bend is sold instead by
+      // the moving sheen below + the receding shadow.
       tl.to(
         flap,
         {
-          keyframes: {
-            rotateX: [0, 60, 130, 178],
-            rotateZ: [0, 2.5, -1.5, 0],
-            scaleX: [1, 0.97, 0.96, 1],
-            scaleY: [1, 0.94, 0.90, 1],
-            easeEach: 'power2.inOut',
-          },
+          rotateX: 168,
           duration: 0.43,
-          ease: 'power2.inOut',
+          ease: 'paperSettle',
         },
         0.12,
       )
 
-      // Cast shadow on the body recedes as the flap rotates up
+      // Light catches the bending surface: a bright band sweeps down the flap
+      // and fades, mid-open. transform + opacity only (GPU-composited).
+      if (sheen) {
+        tl.to(sheen, { opacity: 1, duration: 0.1, ease: 'power1.out' }, 0.14)
+        tl.to(
+          sheen,
+          { y: '60%', duration: 0.34, ease: 'power1.inOut' },
+          0.14,
+        )
+        tl.to(sheen, { opacity: 0, duration: 0.12, ease: 'power1.in' }, 0.4)
+      }
+
+      // Cast shadow on the body recedes as the flap rotates up — fade by
+      // OPACITY only (animating clip-path/scaleY forces re-rasterization).
       if (castShadow) {
         tl.to(
           castShadow,
           {
             opacity: 0,
-            scaleY: 0.2,
-            transformOrigin: 'top center',
-            duration: 0.25,
+            duration: 0.28,
             ease: 'power2.out',
           },
           0.14,
