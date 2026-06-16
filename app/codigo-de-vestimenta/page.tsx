@@ -1,8 +1,12 @@
 import { NavBar } from '@/components/shared/NavBar'
 import { SiteFooter } from '@/components/shared/SiteFooter'
 import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
-import { PinterestBoard } from '@/components/dress-code/PinterestBoard'
+import {
+  PinterestBoard,
+  PinterestEmbedStyles,
+} from '@/components/dress-code/PinterestBoard'
 import { AvoidColors } from '@/components/dress-code/AvoidColors'
+import { ColorPalette } from '@/components/dress-code/ColorPalette'
 import { AttireSilhouettes } from '@/components/dress-code/AttireSilhouettes'
 import { dressCode } from '@/content/dressCode'
 
@@ -36,10 +40,26 @@ export default function DressCodePage() {
         </p>
 
         <section className="mb-24">
-          <h2 className="font-display tracking-[0.4em] text-xs text-gold uppercase text-center mb-10">
+          <h2 className="font-display tracking-[0.4em] text-xs text-gold uppercase text-center mb-4">
             Inspiración
           </h2>
-          <PinterestBoard />
+          <p className="text-xs text-ink-soft italic mb-12 text-center max-w-md mx-auto">
+            Inspiración para tu atuendo — guarda tus ideas favoritas en nuestros
+            tableros de Pinterest.
+          </p>
+
+          <PinterestEmbedStyles />
+          <div className="space-y-24">
+            {dressCode.inspirationBoards.map((board) => (
+              <div key={board.url} className="flex w-full flex-col items-center">
+                {/* allowed-color palette for this group, above its board */}
+                <div className="mb-12 w-full">
+                  <ColorPalette colors={board.palette} />
+                </div>
+                <PinterestBoard boardUrl={board.url} label={board.label} />
+              </div>
+            ))}
+          </div>
         </section>
 
         <div className="flex justify-center mb-24">
