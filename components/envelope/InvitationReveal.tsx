@@ -4,7 +4,6 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import { motion, useInView, type Easing } from 'motion/react'
 import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
-import { PolaroidFrame } from '@/components/shared/PolaroidFrame'
 import { Countdown } from './Countdown'
 import { wedding } from '@/content/wedding'
 
@@ -23,7 +22,7 @@ export function InvitationReveal() {
     <section
       ref={ref}
       data-invitation
-      className="relative flex flex-col items-center text-center px-6 py-24"
+      className="relative flex flex-col items-center text-center px-6 pt-10 pb-24"
     >
       <motion.div
         initial={{ opacity: 0 }}
@@ -37,33 +36,15 @@ export function InvitationReveal() {
         initial={{ opacity: 0, y: 12 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={transition(0.15)}
-        className="font-display tracking-[0.5em] text-sm text-gold mt-8 mb-8 uppercase"
+        className="font-display tracking-[0.5em] text-sm text-gold mt-8 mb-12 uppercase"
       >
         Tenemos el honor de invitarte
       </motion.p>
 
-      {/* Hero keepsake — the couple, the ring, the heart of the reveal */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.86, y: 24 }}
-        animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
-        transition={transition(0.25)}
-        className="mb-10"
-      >
-        <PolaroidFrame
-          src="/photos/couple-hero.jpg"
-          alt={`${wedding.brideName} y ${wedding.groomName}`}
-          caption="Nosotros"
-          rotation={-2}
-          tapeColor="gold"
-          orientation="portrait"
-          priority
-        />
-      </motion.div>
-
       <motion.h1
         initial={{ opacity: 0, y: 16 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={transition(0.45)}
+        transition={transition(0.3)}
         className="font-script text-7xl md:text-9xl text-ink leading-none"
       >
         {wedding.brideName}
