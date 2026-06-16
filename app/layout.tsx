@@ -1,22 +1,27 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Italiana, Mrs_Saint_Delafield } from 'next/font/google'
+import { Montserrat, Bodoni_Moda, Mrs_Saint_Delafield } from 'next/font/google'
 import { PaperBackground } from '@/components/shared/PaperBackground'
 import { SmoothScrollProvider } from '@/components/motion/SmoothScrollProvider'
 import { BackgroundMusic } from '@/components/shared/BackgroundMusic'
 import './globals.css'
 
-const cormorant = Cormorant_Garamond({
+// Body copy — Montserrat. Kept at 500 (medium) on <body> so text reads legible,
+// not thin. Italic loaded for the italicized lines used throughout the site.
+const montserrat = Montserrat({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
   style: ['normal', 'italic'],
-  variable: '--font-cormorant',
+  variable: '--font-montserrat',
   display: 'swap',
 })
 
-const italiana = Italiana({
+// Titles / display — Bodoni Moda (variable font). Normal + italic across the
+// display weight range.
+const bodoni = Bodoni_Moda({
   subsets: ['latin'],
-  weight: '400',
-  variable: '--font-italiana',
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-bodoni',
   display: 'swap',
 })
 
@@ -56,7 +61,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${cormorant.variable} ${italiana.variable} ${mrsSaint.variable}`}
+      className={`${montserrat.variable} ${bodoni.variable} ${mrsSaint.variable}`}
     >
       <body className="font-serif bg-ivory text-ink antialiased">
         <PaperBackground />
