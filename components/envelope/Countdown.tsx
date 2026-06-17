@@ -62,7 +62,7 @@ export function Countdown() {
   if (remaining?.done) {
     return (
       <div ref={ref} className="flex flex-col items-center">
-        <p className="font-script text-5xl md:text-6xl text-gold">
+        <p className="font-display text-5xl md:text-6xl text-gold">
           ¡Hoy es el gran día!
         </p>
       </div>

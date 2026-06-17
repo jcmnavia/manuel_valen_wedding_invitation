@@ -66,7 +66,7 @@ function PhotoCarousel({ className = '' }: { className?: string }) {
 function Headline({ className = '' }: { className?: string }) {
   return (
     <h2
-      className={`font-script leading-none text-6xl sm:text-7xl md:text-8xl ${className}`}
+      className={`font-display leading-none text-6xl sm:text-7xl md:text-8xl ${className}`}
     >
       Nos casamos!
     </h2>

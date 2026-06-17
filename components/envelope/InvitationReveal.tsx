@@ -45,7 +45,7 @@ export function InvitationReveal() {
         initial={{ opacity: 0, y: 16 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={transition(0.3)}
-        className="font-script text-7xl md:text-9xl text-ink leading-none"
+        className="font-display text-7xl md:text-9xl text-ink leading-none"
       >
         {wedding.brideName}
       </motion.h1>
@@ -63,7 +63,7 @@ export function InvitationReveal() {
         initial={{ opacity: 0, y: 16 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={transition(0.75)}
-        className="font-script text-7xl md:text-9xl text-ink leading-none"
+        className="font-display text-7xl md:text-9xl text-ink leading-none"
       >
         {wedding.groomName}
       </motion.h1>
@@ -144,7 +144,7 @@ export function InvitationReveal() {
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         transition={transition(2.0)}
-        className="mt-16 font-script text-3xl text-ink-soft"
+        className="mt-16 font-display text-3xl text-ink-soft"
       >
         Con amor, V &amp; M
       </motion.p>

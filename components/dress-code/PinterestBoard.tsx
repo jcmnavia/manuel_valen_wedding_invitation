@@ -58,7 +58,7 @@ export function PinterestBoard({ boardUrl, label }: Props) {
   return (
     <div className="flex w-full flex-col items-center">
       {label && (
-        <p className="font-script text-2xl md:text-3xl text-ink-soft mb-6 text-center">
+        <p className="font-display text-2xl md:text-3xl text-ink-soft mb-6 text-center">
           {label}
         </p>
       )}

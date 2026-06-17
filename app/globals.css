@@ -31,9 +31,9 @@
   /* Body — Montserrat (sans). Keeps the `font-serif` token NAME so existing
      utility classes keep working; only the underlying face changed. */
   --font-serif: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
-  /* Titles / display — Bodoni Moda (high-contrast serif). */
+  /* Titles / display — Bodoni Moda (high-contrast serif). Also used for the
+     accent lines that were previously a script face. */
   --font-display: var(--font-bodoni), Georgia, serif;
-  --font-script: var(--font-mrs-saint), cursive;
 
   --shadow-paper: 0 24px 60px -20px rgba(31, 26, 20, 0.25),
     0 8px 20px -8px rgba(31, 26, 20, 0.15);
@@ -69,9 +69,6 @@
   .font-display {
     font-family: var(--font-display);
     letter-spacing: 0.02em;
-  }
-  .font-script {
-    font-family: var(--font-script);
   }
   .paper-texture {
     background-image: url("/textures/paper-grain.svg");

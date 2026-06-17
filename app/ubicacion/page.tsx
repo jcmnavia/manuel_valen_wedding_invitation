@@ -42,7 +42,7 @@ export default function UbicacionPage() {
           <h1 className="font-display text-5xl md:text-7xl text-ink mt-6">
             Ubicación
           </h1>
-          <p className="font-script text-3xl text-ink-soft mt-4">
+          <p className="font-display text-3xl text-ink-soft mt-4">
             {wedding.venue.name}
           </p>
           <p className="text-ink-soft italic mt-2">

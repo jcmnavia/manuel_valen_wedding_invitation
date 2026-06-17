@@ -69,7 +69,7 @@ export function NavBar({ visible = true }: { visible?: boolean }) {
           <div className="flex items-center justify-between px-6 py-5 md:px-10">
             <Link
               href="/"
-              className="font-script text-3xl leading-none text-ink hover:text-gold transition-colors"
+              className="font-display text-3xl leading-none text-ink hover:text-gold transition-colors"
             >
               V &amp; M
             </Link>
@@ -135,7 +135,7 @@ export function NavBar({ visible = true }: { visible?: boolean }) {
             <Link
               href="/"
               onClick={() => setMenuOpen(false)}
-              className="font-script text-3xl leading-none text-ink"
+              className="font-display text-3xl leading-none text-ink"
             >
               V &amp; M
             </Link>

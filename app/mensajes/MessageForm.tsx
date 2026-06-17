@@ -83,7 +83,7 @@ export function MessageForm({ onSuccess }: { onSuccess?: () => void }) {
         </button>
 
         {state.status === 'ok' && (
-          <p className="font-script text-2xl text-wine">
+          <p className="font-display text-2xl text-wine">
             ¡Gracias por tus palabras!
           </p>
         )}

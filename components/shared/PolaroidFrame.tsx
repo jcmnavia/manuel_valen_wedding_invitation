@@ -72,7 +72,7 @@ export function PolaroidFrame({
           className={`object-cover ${photoFilter}`}
         />
       </div>
-      <figcaption className="absolute bottom-3 left-0 right-0 text-center font-script text-2xl text-ink-soft">
+      <figcaption className="absolute bottom-3 left-0 right-0 text-center font-display text-2xl text-ink-soft">
         {caption}
       </figcaption>
     </figure>

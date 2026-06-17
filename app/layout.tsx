@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-import { Montserrat, Bodoni_Moda, Mrs_Saint_Delafield } from 'next/font/google'
+import { Montserrat, Bodoni_Moda } from 'next/font/google'
 import { PaperBackground } from '@/components/shared/PaperBackground'
 import { SmoothScrollProvider } from '@/components/motion/SmoothScrollProvider'
-import { BackgroundMusic } from '@/components/shared/BackgroundMusic'
 import './globals.css'
 
 // Body copy — Montserrat. Kept at 500 (medium) on <body> so text reads legible,
@@ -22,13 +21,6 @@ const bodoni = Bodoni_Moda({
   weight: ['400', '500', '600', '700'],
   style: ['normal', 'italic'],
   variable: '--font-bodoni',
-  display: 'swap',
-})
-
-const mrsSaint = Mrs_Saint_Delafield({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-mrs-saint',
   display: 'swap',
 })
 
@@ -61,12 +53,11 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${montserrat.variable} ${bodoni.variable} ${mrsSaint.variable}`}
+      className={`${montserrat.variable} ${bodoni.variable}`}
     >
       <body className="font-serif bg-ivory text-ink antialiased">
         <PaperBackground />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
-        <BackgroundMusic />
       </body>
     </html>
   )
