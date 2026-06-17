@@ -26,7 +26,7 @@ export default function DressCodePage() {
           <h1 className="font-display text-5xl md:text-7xl text-ink mt-6">
             {dressCode.title}
           </h1>
-          <p className="font-script text-3xl text-ink-soft mt-4">
+          <p className="font-display text-3xl text-ink-soft mt-4">
             {dressCode.formality}
           </p>
         </header>
@@ -39,7 +39,33 @@ export default function DressCodePage() {
           {dressCode.intro}
         </p>
 
+        {/* 1 — Colores a evitar */}
         <section className="mb-24">
+          <h2 className="font-display tracking-[0.4em] text-xs text-gold uppercase text-center mb-10">
+            Colores a evitar
+          </h2>
+          <AvoidColors />
+        </section>
+
+        <div className="flex justify-center mb-20">
+          <OrnamentalDivider variant={2} />
+        </div>
+
+        {/* 2 — La etiqueta (animated silhouettes) */}
+        <section className="mb-24">
+          <h2 className="font-display tracking-[0.4em] text-xs text-gold uppercase text-center mb-10">
+            La etiqueta
+          </h2>
+          <AttireSilhouettes />
+        </section>
+
+        <div className="flex justify-center mb-20">
+          <OrnamentalDivider variant={2} />
+        </div>
+
+        {/* 3 & 4 — Inspiración: Ellas, then Ellos. Each board carries its own
+            allowed-color palette above it. */}
+        <section className="mb-16">
           <h2 className="font-display tracking-[0.4em] text-xs text-gold uppercase text-center mb-4">
             Inspiración
           </h2>
@@ -62,29 +88,7 @@ export default function DressCodePage() {
           </div>
         </section>
 
-        <div className="flex justify-center mb-24">
-          <OrnamentalDivider variant={2} />
-        </div>
-
-        <section className="mb-24">
-          <h2 className="font-display tracking-[0.4em] text-xs text-gold uppercase text-center mb-10">
-            Colores a evitar
-          </h2>
-          <AvoidColors />
-        </section>
-
-        <div className="flex justify-center mb-20">
-          <OrnamentalDivider variant={2} />
-        </div>
-
-        <section className="mb-16">
-          <h2 className="font-display tracking-[0.4em] text-xs text-gold uppercase text-center mb-10">
-            La etiqueta
-          </h2>
-          <AttireSilhouettes />
-        </section>
-
-        <p className="text-center text-base text-ink-soft italic max-w-md mx-auto">
+        <p className="mt-16 text-center text-base text-ink-soft italic max-w-md mx-auto">
           {dressCode.notes}
         </p>
       </main>
