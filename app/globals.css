@@ -28,9 +28,12 @@
   --color-wax: #8C2E2A;
   --color-wax-dark: #5C1B19;
 
-  --font-serif: var(--font-cormorant), Georgia, serif;
-  --font-display: var(--font-italiana), Georgia, serif;
-  --font-script: var(--font-mrs-saint), cursive;
+  /* Body — Montserrat (sans). Keeps the `font-serif` token NAME so existing
+     utility classes keep working; only the underlying face changed. */
+  --font-serif: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  /* Titles / display — Bodoni Moda (high-contrast serif). Also used for the
+     accent lines that were previously a script face. */
+  --font-display: var(--font-bodoni), Georgia, serif;
 
   --shadow-paper: 0 24px 60px -20px rgba(31, 26, 20, 0.25),
     0 8px 20px -8px rgba(31, 26, 20, 0.15);
@@ -48,10 +51,10 @@
     background-color: var(--color-ivory);
     color: var(--color-ink);
     font-family: var(--font-serif);
-    /* 500 (a loaded Cormorant weight) so body serif copy reads less thin than 400. */
+    /* 500 (a loaded Montserrat weight) so body copy reads legible, not thin. */
     font-weight: 500;
     overflow-x: hidden;
-    /* Crisper rendering so the high-contrast serifs read less hairline-thin. */
+    /* Crisper rendering for the body sans-serif. */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -66,9 +69,6 @@
   .font-display {
     font-family: var(--font-display);
     letter-spacing: 0.02em;
-  }
-  .font-script {
-    font-family: var(--font-script);
   }
   .paper-texture {
     background-image: url("/textures/paper-grain.svg");

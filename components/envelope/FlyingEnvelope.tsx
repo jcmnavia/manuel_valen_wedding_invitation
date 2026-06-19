@@ -61,7 +61,7 @@ export const FlyingEnvelope = forwardRef<HTMLDivElement>(function FlyingEnvelope
           }}
         >
           <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center px-6">
-            <p className="font-script text-2xl md:text-3xl text-ink/80 leading-none">
+            <p className="font-display text-2xl md:text-3xl text-ink/80 leading-none">
               Para Nuestros Invitados
             </p>
             <div className="mx-auto mt-2 h-px w-20 bg-wine/40" />

@@ -62,7 +62,7 @@ export function Countdown() {
   if (remaining?.done) {
     return (
       <div ref={ref} className="flex flex-col items-center">
-        <p className="font-script text-5xl md:text-6xl text-gold">
+        <p className="font-display text-5xl md:text-6xl text-gold">
           ¡Hoy es el gran día!
         </p>
       </div>
@@ -85,7 +85,7 @@ export function Countdown() {
         {UNITS.map((unit, i) => (
           <div key={unit.key} className="flex items-start">
             <div className="flex flex-col items-center w-[68px] md:w-[96px]">
-              <span className="font-serif font-bold text-5xl md:text-7xl text-ink leading-none tabular-nums">
+              <span className="font-serif font-medium text-5xl md:text-7xl text-ink leading-none tabular-nums">
                 {remaining
                   ? String(remaining[unit.key]).padStart(2, '0')
                   : '—'}
@@ -97,7 +97,7 @@ export function Countdown() {
             {i < UNITS.length - 1 && (
               <span
                 aria-hidden="true"
-                className="font-serif font-semibold text-3xl md:text-5xl text-gold/70 leading-none mx-1 md:mx-2 mt-2 md:mt-3 select-none"
+                className="font-serif font-normal text-3xl md:text-5xl text-gold/70 leading-none mx-1 md:mx-2 mt-2 md:mt-3 select-none"
               >
                 :
               </span>

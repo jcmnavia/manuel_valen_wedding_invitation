@@ -51,7 +51,7 @@ export function MessageList({ messages }: { messages: GuestMessage[] }) {
             <blockquote className="font-serif italic text-lg text-ink leading-relaxed">
               {m.body}
             </blockquote>
-            <figcaption className="mt-4 font-script text-2xl text-wine text-right">
+            <figcaption className="mt-4 font-display text-2xl text-wine text-right">
               {m.name}
             </figcaption>
           </figure>

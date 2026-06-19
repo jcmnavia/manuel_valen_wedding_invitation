@@ -40,7 +40,7 @@ export default async function MensajesPage() {
           <h1 className="font-display text-5xl md:text-7xl text-ink mt-6">
             Dedicatorias
           </h1>
-          <p className="font-script text-3xl text-ink-soft mt-4">
+          <p className="font-display text-3xl text-ink-soft mt-4">
             para los novios
           </p>
         </header>

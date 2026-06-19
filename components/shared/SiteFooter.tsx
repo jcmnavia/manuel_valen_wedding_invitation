@@ -13,10 +13,10 @@ export function SiteFooter() {
       <div className="relative mx-auto max-w-2xl px-6 py-16 md:py-20 text-center">
         {/* Monogram crest */}
         <Image
-          src="/ornaments/monogram.svg"
+          src="/ornaments/monogram.png"
           alt="Monograma de Valentina y Manuel"
-          width={172}
-          height={168}
+          width={1024}
+          height={1024}
           className="mx-auto h-24 w-auto md:h-28 opacity-90"
         />
 

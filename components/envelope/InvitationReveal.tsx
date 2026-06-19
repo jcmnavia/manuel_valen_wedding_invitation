@@ -4,7 +4,6 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import { motion, useInView, type Easing } from 'motion/react'
 import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
-import { PolaroidFrame } from '@/components/shared/PolaroidFrame'
 import { Countdown } from './Countdown'
 import { wedding } from '@/content/wedding'
 
@@ -23,7 +22,7 @@ export function InvitationReveal() {
     <section
       ref={ref}
       data-invitation
-      className="relative flex flex-col items-center text-center px-6 py-24"
+      className="relative flex flex-col items-center text-center px-6 pt-10 pb-24"
     >
       <motion.div
         initial={{ opacity: 0 }}
@@ -37,34 +36,16 @@ export function InvitationReveal() {
         initial={{ opacity: 0, y: 12 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={transition(0.15)}
-        className="font-display tracking-[0.5em] text-sm text-gold mt-8 mb-8 uppercase"
+        className="font-display tracking-[0.5em] text-sm text-gold mt-8 mb-12 uppercase"
       >
         Tenemos el honor de invitarte
       </motion.p>
 
-      {/* Hero keepsake — the couple, the ring, the heart of the reveal */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.86, y: 24 }}
-        animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
-        transition={transition(0.25)}
-        className="mb-10"
-      >
-        <PolaroidFrame
-          src="/photos/couple-hero.jpg"
-          alt={`${wedding.brideName} y ${wedding.groomName}`}
-          caption="Nosotros"
-          rotation={-2}
-          tapeColor="gold"
-          orientation="portrait"
-          priority
-        />
-      </motion.div>
-
       <motion.h1
         initial={{ opacity: 0, y: 16 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={transition(0.45)}
-        className="font-script text-7xl md:text-9xl text-ink leading-none"
+        transition={transition(0.3)}
+        className="font-display text-7xl md:text-9xl text-ink leading-none"
       >
         {wedding.brideName}
       </motion.h1>
@@ -82,7 +63,7 @@ export function InvitationReveal() {
         initial={{ opacity: 0, y: 16 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={transition(0.75)}
-        className="font-script text-7xl md:text-9xl text-ink leading-none"
+        className="font-display text-7xl md:text-9xl text-ink leading-none"
       >
         {wedding.groomName}
       </motion.h1>
@@ -163,7 +144,7 @@ export function InvitationReveal() {
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         transition={transition(2.0)}
-        className="mt-16 font-script text-3xl text-ink-soft"
+        className="mt-16 font-display text-3xl text-ink-soft"
       >
         Con amor, V &amp; M
       </motion.p>
