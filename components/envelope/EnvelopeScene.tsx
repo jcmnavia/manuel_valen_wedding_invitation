@@ -6,7 +6,6 @@ import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { MonogramSeal } from './MonogramSeal'
 import { WeddingCarousel } from './WeddingCarousel'
 import { StoryIntro } from './StoryIntro'
-import { FamilyBlessing } from './FamilyBlessing'
 import { InvitationReveal } from './InvitationReveal'
 import { NavBar } from '@/components/shared/NavBar'
 import { SiteFooter } from '@/components/shared/SiteFooter'
@@ -123,16 +122,12 @@ export function EnvelopeScene() {
         </div>
       </section>
 
-      {/* STORY INTRO + BLESSING + INVITATION (scrolls below the opener) */}
+      {/* STORY INTRO + INVITATION (scrolls below the opener) */}
       <div className="relative bg-ivory">
         <div className="paper-texture absolute inset-0 opacity-30 pointer-events-none" />
 
         <div className="relative max-w-3xl mx-auto px-6 pt-32 pb-8">
           <StoryIntro />
-        </div>
-
-        <div className="relative max-w-3xl mx-auto px-6">
-          <FamilyBlessing />
         </div>
 
         <div className="relative max-w-3xl mx-auto">
