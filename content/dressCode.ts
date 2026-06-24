@@ -1,11 +1,10 @@
 export const dressCode = {
-  title: 'Código de Vestimenta',
-  formality: 'Formal — Black Tie',
+  title: 'Código de Vestuario',
   intro:
-    'Queremos que esta noche sea inolvidable. Te pedimos vestirte para la ocasión: ellos en traje oscuro o smoking; ellas en vestido largo o de cóctel elegante.',
-  // Inspiration boards shown under "Inspiración" — women first, then men.
-  // Each carries its own allowed-color palette (rendered as labeled swatches
-  // above the board). Hex values sampled from the "Paleta de colores" art.
+    'Queremos que esta noche sea inolvidable. Te pedimos vestirte para la ocasión. Evitar vestidos y trajes estampados, con lentejuelas o decoraciones exageradas. Te agradecemos tener en cuenta este código de vestuario para nuestro gran día.',
+  // Suggested-color boards shown under "Colores sugeridos" — women first, then
+  // men. Each carries its own allowed-color palette (rendered as labeled
+  // swatches above the board). Hex values sampled from the "Paleta de colores" art.
   inspirationBoards: [
     {
       label: 'Ellas',
@@ -54,11 +53,12 @@ export const dressCode = {
     'Blanco',
     'Marfil',
     'Beige muy claro',
-    'Wine',
-    'Esmeralda',
+    'Vinotinto',
+    'Verde oscuro',
     'Azul petróleo',
   ],
-  notes: 'Tacones cómodos recomendados — parte del jardín es de césped.',
+  notes:
+    'Llevar tacones cómodos, debido a que la ceremonia es en césped; y un abrigo porque en la noche hace frío.',
 } as const
 
 export type DressCode = typeof dressCode
