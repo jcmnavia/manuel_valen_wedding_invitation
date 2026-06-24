@@ -1,6 +1,7 @@
 import { NavBar } from '@/components/shared/NavBar'
 import { SiteFooter } from '@/components/shared/SiteFooter'
 import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
+import { PhotoFrame } from '@/components/shared/PhotoFrame'
 import { getSupabase, type GuestMessage } from '@/lib/supabase'
 import { MessageList } from './MessageList'
 import { MessageWallClient } from './MessageWallClient'
@@ -55,6 +56,15 @@ export default async function MensajesPage() {
           <p className="mt-6 font-display text-2xl text-wine">
             Con amor, Manuel &amp; Valentina
           </p>
+        </div>
+
+        <div className="mx-auto mb-16 max-w-md">
+          <PhotoFrame
+            src="/photos/us-dedicatorias.jpeg"
+            alt="Valentina y Manuel"
+            ratio="4/3"
+            sizes="(min-width: 768px) 448px, 90vw"
+          />
         </div>
 
         {/* The wall leads the page */}

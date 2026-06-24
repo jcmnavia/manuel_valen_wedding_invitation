@@ -1,6 +1,7 @@
 import { NavBar } from '@/components/shared/NavBar'
 import { SiteFooter } from '@/components/shared/SiteFooter'
 import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
+import { PhotoFrame } from '@/components/shared/PhotoFrame'
 import { GoogleVenueMap } from '@/components/ubicacion/GoogleVenueMap'
 import { wedding } from '@/content/wedding'
 
@@ -27,6 +28,15 @@ export default function UbicacionPage() {
             {wedding.venue.address} · {wedding.region}
           </p>
         </header>
+
+        <div className="mx-auto mb-14 max-w-md">
+          <PhotoFrame
+            src="/photos/us-ubicacion.jpeg"
+            alt="Valentina y Manuel"
+            ratio="4/3"
+            sizes="(min-width: 768px) 448px, 90vw"
+          />
+        </div>
 
         <div className="flex justify-center mb-16">
           <OrnamentalDivider variant={2} />

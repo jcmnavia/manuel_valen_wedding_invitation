@@ -9,6 +9,8 @@ import { StoryIntro } from './StoryIntro'
 import { InvitationReveal } from './InvitationReveal'
 import { NavBar } from '@/components/shared/NavBar'
 import { SiteFooter } from '@/components/shared/SiteFooter'
+import { BackgroundIcons } from '@/components/shared/BackgroundIcons'
+import { PhotoGallery } from '@/components/shared/PhotoGallery'
 import { prefersReducedMotion } from '@/lib/prefersReducedMotion'
 
 // ONE flat cream shared by the seal stage, the carousel wrapper and the story
@@ -125,9 +127,18 @@ export function EnvelopeScene() {
       {/* STORY INTRO + INVITATION (scrolls below the opener) */}
       <div className="relative bg-ivory">
         <div className="paper-texture absolute inset-0 opacity-30 pointer-events-none" />
+        {/* scattered party/wedding line icons — the global PaperBackground sits
+            behind this opaque bg-ivory wrapper, so re-render the pattern here so
+            the home content matches the other pages. */}
+        <BackgroundIcons />
 
         <div className="relative max-w-3xl mx-auto px-6 pt-32 pb-8">
           <StoryIntro />
+        </div>
+
+        {/* A few of us — breaks up the text before the invitation */}
+        <div className="relative max-w-4xl mx-auto px-6 py-10">
+          <PhotoGallery />
         </div>
 
         <div className="relative max-w-3xl mx-auto">

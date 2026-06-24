@@ -11,7 +11,7 @@ export type CarouselPhoto = {
   alt: string
 }
 
-const COUNT = 13
+const COUNT = 8
 
 export const carouselPhotos: readonly CarouselPhoto[] = Array.from(
   { length: COUNT },
