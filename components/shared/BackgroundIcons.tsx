@@ -115,7 +115,7 @@ const PLACEMENTS: Placement[] = (() => {
       rotate: Math.round((rng() - 0.5) * 80), // −40°…40°
       // mostly eucalipto, occasionally a wine accent
       tint: rng() < 0.22 ? '#7B3540' : '#5F7A6B',
-      opacity: 0.18 + rng() * 0.08, // ~0.18–0.26 (thin lines need a touch more)
+      opacity: 0.1 + rng() * 0.05, // ~0.10–0.15 (subtle watermark)
     })
   }
   return out

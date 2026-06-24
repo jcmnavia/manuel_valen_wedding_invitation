@@ -155,19 +155,19 @@ export function InvitationReveal() {
       >
         <Link
           href="/codigo-de-vestuario"
-          className="group relative px-8 py-4 border border-esmeralda text-esmeralda hover:bg-esmeralda hover:text-ivory transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
+          className="px-8 py-4 bg-esmeralda text-ivory hover:bg-esmeralda-deep transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
         >
           Código de Vestuario
         </Link>
         <Link
           href="/ubicacion"
-          className="group relative px-8 py-4 border border-esmeralda text-esmeralda hover:bg-esmeralda hover:text-ivory transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
+          className="px-8 py-4 bg-esmeralda text-ivory hover:bg-esmeralda-deep transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
         >
           Ubicación
         </Link>
         <Link
           href="/mensajes"
-          className="group relative px-8 py-4 border border-esmeralda text-esmeralda hover:bg-esmeralda hover:text-ivory transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
+          className="px-8 py-4 bg-esmeralda text-ivory hover:bg-esmeralda-deep transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
         >
           Dedicatorias
         </Link>

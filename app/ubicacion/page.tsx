@@ -9,6 +9,24 @@ export const metadata = {
   title: 'Ubicación · Valentina & Manuel',
 }
 
+const arrivalSteps = [
+  {
+    from: 'Desde El Poblado',
+    detail:
+      'Toma la Av. Las Vegas o la Av. El Poblado hacia el sur hasta Envigado. Sube por la Loma de El Escobero (Cra. 27B / Calle 36 Sur) y continúa el ascenso siguiendo las indicaciones hacia Fábula. Unos 25–35 minutos según el tráfico.',
+  },
+  {
+    from: 'Desde el centro de Medellín',
+    detail:
+      'Toma la Regional sentido sur, sal hacia Envigado y conéctate con la Loma de El Escobero. Sube la loma hasta llegar al recinto. Calcula 35–45 minutos.',
+  },
+  {
+    from: 'Desde el Aeropuerto José María Córdova (Rionegro)',
+    detail:
+      'Toma la vía Las Palmas sentido Medellín y desvía hacia Envigado / El Escobero. El trayecto toma aproximadamente 45–55 minutos.',
+  },
+]
+
 export default function UbicacionPage() {
   return (
     <>
@@ -21,12 +39,6 @@ export default function UbicacionPage() {
           <h1 className="font-display text-5xl md:text-7xl text-wine uppercase mt-6">
             Ubicación
           </h1>
-          <p className="font-display text-3xl text-ink-soft mt-4">
-            {wedding.venue.name}
-          </p>
-          <p className="text-ink-soft italic mt-2">
-            {wedding.venue.address} · {wedding.region}
-          </p>
         </header>
 
         <div className="mx-auto mb-14 max-w-md">
@@ -76,11 +88,29 @@ export default function UbicacionPage() {
           </article>
         </section>
 
-        <section className="mb-20">
+        <section className="mb-16">
           <h2 className="font-display tracking-[0.4em] text-xs text-gold uppercase text-center mb-8">
             En el mapa
           </h2>
           <GoogleVenueMap />
+        </section>
+
+        <div className="flex justify-center mb-12">
+          <OrnamentalDivider variant={1} />
+        </div>
+
+        {/* Arrival directions (no heading) */}
+        <section className="max-w-2xl mx-auto">
+          <ul className="space-y-8">
+            {arrivalSteps.map((step) => (
+              <li key={step.from} className="text-center md:text-left">
+                <p className="font-display tracking-[0.25em] text-sm text-ink uppercase mb-2">
+                  {step.from}
+                </p>
+                <p className="text-ink-soft leading-relaxed">{step.detail}</p>
+              </li>
+            ))}
+          </ul>
         </section>
       </main>
       <SiteFooter />

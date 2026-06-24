@@ -38,7 +38,7 @@ export default async function MensajesPage() {
           <p className="font-display tracking-[0.5em] text-sm text-wine uppercase">
             Déjanos unas palabras
           </p>
-          <h1 className="font-display text-5xl md:text-7xl text-wine uppercase mt-6">
+          <h1 className="font-display text-[clamp(1.6rem,9vw,4.5rem)] leading-none text-wine uppercase mt-6">
             Dedicatorias
           </h1>
         </header>
