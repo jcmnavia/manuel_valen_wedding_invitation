@@ -22,8 +22,8 @@ export function SiteFooter() {
 
         {/* The crest already arches "Valentina & Manuel", so just the date sits
             below it — no repeated names. */}
-        <p className="mt-6 font-display tracking-[0.4em] text-xs text-wine uppercase">
-          {wedding.dateRoman}
+        <p className="mt-6 font-display tracking-[0.3em] text-xs text-wine uppercase">
+          {wedding.dateDisplay}
         </p>
 
         {/* sage hairline close */}
