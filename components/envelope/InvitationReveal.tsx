@@ -130,10 +130,27 @@ export function InvitationReveal() {
         con cariño que no podrás acompañarnos.
       </motion.p>
 
+      {/* Primary RSVP call-to-action — the "link de la parte de abajo" */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={transition(1.85)}
+        className="mt-8"
+      >
+        <a
+          href={wedding.rsvpUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block px-10 py-4 bg-wine text-ivory hover:bg-wine-deep transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
+        >
+          Confirmar asistencia
+        </a>
+      </motion.div>
+
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={transition(1.9)}
+        transition={transition(2.0)}
         className="mt-16 flex flex-col md:flex-row gap-4"
       >
         <Link

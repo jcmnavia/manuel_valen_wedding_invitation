@@ -31,6 +31,9 @@ export const wedding = {
     coords: [6.1605, -75.543] as [number, number],
   },
   hashtag: '#ValentinaYManuel2026',
+  /** RSVP — Google Form where guests confirm attendance (before Jul 16). */
+  rsvpUrl:
+    'https://docs.google.com/forms/d/e/1FAIpQLSczBNuHahnEXqRcg2J3QXWkaT5z7IVFZqs3HdZs61tMn0Y0jg/viewform',
   /** Parents of the couple — shown in the "bendición" blessing section. */
   family: {
     novia: {
