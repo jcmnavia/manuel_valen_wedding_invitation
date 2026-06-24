@@ -37,22 +37,25 @@ export default async function MensajesPage() {
           <p className="font-display tracking-[0.5em] text-sm text-wine uppercase">
             Déjanos unas palabras
           </p>
-          <h1 className="font-display text-5xl md:text-7xl text-ink mt-6">
+          <h1 className="font-display text-5xl md:text-7xl text-wine uppercase mt-6">
             Dedicatorias
           </h1>
-          <p className="font-display text-3xl text-ink-soft mt-4">
-            para los novios
-          </p>
         </header>
 
         <div className="flex justify-center mb-16">
           <OrnamentalDivider variant={2} />
         </div>
 
-        <p className="text-center text-lg leading-relaxed text-ink-soft max-w-xl mx-auto italic mb-16">
-          Tu cariño, un consejo o un buen deseo: estas son las palabras que
-          familiares y amigos le dejan a Valentina y Manuel.
-        </p>
+        <div className="max-w-xl mx-auto mb-16 text-center">
+          <p className="text-lg leading-relaxed text-ink-soft italic">
+            Déjanos un mensaje para recordar. Un consejo, un deseo, una anécdota
+            o unas palabras para esta nueva aventura juntos. Nos encantará leer
+            cada uno de ellos y guardarlo como parte de este día tan especial.
+          </p>
+          <p className="mt-6 font-display text-2xl text-wine">
+            Con amor, Manuel &amp; Valentina
+          </p>
+        </div>
 
         {/* The wall leads the page */}
         <section>
