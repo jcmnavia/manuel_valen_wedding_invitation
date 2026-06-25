@@ -118,8 +118,11 @@ export function EnvelopeScene() {
         <MonogramSeal ref={monogramRef} />
 
         {/* CAROUSEL — absolutely fills the stage, fades in over the cream base
-            (the base never fades, so the photo composites over solid cream). */}
-        <div ref={carouselFadeRef} className="absolute inset-0">
+            (the base never fades, so the photo composites over solid cream).
+            Starts opacity-0 in the markup so it can't flash over the seal on the
+            very first paint (before GSAP runs after hydration). GSAP fades it in
+            on scroll; the reduced-motion branch reveals it via gsap.set. */}
+        <div ref={carouselFadeRef} className="absolute inset-0 opacity-0">
           <WeddingCarousel />
         </div>
       </section>
