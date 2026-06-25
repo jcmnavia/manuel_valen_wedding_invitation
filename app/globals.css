@@ -18,7 +18,6 @@
   --color-durazno: #F0C090;
   --color-naranja: #C8682E;
   --color-esmeralda: #2C6B33;
-  --color-esmeralda-deep: #1F4D25;
 
   /* The former "gold" accent role now resolves to Wine, so every existing
      text-gold / border-gold usage becomes the palette accent in one move.

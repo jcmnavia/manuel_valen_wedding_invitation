@@ -53,8 +53,14 @@ export default async function MensajesPage() {
             o unas palabras para esta nueva aventura juntos. Nos encantará leer
             cada uno de ellos y guardarlo como parte de este día tan especial.
           </p>
-          <p className="mt-6 font-display text-2xl text-wine">
-            Con amor, Manuel &amp; Valentina
+          <p className="mt-6 font-display text-xl sm:text-2xl text-wine">
+            Con amor,
+            {/* break to a second line on mobile, starting at "Manuel"; the
+                nowrap keeps that second segment on a single line */}
+            <br className="sm:hidden" />{' '}
+            <span className="whitespace-nowrap sm:whitespace-normal">
+              Manuel &amp; Valentina
+            </span>
           </p>
         </div>
 

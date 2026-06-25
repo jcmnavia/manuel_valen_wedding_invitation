@@ -1,22 +1,22 @@
-'use client'
+"use client";
 
-import { useRef } from 'react'
-import Link from 'next/link'
-import { motion, useInView, type Easing } from 'motion/react'
-import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
-import { Countdown } from './Countdown'
-import { wedding } from '@/content/wedding'
+import { OrnamentalDivider } from "@/components/shared/OrnamentalDivider";
+import { wedding } from "@/content/wedding";
+import { motion, useInView, type Easing } from "motion/react";
+import Link from "next/link";
+import { useRef } from "react";
+import { Countdown } from "./Countdown";
 
 export function InvitationReveal() {
-  const ref = useRef<HTMLDivElement | null>(null)
-  const inView = useInView(ref, { once: true, margin: '-10%' })
+  const ref = useRef<HTMLDivElement | null>(null);
+  const inView = useInView(ref, { once: true, margin: "-10%" });
 
-  const ease: Easing = [0.22, 1, 0.36, 1]
+  const ease: Easing = [0.22, 1, 0.36, 1];
   const transition = (delay: number) => ({
     duration: 1.2,
     ease,
     delay,
-  })
+  });
 
   return (
     <section
@@ -38,7 +38,7 @@ export function InvitationReveal() {
         transition={transition(0.15)}
         className="font-display tracking-[0.5em] text-sm text-gold mt-8 mb-12 uppercase"
       >
-        Tenemos el honor de invitarte
+        Tenemos el gusto de invitarte
       </motion.p>
 
       <motion.h1
@@ -101,8 +101,10 @@ export function InvitationReveal() {
           Ceremonia y Recepción
         </p>
         <p className="text-xl text-ink">{wedding.ceremony.name}</p>
-        <p className="text-base text-ink-soft italic">{wedding.ceremony.address}</p>
-        <p className="text-base text-ink mt-1">{wedding.ceremony.time} h</p>
+        <p className="text-base text-ink-soft italic">
+          {wedding.ceremony.address}
+        </p>
+        <p className="text-base text-ink mt-1">{wedding.ceremony.time} horas</p>
       </motion.div>
 
       {/* #8 — Gift note */}
@@ -155,23 +157,23 @@ export function InvitationReveal() {
       >
         <Link
           href="/codigo-de-vestuario"
-          className="px-8 py-4 bg-esmeralda text-ivory hover:bg-esmeralda-deep transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
+          className="px-8 py-4 bg-wine text-ivory hover:bg-wine-deep transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
         >
           Código de Vestuario
         </Link>
         <Link
           href="/ubicacion"
-          className="px-8 py-4 bg-esmeralda text-ivory hover:bg-esmeralda-deep transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
+          className="px-8 py-4 bg-wine text-ivory hover:bg-wine-deep transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
         >
           Ubicación
         </Link>
         <Link
           href="/mensajes"
-          className="px-8 py-4 bg-esmeralda text-ivory hover:bg-esmeralda-deep transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
+          className="px-8 py-4 bg-wine text-ivory hover:bg-wine-deep transition-colors duration-500 font-display tracking-[0.3em] text-sm uppercase"
         >
           Dedicatorias
         </Link>
       </motion.div>
     </section>
-  )
+  );
 }
