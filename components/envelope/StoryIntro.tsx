@@ -40,7 +40,7 @@ export function StoryIntro() {
             transition={{ duration: 1.0, ease, delay: 0.15 + i * 0.12 }}
             className={
               i === 0
-                ? 'font-serif text-xl md:text-2xl text-ink leading-relaxed'
+                ? 'font-serif text-xl md:text-2xl text-esmeralda leading-relaxed'
                 : 'font-serif text-base md:text-lg text-ink-soft leading-relaxed'
             }
           >

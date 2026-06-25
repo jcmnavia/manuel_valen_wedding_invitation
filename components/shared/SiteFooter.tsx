@@ -1,10 +1,9 @@
 import Image from 'next/image'
-import { wedding } from '@/content/wedding'
 
 /**
  * Site footer — closes every page with the couple's monogram crest (the wine
- * V|M-in-a-laurel mark), their names, the date and the hashtag. Quiet, centered,
- * on the same cream as the rest of the site.
+ * V|M-in-a-laurel mark). Quiet, centered, on the same cream as the rest of the
+ * site.
  */
 export function SiteFooter() {
   return (
@@ -19,12 +18,6 @@ export function SiteFooter() {
           height={1024}
           className="mx-auto h-24 w-auto md:h-28 opacity-90"
         />
-
-        {/* The crest already arches "Valentina & Manuel", so just the date sits
-            below it — no repeated names. */}
-        <p className="mt-6 font-display tracking-[0.4em] text-xs text-wine uppercase">
-          {wedding.dateRoman}
-        </p>
 
         {/* sage hairline close */}
         <div className="mx-auto mt-8 h-px w-16 bg-sage/40" />

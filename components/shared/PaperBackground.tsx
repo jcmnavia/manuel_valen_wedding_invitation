@@ -1,7 +1,11 @@
+import { BackgroundIcons } from './BackgroundIcons'
+
 export function PaperBackground() {
   return (
     <div aria-hidden="true" className="fixed inset-0 -z-10 pointer-events-none">
       <div className="absolute inset-0 paper-texture opacity-60" />
+      {/* scattered minimalist party/wedding line icons */}
+      <BackgroundIcons />
       <div
         className="absolute inset-0"
         style={{

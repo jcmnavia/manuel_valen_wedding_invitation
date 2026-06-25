@@ -18,6 +18,7 @@ export function AttireSilhouettes() {
       ref={ref}
       className="flex justify-center items-end gap-12 md:gap-20 text-gold"
     >
+      <figure className="flex flex-col items-center">
       <svg viewBox="0 0 100 220" width="120" height="240" aria-label="Smoking">
         <g
           fill="none"
@@ -63,7 +64,15 @@ export function AttireSilhouettes() {
           />
         </g>
       </svg>
+        <figcaption className="mt-5 text-center">
+          <span className="font-display tracking-[0.25em] text-xs text-wine uppercase">
+            Hombres
+          </span>
+          <span className="mt-1 block text-sm text-ink">Traje formal</span>
+        </figcaption>
+      </figure>
 
+      <figure className="flex flex-col items-center">
       <svg viewBox="0 0 100 220" width="120" height="240" aria-label="Vestido largo">
         <g
           fill="none"
@@ -100,6 +109,13 @@ export function AttireSilhouettes() {
           />
         </g>
       </svg>
+        <figcaption className="mt-5 text-center">
+          <span className="font-display tracking-[0.25em] text-xs text-wine uppercase">
+            Mujeres
+          </span>
+          <span className="mt-1 block text-sm text-ink">Vestido largo</span>
+        </figcaption>
+      </figure>
     </div>
   )
 }

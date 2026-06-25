@@ -8,7 +8,6 @@ import { wedding } from '@/content/wedding'
  */
 const query = encodeURIComponent(wedding.venue.mapsQuery)
 const embedSrc = `https://www.google.com/maps?q=${query}&z=15&output=embed`
-const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${query}`
 const openHref = `https://www.google.com/maps/search/?api=1&query=${query}`
 
 export function GoogleVenueMap() {
@@ -30,12 +29,12 @@ export function GoogleVenueMap() {
         />
       </div>
 
-      <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+      <div className="mt-6 flex items-center justify-center">
         <a
-          href={directionsHref}
+          href={openHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-7 py-3 bg-gold text-ivory hover:bg-gold-dim transition-colors duration-500 font-display tracking-[0.25em] text-xs uppercase"
+          className="inline-flex items-center gap-2 px-8 py-4 bg-wine text-ivory hover:bg-wine-deep transition-colors duration-500 font-display tracking-[0.25em] text-xs uppercase"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path
@@ -46,14 +45,6 @@ export function GoogleVenueMap() {
             />
             <circle cx="12" cy="10" r="2.4" stroke="currentColor" strokeWidth="1.8" />
           </svg>
-          Cómo llegar
-        </a>
-        <a
-          href={openHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block px-7 py-3 border border-gold text-ink hover:bg-gold hover:text-ivory transition-colors duration-500 font-display tracking-[0.25em] text-xs uppercase"
-        >
           Ver en Google Maps
         </a>
       </div>

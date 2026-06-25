@@ -2,14 +2,14 @@
 
 import { forwardRef } from 'react'
 import Image from 'next/image'
-import { wedding } from '@/content/wedding'
 
 /**
  * Opening composition: the couple's real wax seal + their monogram.
  *
  * The seal is the photographed terracotta-wine wax stamp ("Valentina & Manuel"
  * arched over a V|M monogram in a laurel wreath). The data-monogram-seal hook is
- * kept on the wrapper so the scene animation still finds it.
+ * kept on the wrapper so the scene animation still finds it. Just the monogram
+ * shows here — no date beneath it.
  */
 export const MonogramSeal = forwardRef<HTMLDivElement>(function MonogramSeal(
   _props,
@@ -36,12 +36,6 @@ export const MonogramSeal = forwardRef<HTMLDivElement>(function MonogramSeal(
           priority
         />
       </div>
-
-      {/* The seal already carries "Valentina & Manuel", so just the date sits
-          below it — no repeated names. */}
-      <p className="mt-8 font-display tracking-[0.45em] text-xs md:text-sm text-wine uppercase">
-        {wedding.dateRoman}
-      </p>
     </div>
   )
 })

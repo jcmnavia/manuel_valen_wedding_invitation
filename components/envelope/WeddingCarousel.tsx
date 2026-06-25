@@ -68,7 +68,7 @@ function Headline({ className = '' }: { className?: string }) {
     <h2
       className={`font-display leading-none text-6xl sm:text-7xl md:text-8xl ${className}`}
     >
-      Nos casamos!
+      ¡Nos casamos!
     </h2>
   )
 }

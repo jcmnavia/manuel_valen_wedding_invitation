@@ -1,6 +1,7 @@
 import { NavBar } from '@/components/shared/NavBar'
 import { SiteFooter } from '@/components/shared/SiteFooter'
 import { OrnamentalDivider } from '@/components/shared/OrnamentalDivider'
+import { PhotoFrame } from '@/components/shared/PhotoFrame'
 import { getSupabase, type GuestMessage } from '@/lib/supabase'
 import { MessageList } from './MessageList'
 import { MessageWallClient } from './MessageWallClient'
@@ -37,22 +38,40 @@ export default async function MensajesPage() {
           <p className="font-display tracking-[0.5em] text-sm text-wine uppercase">
             Déjanos unas palabras
           </p>
-          <h1 className="font-display text-5xl md:text-7xl text-ink mt-6">
+          <h1 className="font-display text-[clamp(1.6rem,9vw,4.5rem)] leading-none text-wine uppercase mt-6">
             Dedicatorias
           </h1>
-          <p className="font-display text-3xl text-ink-soft mt-4">
-            para los novios
-          </p>
         </header>
 
         <div className="flex justify-center mb-16">
           <OrnamentalDivider variant={2} />
         </div>
 
-        <p className="text-center text-lg leading-relaxed text-ink-soft max-w-xl mx-auto italic mb-16">
-          Tu cariño, un consejo o un buen deseo: estas son las palabras que
-          familiares y amigos le dejan a Valentina y Manuel.
-        </p>
+        <div className="max-w-xl mx-auto mb-16 text-center">
+          <p className="text-lg leading-relaxed text-ink-soft italic">
+            Déjanos un mensaje para recordar. Un consejo, un deseo, una anécdota
+            o unas palabras para esta nueva aventura juntos. Nos encantará leer
+            cada uno de ellos y guardarlo como parte de este día tan especial.
+          </p>
+          <p className="mt-6 font-display text-xl sm:text-2xl text-wine">
+            Con amor,
+            {/* break to a second line on mobile, starting at "Manuel"; the
+                nowrap keeps that second segment on a single line */}
+            <br className="sm:hidden" />{' '}
+            <span className="whitespace-nowrap sm:whitespace-normal">
+              Manuel &amp; Valentina
+            </span>
+          </p>
+        </div>
+
+        <div className="mx-auto mb-16 max-w-md">
+          <PhotoFrame
+            src="/photos/us-dedicatorias.jpeg"
+            alt="Valentina y Manuel"
+            ratio="4/3"
+            sizes="(min-width: 768px) 448px, 90vw"
+          />
+        </div>
 
         {/* The wall leads the page */}
         <section>
