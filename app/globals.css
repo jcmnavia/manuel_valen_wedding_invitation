@@ -43,6 +43,11 @@
 @layer base {
   html {
     scroll-behavior: auto;
+    /* This is a light-only design. Declaring the scheme tells the browser the
+       page is already light and to NOT apply an algorithmic "auto dark" tint —
+       the thing that was muddying the color swatches on some Android browsers
+       (Samsung Internet, Chrome Auto Dark Theme, some in-app WebViews). */
+    color-scheme: light;
     /* Moderate global type bump: 1rem = 18px (was 16px), so every rem-based
        text size scales up ~12.5% site-wide in one move. */
     font-size: 112.5%;

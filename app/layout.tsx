@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Montserrat, Bodoni_Moda } from 'next/font/google'
 import { PaperBackground } from '@/components/shared/PaperBackground'
 import { SmoothScrollProvider } from '@/components/motion/SmoothScrollProvider'
@@ -23,6 +23,14 @@ const bodoni = Bodoni_Moda({
   variable: '--font-bodoni',
   display: 'swap',
 })
+
+// Light-only design. `colorScheme: 'light'` reinforces the CSS declaration so
+// the browser won't algorithmically dark-tint the page (fixes muddy swatches on
+// some Android browsers); `themeColor` keeps the browser chrome ivory to match.
+export const viewport: Viewport = {
+  colorScheme: 'light',
+  themeColor: '#F5EFE3',
+}
 
 export const metadata: Metadata = {
   title: 'Valentina & Manuel · 16 de Agosto, 2026',
